@@ -3,145 +3,98 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Mentor demo guide · Constellation OS</title>
-<meta name="description" content="A practical Constellation OS mentor walkthrough from request intake to a proposed plan, approval, dispatch, and repair.">
+<title>Mentor demo flows · Constellation OS</title>
+<meta name="description" content="Copyable Codex and Claude Code prompts for four honest Constellation OS mentor demo flows.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
 <style>
-  :root { --ground:#F2F4F7; --surface:#FFFFFF; --ink:#111827; --ink-2:#424D5E; --muted:#667388; --line:#D6DCE5; --amber:#B9711A; --blue:#2A6597; --code:#E9EDF2; }
-  @media (prefers-color-scheme:dark) { :root { --ground:#0C1420; --surface:#131D2C; --ink:#E8EDF4; --ink-2:#B3BFCF; --muted:#9AA9BC; --line:#34465F; --amber:#E2A24A; --blue:#78ACDF; --code:#1A2637; } }
-  * { box-sizing:border-box; }
-  html { scroll-behavior:smooth; }
-  body { margin:0; background:var(--ground); color:var(--ink); font-family:"IBM Plex Sans",Arial,sans-serif; line-height:1.55; }
-  a { color:var(--blue); } a:focus-visible, summary:focus-visible { outline:3px solid var(--amber); outline-offset:3px; }
-  main { max-width:940px; margin:auto; padding:clamp(1.5rem,5vw,4rem) 1.25rem 4rem; }
-  nav { display:flex; flex-wrap:wrap; gap:1.25rem; border-bottom:1px solid var(--line); padding-bottom:1rem; font-size:.85rem; }
-  h1,h2,h3 { font-family:Archivo,Arial,sans-serif; line-height:1.16; }
-  h1 { font-size:clamp(2rem,5vw,3.2rem); max-width:18ch; margin:.5rem 0; }
-  h2 { font-size:clamp(1.4rem,3vw,1.9rem); margin:0 0 .7rem; }
-  h3 { font-size:1.12rem; margin:0 0 .3rem; }
-  p { margin:.5rem 0 0; } ul,ol { padding-left:1.3rem; margin:.55rem 0 0; } li+li { margin-top:.4rem; }
-  .eyebrow { font:500 .72rem "IBM Plex Mono",monospace; letter-spacing:.12em; text-transform:uppercase; color:var(--amber); }
-  .lede { max-width:66ch; color:var(--ink-2); font-size:1.1rem; }
-  .hero { padding:2.5rem 0 1.8rem; }
-  .jump { display:flex; flex-wrap:wrap; gap:.5rem 1.3rem; margin-top:1.5rem; font-size:.9rem; }
-  section { margin-top:2.4rem; }
-  .card { background:var(--surface); border:1px solid var(--line); border-radius:7px; padding:clamp(1rem,3vw,1.5rem); }
-  .card+.card { margin-top:.7rem; }
-  .step { display:grid; grid-template-columns:2rem minmax(0,1fr); gap:1rem; border-top:1px solid var(--line); padding:1.2rem 0; }
-  .step:first-of-type { border-top:0; }
-  .number { font:500 .9rem "IBM Plex Mono",monospace; color:var(--amber); padding-top:.2rem; }
-  .step p { color:var(--ink-2); }
-  .aside { border-left:3px solid var(--amber); padding:.7rem 1rem; background:var(--surface); margin-top:1rem; color:var(--ink-2); }
-  .aside strong { color:var(--ink); }
-  code,pre { font-family:"IBM Plex Mono",monospace; font-size:.83rem; }
-  code { overflow-wrap:anywhere; }
-  pre { background:var(--code); padding:1rem; border-radius:5px; overflow-x:auto; line-height:1.5; }
-  pre code { overflow-wrap:normal; }
-  details { border:1px solid var(--line); border-radius:6px; background:var(--surface); padding:1rem 1.2rem; margin-top:.7rem; }
-  summary { cursor:pointer; font-weight:600; }
-  footer { border-top:1px solid var(--line); margin-top:3rem; padding-top:1rem; color:var(--muted); font-size:.82rem; }
-  @media (max-width:600px) { .step { grid-template-columns:1.5rem minmax(0,1fr); gap:.7rem; } }
-  @media (prefers-reduced-motion:reduce) { html { scroll-behavior:auto; } }
+:root{--ground:#f2f4f7;--surface:#fff;--ink:#111827;--ink2:#414d60;--muted:#64748b;--line:#d4dce6;--blue:#215d92;--amber:#a86412;--code:#e9edf3}
+@media(prefers-color-scheme:dark){:root{--ground:#0c1420;--surface:#141e2d;--ink:#eaf0f6;--ink2:#b9c6d5;--muted:#9eacc0;--line:#34465f;--blue:#83b9e8;--amber:#e9aa54;--code:#1c293b}}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--ground);color:var(--ink);font-family:"IBM Plex Sans",Arial,sans-serif;line-height:1.55}main{max-width:1020px;margin:auto;padding:1.5rem 1.2rem 4rem}a{color:var(--blue)}a:focus-visible,button:focus-visible{outline:3px solid var(--amber);outline-offset:3px}h1,h2,h3{font-family:Archivo,Arial,sans-serif;line-height:1.16}h1{font-size:clamp(2.2rem,5vw,3.5rem);max-width:16ch;margin:.45rem 0}h2{font-size:clamp(1.5rem,3vw,2rem);margin:0 0 .45rem}h3{font-size:1.1rem;margin:0 0 .35rem}p{margin:.5rem 0 0}.eyebrow,.tag{font:500 .72rem "IBM Plex Mono",monospace;letter-spacing:.1em;text-transform:uppercase;color:var(--amber)}.lede{font-size:1.12rem;color:var(--ink2);max-width:67ch}.small{font-size:.9rem;color:var(--ink2)}.mono,code,pre{font-family:"IBM Plex Mono",monospace}code{overflow-wrap:anywhere}nav{display:flex;gap:.8rem 1.3rem;flex-wrap:wrap;border-bottom:1px solid var(--line);padding-bottom:1rem;font-size:.88rem}.hero{padding:2.5rem 0 1.2rem}.route{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:.6rem;margin:1.4rem 0 0}.route a,.panel,.flow{background:var(--surface);border:1px solid var(--line);border-radius:8px}.route a{display:block;padding:.95rem;color:var(--ink);text-decoration:none;font-weight:600}.route a:hover{border-color:var(--blue)}.route span{display:block;color:var(--muted);font-size:.79rem;font-weight:400;margin-top:.25rem}section{margin-top:2.5rem}.panel{padding:1.1rem 1.3rem}.panel ul{margin:.55rem 0 0;padding-left:1.2rem}.panel li+li{margin-top:.35rem}.caution{border-left:3px solid var(--amber);padding:.7rem 1rem;background:var(--surface);margin-top:1rem;color:var(--ink2)}.caution strong{color:var(--ink)}.flow{margin-top:1.5rem;padding:clamp(1.1rem,3vw,1.7rem)}.flow-head{display:flex;justify-content:space-between;gap:1rem;align-items:start}.flow-head p{color:var(--ink2);max-width:65ch}.steps{display:flex;flex-wrap:wrap;gap:.3rem .7rem;margin:1rem 0;padding:0;list-style:none;font-size:.86rem;color:var(--ink2)}.steps li:not(:last-child)::after{content:" →";color:var(--amber)}.prompt-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.8rem;margin-top:1.1rem}.prompt{min-width:0;border:1px solid var(--line);border-radius:6px;overflow:hidden}.prompt-head{display:flex;align-items:center;justify-content:space-between;gap:.6rem;padding:.65rem .8rem}.prompt-head h3{margin:0}.copy{background:var(--ink);color:var(--surface);border:0;border-radius:4px;padding:.42rem .65rem;font:600 .8rem "IBM Plex Sans",Arial,sans-serif;cursor:pointer}.copy:hover{opacity:.82}pre{background:var(--code);margin:0;padding:.9rem;white-space:pre-wrap;overflow-wrap:anywhere;font-size:.79rem;line-height:1.52;max-height:24rem;overflow:auto}.say{border-top:1px solid var(--line);margin-top:1.15rem;padding-top:.8rem;color:var(--ink2)}.say strong{color:var(--ink)}footer{border-top:1px solid var(--line);margin-top:3rem;padding-top:1rem;color:var(--muted);font-size:.82rem}#copy-status{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)}@media(max-width:760px){.route,.prompt-grid{grid-template-columns:1fr 1fr}}@media(max-width:560px){.route,.prompt-grid{grid-template-columns:1fr}.flow-head{display:block}}@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
 </style>
 </head>
 <body>
 <main>
-<nav aria-label="Founder pages"><a href="index.html">Founder pages</a><a href="brief.html">Investor brief</a><a href="#run">Live route</a><a href="#branches">Replan or repair</a></nav>
+<nav aria-label="Founder pages"><a href="index.html">Founder pages</a><a href="brief.html">Investor brief</a><a href="#setup">Set up</a><a href="#flows">Choose a flow</a></nav>
 <header class="hero">
-  <p class="eyebrow">Mentor walkthrough · local demo · 29 September 2026</p>
-  <h1>From a request to an approved plan.</h1>
-  <p class="lede">Keep this guide beside the operator console. Practise the complete request → new plan → compare → approve sequence on the local fixture server. Send and observe are a separate Compose rehearsal when a current-window activity is eligible. Repair needs a real execution event.</p>
-  <div class="jump"><a href="#before">Before the call</a><a href="#run">Walkthrough</a><a href="#jobs">Planning job trigger</a><a href="#branches">Replan / repair</a><a href="#talk">What to say</a></div>
+<p class="eyebrow">Mentor cue sheet · 29 September 2026</p>
+<h1>Four demo flows. Two coding agents.</h1>
+<p class="lede">Copy a Codex prompt to run the local rehearsal. Copy the paired Claude Code prompt to check the evidence independently and help you explain what changed. Follow one flow at a time; carry the actual scenario ID, revision, job ID and receipt into the next flow.</p>
+<div class="route" id="flows"><a href="#new-plan">01 · New plan<span>Queue a request, generate, optimize</span></a><a href="#replan">02 · Replan<span>Add demand, compare priorities</span></a><a href="#repair">03 · Repair<span>Use a real disruption event</span></a><a href="#authority">04 · Decide and send<span>Approve, dispatch, inspect receipts</span></a></div>
 </header>
-
-<section id="before">
-  <h2>Before the call</h2>
-  <div class="card">
-    <ol>
-      <li>In one terminal, run <code>CONSTELLATION_FUTURE_ADMISSION_LEAD_HOURS=1 backend/.venv/bin/python development/dev_api.py fleet_optimized</code> from the Constellation OS checkout. In another, run <code>cd frontend &amp;&amp; npm run dev -- --host 127.0.0.1 --port 4173</code>. The local server creates a fresh demo database and starts its planning worker. The one-hour admission lead applies only to this practice process.</li>
-      <li>Open <a href="http://127.0.0.1:4173">the local console</a>, use the development identity chooser to sign in as a <strong>tenant admin</strong>, and open <code>world-fleet</code> revision 3. Use a tenant identity, not the platform login. This fixture’s clock is parked at <strong>31 July 2026, 08:00 UTC</strong>.</li>
-      <li>Choose a rehearsed customer, target and sensor. For a concrete target, try <code>26.2685° N, 74.3688° E</code> and a deadline of <code>1 August 2026, 02:00 UTC</code>; the fixture has opportunities at that target. Keep the deadline beyond the displayed admission lead and inside the 31 July–1 August planning window. Note the starting optimized revision for Compare. Confirm the API and console load before the call.</li>
-    </ol>
-  </div>
-  <p class="aside"><strong>What this practice proves.</strong> The fixture server uses a virtual clock and a local job worker. It lets you practise intake, planning, comparison and approval; it does not provide Yamcs dispatch receipts. Stock Compose includes Yamcs and a deterministic spacecraft spoof, but its seeded <code>world-origin</code> horizon is 16–17 July 2026 and its clock is real time. Do not promise a live send from that seed on today’s clock. The full Q09 rehearsal and DEMO_GO decision remain open.</p>
+<section id="setup">
+<h2>Set up once</h2>
+<div class="panel"><p><strong>Roles:</strong> Codex is the operator copilot and may submit the planning jobs you ask it to run. You make the request and authority decisions in the UI. Claude Code is an independent read-only checker; give it Codex’s IDs and evidence after each flow.</p><ul><li>Use a disposable local demo tenant. The reliable practice path is <code>world-fleet</code> on <code>development/dev_api.py fleet_optimized</code>, virtual clock <code>2026-07-31 08:00 UTC</code>. Start with <code>CONSTELLATION_FUTURE_ADMISSION_LEAD_HOURS=1 backend/.venv/bin/python development/dev_api.py fleet_optimized</code>, then <code>cd frontend &amp;&amp; npm run dev -- --host 127.0.0.1 --port 4173</code>. Sign in as a tenant admin at <a href="http://127.0.0.1:4173">the local console</a>.</li><li>A possible collection target is <code>26.2685° N, 74.3688° E</code> with deadline <code>2026-08-01 02:00 UTC</code>. Have Codex confirm the actual fixture, admission lead and policy window before using it.</li><li>Do not use customer Place-an-order as the critical path until <a href="https://github.com/SumanthVarma798/constellation-os/issues/386">local customer intake #386</a> is resolved. Use operator <strong>Queue request</strong>.</li></ul></div>
+<p class="caution"><strong>Demo boundary:</strong> Local dev API supports request → planning jobs → comparison → approval. It has no Yamcs dispatch worker. Stock Compose has Yamcs integration, but its seed is outside today’s real-time horizon. Repair needs actual typed event evidence. Product status is <strong>DEMO_HOLD</strong> pending Q09 rehearsal and an explicit DEMO_GO; call these practice flows, not an end-to-end live proof.</p>
 </section>
+<section id="new-plan" class="flow">
+<div class="flow-head"><div><p class="tag">Flow 01 · main live route</p><h2>Queue a request → propose a new plan</h2><p>Use this first. The audience sees an accepted request become a separate optimized plan, then sees what changed.</p></div></div>
+<ol class="steps"><li>Queue request in Plan</li><li>Generate opportunities</li><li>Optimize</li><li>Compare revisions</li></ol>
+<div class="prompt-grid">
+<div class="prompt"><div class="prompt-head"><h3>Codex · run</h3><button class="copy" type="button" data-copy="new-codex" aria-label="Copy new plan Codex prompt">Copy prompt</button></div><pre id="new-codex">Be my Constellation OS mentor-demo operator copilot in this checkout. Read docs/README.md, docs/operations/CURRENT.md and the current planning flow first. Use only the disposable local demo tenant; do not edit source, reset data or touch deployment.
 
-<section id="run">
-  <h2>Live route</h2>
-  <div class="step"><span class="number">01</span><div><h3>Queue the request</h3><p>In Plan, select <strong>Queue request</strong>. Choose the customer; enter a justification, target name and coordinates, sensor, mission use, deadline, SLA, priority and planner value. Select <strong>Review request</strong>, check the summary, then acknowledge and select <strong>Submit request</strong>.</p><p><strong>Show:</strong> the acceptance receipt and the new revision. Say that this is durable <em>unscheduled demand</em>; no collection has been scheduled yet.</p></div></div>
-  <div class="step"><span class="number">02</span><div><h3>Make a new proposed plan</h3><p>Use the planning-job snippet below in the console tab’s developer tools. Keep <code>world-fleet</code> and enter the exact new revision shown after intake. Run <code>opportunity_generation</code>, wait for its successor, then run <code>optimization</code> on that successor. These are two distinct queued jobs. A 202 response means admitted or deferred, not completed.</p><p><strong>Show:</strong> each job ID and the resulting revision printed by the snippet. Refresh the console and select the new optimized revision.</p></div></div>
-  <div class="step"><span class="number">03</span><div><h3>Inspect the difference</h3><p>Use <strong>Compare</strong> to place the earlier optimized revision beside the new one. Point to changed or refused requests, activity placement, station use and the money figures in Economics. If the new request is infeasible, show its typed rejection reason; an accepted request does not guarantee a scheduled activity.</p></div></div>
-  <div class="step"><span class="number">04</span><div><h3>Approve the exact revision</h3><p>As the tenant admin, select <strong>Review and approve</strong>. Read the pending request/activity diff and net-value change, acknowledge it, then approve this revision. A regular operator can submit work but cannot approve. Approval authorizes the chosen version; it does not contact C2.</p></div></div>
-  <div class="step"><span class="number">05</span><div><h3>Explain the send gate; rehearse it separately</h3><p>On a <em>current-window Compose plan</em>, select an eligible activity and use <strong>Send selected activity</strong> → <strong>Request dispatch</strong>. In Execution, wait for command and observation receipts. A dispatch request is not an uplink or execution outcome; only later receipts establish those facts. In the fixture practice above, stop at approval: there is no Yamcs dispatch worker.</p></div></div>
+1. Check whether dev_api.py fleet_optimized, the frontend and the tenant-admin session are ready. Check world-fleet's current head, virtual clock, admission lead, planning horizon and a valid request example. Tell me the exact values to enter in Plan → Queue request. I will review and submit it in the UI; wait for my acceptance receipt.
+2. Verify that intake appended unscheduled demand. Record scenario ID, accepted request ID, exact new version and canonical hash. Explain why no planning job has run yet.
+3. Submit opportunity_generation against that exact version/hash through the documented authenticated API. Record the action ID, job ID and admission result; poll to a terminal state. Resolve the successor by its output hash. If it fails or is deferred, report the actual state and stop.
+4. Submit optimization against that successor's exact version/hash. Poll and resolve its output hash. Do not assume 202 means success and do not create duplicate jobs on retry.
+5. Tell me which old and new revisions to select in Compare, which request/activity changes and money figures to point at, and any infeasible reason. Stop before approval. Give me a compact handoff of IDs, hashes and evidence for Claude Code.</pre></div>
+<div class="prompt"><div class="prompt-head"><h3>Claude Code · check</h3><button class="copy" type="button" data-copy="new-claude" aria-label="Copy new plan Claude Code prompt">Copy prompt</button></div><pre id="new-claude">Independently audit my Constellation OS new-plan demo. Read the current repository contracts and the evidence/IDs I paste from Codex. Use read-only commands and API calls; do not submit jobs or edit data. Verify the request was accepted as unscheduled demand, opportunity_generation and optimization each reached a terminal success, each output hash maps to the claimed immutable successor, and Compare/Economics figures come from those revisions. Flag any stale version, infeasible request or unproven claim. Give me a 20-second mentor narration using only verified facts.</pre></div>
+</div><p class="say"><strong>What to say:</strong> “Intake preserves the demand first. Geometry finds possible observations; the optimizer chooses a feasible plan. We can compare the result with the previous revision before anyone authorizes it.”</p>
 </section>
+<section id="replan" class="flow">
+<p class="tag">Flow 02 · changed demand</p><h2>New priority → replan</h2><p class="small">Do this after Flow 01. The second request creates a new unscheduled head; planning must run again. This is a fresh solve, not an execution-event repair.</p>
+<ol class="steps"><li>Show first plan</li><li>Queue a second request</li><li>Generate + optimize</li><li>Compare moved work</li></ol>
+<div class="prompt-grid">
+<div class="prompt"><div class="prompt-head"><h3>Codex · run</h3><button class="copy" type="button" data-copy="replan-codex" aria-label="Copy replan Codex prompt">Copy prompt</button></div><pre id="replan-codex">Guide a second Constellation OS demo flow on the same disposable local tenant. Read the current planning/intake contracts. Start from the actual optimized revision created in the first flow; do not assume a version number. Inspect the fixture and propose one valid second operator request whose priority/deadline may compete for resources. Be honest if no such demonstrable conflict is supported by this fixture.
 
-<section id="jobs">
-  <h2>Planning job trigger</h2>
-  <p>The current operator UI does not have a general “run planner” or “run repair” button. While signed in to <code>http://127.0.0.1:4173</code>, open that tab’s developer console, edit <code>startVersion</code>, then paste this. The script uses your existing same-origin session and CSRF cookie; run it only against the local demo tenant.</p>
-  <pre><code>(async () =&gt; {
-  const book = "world-fleet"; // scenario ID shown in Queue request
-  const startVersion = 4;     // new revision shown after intake; edit if needed
-  const kinds = ["opportunity_generation", "optimization"];
-  // For repair after a real event: use ["repair"] and its current version.
-  const csrf = document.cookie.split("; ").find(x =&gt; x.startsWith("constellation_csrf="))?.split("=")[1];
-  if (!csrf) throw new Error("Sign in to the local operator console first");
-  const read = async path =&gt; {
-    const response = await fetch(path, { credentials: "same-origin" });
-    const body = await response.json();
-    if (!response.ok) throw new Error(JSON.stringify(body));
-    return body.data;
-  };
-  let expected = startVersion;
-  for (const kind of kinds) {
-    const path = `/api/v1/scenarios/${encodeURIComponent(book)}/versions`;
-    const versions = await read(path);
-    const latest = versions.reduce((a, b) =&gt; a.version &gt; b.version ? a : b);
-    if (latest.version !== expected) throw new Error(`Expected revision ${expected}, found ${latest.version}; check the selected plan`);
-    const response = await fetch(`${path}/${latest.version}/jobs`, {
-      method: "POST", credentials: "same-origin",
-      headers: { "Content-Type": "application/json", "X-CSRF-Token": decodeURIComponent(csrf) },
-      body: JSON.stringify({ action_id: crypto.randomUUID(), job_kind: kind,
-        expected_scenario_version: latest.version,
-        expected_scenario_hash: latest.canonical_hash,
-        justification: "Mentor demo: plan accepted request" })
-    });
-    const submitted = await response.json();
-    if (!response.ok) throw new Error(JSON.stringify(submitted));
-    const id = submitted.data.job_id;
-    console.log(`${kind} queued`, id, submitted.data.admission);
-    let completed = false;
-    for (let attempt = 0; attempt &lt; 450; attempt++) {
-      const state = await read(`/api/v1/jobs/${id}`);
-      if (state.payload.status === "failed") throw new Error(JSON.stringify(state.payload.failure));
-      if (state.payload.status === "succeeded") {
-        const successor = (await read(path)).find(v =&gt; v.canonical_hash === state.payload.output_hash);
-        if (!successor) throw new Error(`Job ${id} succeeded but its successor was not found`);
-        console.log(`${kind} succeeded → revision ${successor.version}`, successor);
-        expected = successor.version;
-        completed = true;
-        break;
-      }
-      await new Promise(resolve =&gt; setTimeout(resolve, 2000));
-    }
-    if (!completed) throw new Error(`Job ${id} is still running; inspect /api/v1/jobs/${id}`);
-  }
-})().catch(error =&gt; console.error("Planning stopped:", error));</code></pre>
-  <p class="aside"><strong>If a job fails:</strong> read its printed failure and the job record at <code>/api/v1/jobs/&lt;job-id&gt;</code>. Do not approve an old revision or claim the plan succeeded. A stale input or infeasible request may require a different rehearsed case.</p>
+I will use Plan → Queue request and submit it myself. Wait for the acceptance receipt. Then verify the new unscheduled head and submit opportunity_generation followed by optimization, each guarded by the exact current version/hash. Poll both jobs and join each output hash to its successor; stop on any failure or stale baseline. Open or direct me to Compare between the prior optimized plan and the new proposal. Report which requests are selected or refused, which activities moved, net-value delta and any reason codes. Do not approve or dispatch. Give Claude Code the exact evidence IDs and a concise account of what the audience actually saw.</pre></div>
+<div class="prompt"><div class="prompt-head"><h3>Claude Code · check</h3><button class="copy" type="button" data-copy="replan-claude" aria-label="Copy replan Claude Code prompt">Copy prompt</button></div><pre id="replan-claude">Independently check my Constellation OS replan demo using the IDs and evidence I paste. Read-only only. Confirm the second intake produced unscheduled demand, the two planning jobs ran against the right successors, and the old/new Compare view supports every claimed request, schedule, resource and money change. If there is no visible tradeoff, say that plainly and suggest the one strongest truthful point I can show. Return a short mentor narration.</pre></div>
+</div><p class="say"><strong>What to say:</strong> “New demand does not silently rewrite the old plan. It creates another version. We can see what the fresh solve selected, moved or could not fit.”</p>
 </section>
+<section id="repair" class="flow">
+<p class="tag">Flow 03 · only with event evidence</p><h2>Disruption → bounded repair</h2><p class="small">Prepare this before the meeting. A failed observation, outage or other valid repair event must exist for the baseline. Opening an existing repair result is a fallback view, not a live trigger.</p>
+<ol class="steps"><li>Show typed event</li><li>Trigger repair job</li><li>Inspect freeze + changes</li><li>Compare successor</li></ol>
+<div class="prompt-grid">
+<div class="prompt"><div class="prompt-head"><h3>Codex · run</h3><button class="copy" type="button" data-copy="repair-codex" aria-label="Copy repair Codex prompt">Copy prompt</button></div><pre id="repair-codex">Prepare and, if the prerequisites exist, run a Constellation OS repair demonstration. Read docs/architecture/05-repair-and-event-projection.md and the current repair job/API contracts. Work only in a disposable local demo environment. Do not fabricate an event, mutate a committed fixture, reset data or claim a seeded repaired revision was generated live.
 
-<section id="branches">
-  <h2>Replan or repair</h2>
-  <details open><summary>New request or changed planning input → replan</summary><p>From the accepted request’s latest unscheduled revision, run <code>opportunity_generation</code> followed by <code>optimization</code> as above. Compare the earlier optimized version with the new proposed version. This is the reliable path for a fresh request; intake itself never queues either job.</p></details>
-  <details><summary>Execution disruption → repair</summary><p>First show an actual missed, failed or changed execution event in Execution. On the affected scenario, take its current optimized/authorized revision as <code>startVersion</code>, change <code>kinds</code> to <code>["repair"]</code>, and run the same snippet. Repair needs a valid baseline and event evidence; without those, it can fail closed. Compare the repair successor, inspect its changed commitments and money report, then approve that exact revision. Request dispatch only if an eligible remaining activity and a live C2 worker exist. <strong>Open repair</strong> in Execution navigates to an existing repair result; it does not start the job.</p></details>
-  <p class="aside"><strong>Fallback if time is short:</strong> finish at the approval receipt. For repair, open an already generated repaired revision and say plainly that its disruption was prepared. Avoid resetting Compose volumes during the meeting.</p>
-</section>
+Find an optimized baseline with a real typed execution/disruption event and a valid repair input snapshot. Show me the event and its evidence ID first. Check policy, time, lineage and frozen/committed activities. If the local environment lacks a repairable event, stop and tell me how to show an existing repaired revision honestly; do not submit a fake job.
 
-<section id="talk">
-  <h2>Thirty-second talk track</h2>
-  <div class="card"><p>“A customer asks for an observation. We keep that request as its own version before scheduling anything. The planner generates physical opportunities, then chooses collections and ground contacts under resource and deadline limits. I can compare what moved and what it costs. A human approves one exact version; sending an activity is a second decision. In the Compose integration, Yamcs and the simulator return receipts, so an execution failure can feed a repair.”</p></div>
+If eligible, submit exactly one repair job against the correct baseline version/hash and event snapshot using the documented API. Poll to terminal state and map output hash to its new immutable proposed revision. Tell me what to open in Execution, Plan, Compare and Economics. Report preserved execution-owned work, changed activities, stability cost, money delta and any typed failure. Stop before approval or dispatch. Give Claude Code the baseline, event, job and successor evidence.</pre></div>
+<div class="prompt"><div class="prompt-head"><h3>Claude Code · check</h3><button class="copy" type="button" data-copy="repair-claude" aria-label="Copy repair Claude Code prompt">Copy prompt</button></div><pre id="repair-claude">Independently audit the repair demo from the baseline, event, job and successor evidence I paste. Read-only only. Verify the event is typed and belongs to the baseline, the repair job actually completed, the successor is proposed, execution-owned/frozen work stayed fixed, and the reported stability and money deltas are sourced. Distinguish an existing prepared repair result from one triggered during this session. Tell me the exact claim I can make to a mentor and any missing proof.</pre></div>
+</div><p class="say"><strong>What to say:</strong> “The event changes what remains feasible. Repair keeps executed and frozen work fixed, proposes a bounded change, and leaves the new version for human review.”</p>
 </section>
-<footer>Personal mentor-demo guide · Updated 29 September 2026 · <a href="brief.html">Back to the investor brief</a></footer>
+<section id="authority" class="flow">
+<p class="tag">Flow 04 · human authority</p><h2>Approve → request dispatch → inspect receipts</h2><p class="small">Approval and sending are separate decisions. Practise approval on the local plan. Attempt dispatch only on a current-window Compose plan with an eligible activity, working C2 worker and Yamcs connection.</p>
+<ol class="steps"><li>Review exact revision</li><li>Approve in UI</li><li>Send eligible activity</li><li>Read receipts</li></ol>
+<div class="prompt-grid">
+<div class="prompt"><div class="prompt-head"><h3>Codex · guide</h3><button class="copy" type="button" data-copy="authority-codex" aria-label="Copy authority Codex prompt">Copy prompt</button></div><pre id="authority-codex">Be my Constellation OS authority-and-dispatch demo copilot. Read the current C2 evidence sequence and UI/API contracts. Use read-only inspection; I will make every approval and send decision in the UI.
+
+First identify the exact proposed plan version/hash, pending authoring diff, review cursor, net value and stability summary. Guide me through Review and approve as tenant admin; wait for my click and verify the approval receipt. State clearly that this did not contact C2.
+
+Then check whether this environment has an eligible current-window activity, an operating C2 worker and Yamcs. The local dev_api fixture is not sufficient. If any prerequisite is absent, stop at approval and say exactly why. If all are present, show me the activity ID, destination and eligibility. I will use Send selected activity → Request dispatch. After my click, inspect the dispatch request, worker/Yamcs command receipts and Execution observations in order. Distinguish requested, queued, uplinked, executed, failed and unknown states by actual receipts. Never call a request receipt proof of execution. Hand Claude Code the IDs and evidence.</pre></div>
+<div class="prompt"><div class="prompt-head"><h3>Claude Code · check</h3><button class="copy" type="button" data-copy="authority-claude" aria-label="Copy authority Claude Code prompt">Copy prompt</button></div><pre id="authority-claude">Independently verify my Constellation OS authority demo using the plan, approval, activity, dispatch and receipt IDs I paste. Read-only only. Confirm the approval is for the exact reviewed revision, identify who had authority, and distinguish approval from the later activity-level send. If dispatch occurred, trace request → worker/Yamcs command history → observation and label the last state actually proven. If the environment stopped at approval, say so. Give me a precise 20-second mentor narration with no inferred uplink or execution.</pre></div>
+</div><p class="say"><strong>What to say:</strong> “A person authorizes one exact plan. Sending a single eligible activity is another explicit action. The request, command and execution receipts tell us how far it actually went.”</p>
+</section>
+<p class="caution"><strong>If the demo stalls:</strong> show the last verified receipt or revision, state the typed refusal or missing prerequisite, and continue with a prepared comparison. Never turn a submitted job into a claimed plan, an approved plan into a claimed send, or a dispatch request into a claimed uplink.</p>
+<footer>Personal practice page · <a href="brief.html">Back to the investor brief</a></footer>
+<p id="copy-status" role="status" aria-live="polite"></p>
 </main>
+<script>
+for(const button of document.querySelectorAll('[data-copy]')){
+  button.addEventListener('click',async()=>{
+    const original=button.textContent;
+    try{
+      await navigator.clipboard.writeText(document.getElementById(button.dataset.copy).textContent.trim());
+      button.textContent='Copied';
+      document.getElementById('copy-status').textContent=button.getAttribute('aria-label').replace('Copy','Copied');
+      setTimeout(()=>{button.textContent=original},1800);
+    }catch{
+      button.textContent='Select text';
+      document.getElementById('copy-status').textContent='Clipboard unavailable. Select and copy the prompt text.';
+      setTimeout(()=>{button.textContent=original},2500);
+    }
+  });
+}
+</script>
 </body>
 </html>
