@@ -1,0 +1,820 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Constellation OS Pitch</title>
+<meta name="description" content="Constellation OS — the planning layer that makes satellite fleets pay. Pitch deck for investors, mentors and domain experts.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+  :root {
+    --ground: #F2F4F7; --surface: #FFFFFF; --surface-2: #E9EDF2;
+    --ink: #111827; --ink-2: #424D5E; --muted: #7C8797;
+    --line: #D6DCE5; --line-strong: #B9C2CF;
+    --amber: #B9711A; --amber-soft: #F4E4CB;
+    --blue: #2A6597; --blue-soft: #D8E6F3; --blue-2: #7FA9CF; --blue-3: #BBD1E6;
+    --rose: #B0433A; --rose-soft: #F3D9D6;
+    --green: #2F7A4F; --green-soft: #D6EBDD;
+    --focus: #2A6597;
+    --shadow: 0 1px 2px rgba(17,24,39,.06), 0 6px 20px rgba(17,24,39,.06);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --ground: #0C1420; --surface: #131D2C; --surface-2: #1A2637;
+      --ink: #E8EDF4; --ink-2: #B3BFCF; --muted: #74829A;
+      --line: #243349; --line-strong: #34465F;
+      --amber: #E2A24A; --amber-soft: #3A2B14;
+      --blue: #78ACDF; --blue-soft: #16304A; --blue-2: #3F76A8; --blue-3: #244A6E;
+      --rose: #E4776E; --rose-soft: #3E1F1D;
+      --green: #6CC08F; --green-soft: #173324;
+      --focus: #78ACDF;
+      --shadow: 0 1px 2px rgba(0,0,0,.4), 0 8px 24px rgba(0,0,0,.35);
+    }
+  }
+  :root[data-theme="dark"] {
+    --ground: #0C1420; --surface: #131D2C; --surface-2: #1A2637;
+    --ink: #E8EDF4; --ink-2: #B3BFCF; --muted: #74829A;
+    --line: #243349; --line-strong: #34465F;
+    --amber: #E2A24A; --amber-soft: #3A2B14;
+    --blue: #78ACDF; --blue-soft: #16304A; --blue-2: #3F76A8; --blue-3: #244A6E;
+    --rose: #E4776E; --rose-soft: #3E1F1D;
+    --green: #6CC08F; --green-soft: #173324;
+    --focus: #78ACDF;
+    --shadow: 0 1px 2px rgba(0,0,0,.4), 0 8px 24px rgba(0,0,0,.35);
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  html, body { height: 100%; }
+  body {
+    margin: 0; background: var(--ground); color: var(--ink);
+    font-family: "IBM Plex Sans", "Helvetica Neue", Arial, sans-serif; font-size: 16px; line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+  }
+  h1, h2, h3, h4 { font-family: "Archivo", "Helvetica Neue", Arial, sans-serif; letter-spacing: -0.015em; text-wrap: balance; margin: 0; line-height: 1.1; }
+  h1 { font-size: clamp(2.2rem, 5.5vw, 4.2rem); font-weight: 800; letter-spacing: -0.03em; }
+  h2 { font-size: clamp(1.6rem, 3.6vw, 2.6rem); font-weight: 700; }
+  h3 { font-size: clamp(1.05rem, 1.6vw, 1.25rem); font-weight: 600; }
+  p { margin: 0; }
+  a { color: var(--blue); text-underline-offset: 2px; }
+  a:hover { color: var(--ink); }
+  .mono { font-family: "IBM Plex Mono", Menlo, monospace; }
+  .num { font-variant-numeric: tabular-nums; }
+  :focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+  button { font: inherit; color: inherit; }
+  .eyebrow { font-family: "IBM Plex Mono", monospace; font-size: .72rem; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+  .eyebrow.amber { color: var(--amber); }
+  .lede { font-size: clamp(1.02rem, 1.5vw, 1.25rem); color: var(--ink-2); max-width: 60ch; }
+  .prose { max-width: 64ch; }
+  .prose p + p { margin-top: .8em; }
+  .stack { display: grid; gap: 1rem; }
+
+  /* ---------- deck scaffold ---------- */
+  .deck { scroll-snap-type: y mandatory; height: 100dvh; overflow-y: auto; overscroll-behavior-y: contain; }
+  @supports not (height: 100dvh) { .deck { height: 100vh; } }
+  .slide {
+    scroll-snap-align: start; scroll-snap-stop: always;
+    min-height: 100dvh; padding: clamp(1.25rem, 4vw, 3.5rem) clamp(1rem, 4vw, 3rem) 5.5rem;
+    display: flex; flex-direction: column; justify-content: center;
+    border-bottom: 1px solid var(--line);
+  }
+  @supports not (height: 100dvh) { .slide { min-height: 100vh; } }
+  .slide-inner { width: 100%; max-width: 1120px; margin: 0 auto; display: grid; gap: clamp(1rem, 2.5vw, 2rem); }
+  .slide-head { display: grid; gap: .5rem; }
+  .slide-head .eyebrow { display: flex; gap: .75rem; align-items: center; }
+  .slide-head .eyebrow .n { color: var(--amber); }
+  @media (max-width: 760px) {
+    .deck { scroll-snap-type: y proximity; }
+    .slide { justify-content: flex-start; padding-top: 2rem; }
+  }
+
+  /* ---------- deck chrome ---------- */
+  .chrome {
+    position: fixed; left: 0; right: 0; bottom: 0; z-index: 30;
+    background: color-mix(in srgb, var(--ground) 90%, transparent); backdrop-filter: blur(10px);
+    border-top: 1px solid var(--line);
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+  .chrome-inner { max-width: 1120px; margin: 0 auto; padding: .5rem 1rem; display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: .75rem; }
+  .chrome .brand { display: flex; align-items: center; gap: .5rem; font-family: "Archivo", sans-serif; font-weight: 600; font-size: .9rem; white-space: nowrap; }
+  .chrome .brand svg { width: 20px; height: 20px; }
+  .dots { display: flex; gap: 4px; justify-content: center; flex-wrap: wrap; }
+  .dots a { width: 8px; height: 8px; border-radius: 50%; background: var(--line-strong); display: block; }
+  .dots a[aria-current="true"] { background: var(--amber); width: 22px; border-radius: 4px; }
+  .dots a.appx { background: var(--line); }
+  .ctrls { display: flex; align-items: center; gap: .35rem; }
+  .ctrls button, .ctrls a.btnlink {
+    border: 1px solid var(--line-strong); background: var(--surface); border-radius: 4px; cursor: pointer;
+    padding: .35rem .6rem; font-family: "IBM Plex Mono", monospace; font-size: .78rem; text-decoration: none; color: var(--ink);
+    display: inline-flex; align-items: center; gap: .3rem; min-height: 32px;
+  }
+  .ctrls button:hover { background: var(--surface-2); }
+  .ctrls button[aria-pressed="true"] { background: var(--ink); color: var(--ground); border-color: var(--ink); }
+  .counter { font-family: "IBM Plex Mono", monospace; font-size: .78rem; color: var(--muted); min-width: 4.5ch; text-align: center; }
+  @media (max-width: 640px) { .chrome .brand span { display: none; } .dots { display: none; } .chrome-inner { grid-template-columns: auto 1fr auto; } .counter { text-align: left; } }
+
+  /* ---------- notes ---------- */
+  .notes { display: none; border-left: 3px solid var(--blue); background: var(--surface); padding: .9rem 1.1rem; border-radius: 0 6px 6px 0; max-width: 78ch; font-size: .92rem; color: var(--ink-2); }
+  .notes .eyebrow { margin-bottom: .35rem; display: block; }
+  body.show-notes .notes { display: block; }
+  .notes ul { margin: .3rem 0 0; padding-left: 1.1rem; display: grid; gap: .2rem; }
+
+  /* ---------- shared components ---------- */
+  .tiles { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px; }
+  .tiles.four { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .tiles.two { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  @media (max-width: 760px) { .tiles, .tiles.four { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  @media (max-width: 440px) { .tiles, .tiles.four, .tiles.two { grid-template-columns: 1fr; } }
+  .tile { background: var(--surface); border: 1px solid var(--line); border-radius: 6px; padding: 1rem 1.1rem; display: grid; gap: .3rem; align-content: start; }
+  .tile b { font-family: "Archivo", sans-serif; font-size: clamp(1.4rem, 2.6vw, 2rem); font-weight: 700; letter-spacing: -.02em; line-height: 1.05; }
+  .tile b.amber { color: var(--amber); }
+  .tile span { font-size: .84rem; color: var(--ink-2); line-height: 1.4; }
+  .tile.hi { border-color: var(--amber); }
+  .note { border-left: 3px solid var(--amber); background: var(--surface); padding: .9rem 1.1rem; border-radius: 0 6px 6px 0; display: grid; gap: .35rem; max-width: 72ch; }
+  .note.blue { border-left-color: var(--blue); } .note.rose { border-left-color: var(--rose); } .note.green { border-left-color: var(--green); }
+  .pill { display: inline-block; font-family: "IBM Plex Mono", monospace; font-size: .66rem; letter-spacing: .06em; text-transform: uppercase; padding: .12rem .5rem; border-radius: 999px; border: 1px solid var(--line-strong); color: var(--ink-2); white-space: nowrap; }
+  .pill.src { background: var(--green-soft); border-color: transparent; color: var(--green); }
+  .pill.est { background: var(--amber-soft); border-color: transparent; color: var(--amber); }
+  .pill.tgt { background: var(--blue-soft); border-color: transparent; color: var(--blue); }
+  .pill.open { background: var(--rose-soft); border-color: transparent; color: var(--rose); }
+  .two { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(1rem, 3vw, 2.5rem); align-items: start; }
+  .two.wide-left { grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); }
+  @media (max-width: 820px) { .two, .two.wide-left { grid-template-columns: 1fr; } }
+  .tablewrap { overflow-x: auto; border: 1px solid var(--line); border-radius: 6px; background: var(--surface); }
+  table { border-collapse: collapse; width: 100%; font-size: .9rem; }
+  th, td { text-align: left; padding: .55rem .8rem; vertical-align: top; border-bottom: 1px solid var(--line); }
+  th { font-family: "IBM Plex Mono", monospace; font-size: .68rem; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); font-weight: 500; background: var(--surface-2); }
+  tbody tr:last-child td { border-bottom: 0; }
+  td.k { font-weight: 600; white-space: nowrap; }
+  .btn { display: inline-flex; align-items: center; gap: .5rem; text-decoration: none; font-family: "Archivo", sans-serif; font-weight: 600; font-size: .92rem; padding: .6rem 1rem; border-radius: 4px; border: 1px solid var(--ink); color: var(--ink); background: transparent; }
+  .btn:hover { background: var(--surface-2); color: var(--ink); }
+  .btn.primary { background: var(--ink); color: var(--ground); }
+  .btn.primary:hover { background: var(--ink-2); color: var(--ground); }
+  .btn svg { width: 18px; height: 18px; fill: currentColor; }
+  .cta { display: flex; flex-wrap: wrap; gap: .6rem; align-items: center; }
+  .checks { display: grid; gap: 2px; }
+  .check { display: grid; grid-template-columns: 1.2rem 1fr; gap: .6rem; padding: .45rem .2rem; border-bottom: 1px solid var(--line); font-size: .95rem; align-items: start; }
+  .check:last-child { border-bottom: 0; }
+  .check i { width: 10px; height: 10px; border-radius: 50%; background: var(--green); margin-top: .5rem; display: block; }
+  .check i.wip { background: var(--amber); } .check i.no { background: var(--muted); }
+  .check small { display: block; color: var(--muted); font-size: .8rem; }
+
+  /* ---------- title slide ---------- */
+  .title .slide-inner { gap: 1.5rem; }
+  .title .orbit { width: min(160px, 30vw); height: auto; }
+  .title h1 { max-width: 16ch; }
+  .title .byline { display: flex; flex-wrap: wrap; gap: .4rem 1.2rem; font-size: .95rem; color: var(--ink-2); }
+  .hint { font-family: "IBM Plex Mono", monospace; font-size: .74rem; color: var(--muted); }
+
+  /* ---------- problem svg ---------- */
+  .fig { background: var(--surface); border: 1px solid var(--line); border-radius: 6px; padding: .75rem; overflow-x: auto; }
+  .fig svg { width: 100%; height: auto; display: block; }
+  @media (max-width: 640px) { .fig svg { min-width: 540px; } }
+  .fig text { font-family: "IBM Plex Mono", monospace; font-size: 11px; fill: var(--ink-2); }
+  .fig text.strong { fill: var(--ink); font-weight: 500; }
+  .fig text.amber { fill: var(--amber); }
+  .fig text.rose { fill: var(--rose); }
+  .fig .cap { font-size: .8rem; color: var(--muted); padding: .5rem .25rem 0; font-family: "IBM Plex Sans", sans-serif; }
+
+  /* ---------- why-now timeline ---------- */
+  .tl { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 6px; }
+  @media (max-width: 820px) { .tl { grid-template-columns: 1fr; } }
+  .tl div { background: var(--surface); border: 1px solid var(--line); border-radius: 6px; padding: .8rem .9rem; display: grid; gap: .3rem; align-content: start; font-size: .9rem; }
+  .tl div .yr { font-family: "IBM Plex Mono", monospace; font-size: .74rem; color: var(--muted); }
+  .tl div.now { border-color: var(--amber); } .tl div.now .yr { color: var(--amber); }
+
+  /* ---------- workflow ---------- */
+  .flow { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 6px; }
+  @media (max-width: 760px) { .flow { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+  .flow div { background: var(--surface); border: 1px solid var(--line); border-radius: 4px; padding: .65rem .6rem; display: grid; gap: .15rem; }
+  .flow div b { font-family: "Archivo", sans-serif; font-weight: 600; }
+  .flow div span { font-size: .78rem; color: var(--muted); }
+  .flow div.repair { border-color: var(--rose); }
+
+  /* ---------- matrix ---------- */
+  .matrix svg text.co { font-family: "IBM Plex Sans", sans-serif; font-size: 11.5px; fill: var(--ink-2); }
+  .matrix svg text.us { font-family: "Archivo", sans-serif; font-size: 12.5px; font-weight: 700; fill: var(--amber); }
+  .matrix svg text.ax { font-family: "IBM Plex Mono", monospace; font-size: 10px; fill: var(--muted); letter-spacing: .08em; }
+
+  /* ---------- team ---------- */
+  .team { display: grid; grid-template-columns: 200px minmax(0, 1fr); gap: 2rem; align-items: start; }
+  @media (max-width: 700px) { .team { grid-template-columns: 1fr; } }
+  .photo { width: 200px; height: 200px; border-radius: 6px; object-fit: cover; border: 1px solid var(--line); display: block; }
+  .creds { display: grid; gap: 2px; }
+  .cred { background: var(--surface); border: 1px solid var(--line); border-radius: 4px; padding: .55rem .8rem; font-size: .9rem; display: grid; gap: .1rem; }
+  .cred .eyebrow { font-size: .62rem; }
+
+  /* ---------- roadmap ---------- */
+  .ms { display: grid; gap: 2px; }
+  .ms div { display: grid; grid-template-columns: 7.5rem 1fr; gap: 1rem; padding: .5rem .2rem; border-bottom: 1px solid var(--line); font-size: .95rem; }
+  .ms div:last-child { border-bottom: 0; }
+  .ms .when { font-family: "IBM Plex Mono", monospace; font-size: .78rem; color: var(--muted); padding-top: .2rem; }
+  .ms div.key .when { color: var(--amber); }
+  @media (max-width: 480px) { .ms div { grid-template-columns: 1fr; gap: .1rem; } }
+
+  /* ---------- appendix divider ---------- */
+  .appx-mark { font-family: "IBM Plex Mono", monospace; font-size: .72rem; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+  .sources { font-size: .82rem; color: var(--ink-2); columns: 2; column-gap: 2rem; max-width: 100ch; }
+  .sources ol { margin: 0; padding-left: 1.2rem; } .sources li { break-inside: avoid; margin-bottom: .3rem; }
+  @media (max-width: 700px) { .sources { columns: 1; } }
+
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+  @media print {
+    .deck { height: auto; overflow: visible; scroll-snap-type: none; }
+    .slide { min-height: auto; page-break-after: always; padding: 1.5rem; border: 0; }
+    .chrome { display: none; }
+    .notes { display: block; }
+  }
+</style>
+</head>
+<body>
+
+<main class="deck" id="deck" tabindex="0" aria-label="Constellation OS pitch deck">
+
+  <!-- 1 · TITLE -->
+  <section class="slide title" id="s1" data-title="Title">
+    <div class="slide-inner">
+      <svg class="orbit" viewBox="0 0 120 120" aria-hidden="true">
+        <circle cx="60" cy="60" r="14" fill="var(--amber)"/>
+        <ellipse cx="60" cy="60" rx="52" ry="20" fill="none" stroke="var(--ink)" stroke-width="1.6" transform="rotate(-25 60 60)"/>
+        <ellipse cx="60" cy="60" rx="52" ry="20" fill="none" stroke="var(--line-strong)" stroke-width="1" transform="rotate(35 60 60)"/>
+        <circle cx="103" cy="38" r="5" fill="var(--blue)"/>
+        <circle cx="22" cy="92" r="3.5" fill="var(--blue)"/>
+      </svg>
+      <div class="stack">
+        <p class="eyebrow amber">Constellation OS · Hyderabad · September 2026</p>
+        <h1>Software that makes a fleet of satellites earn its keep.</h1>
+        <p class="lede">The planning and mission-operations layer above the control systems satellite operators already own. It decides what every satellite does and when, prices each decision in rupees, and repairs the plan when reality breaks it.</p>
+      </div>
+      <div class="byline">
+        <span><strong>Sumanth Varma Vitrouthu</strong> · founder</span>
+        <a href="https://linkedin.com/in/sumanthvarmaa" target="_blank" rel="noopener">linkedin.com/in/sumanthvarmaa</a>
+        <a href="https://github.com/SumanthVarma798" target="_blank" rel="noopener">github.com/SumanthVarma798</a>
+      </div>
+      <p class="hint">→ / swipe to advance · N for speaker notes · works on phone, tablet and desktop</p>
+      <aside class="notes"><span class="eyebrow">Speaker notes</span>Thirteen slides, then a short appendix. The first four slides carry the argument; everything after is proof. For a mentor or domain expert, turn notes on — each slide then shows the evidence and the assumptions behind it.</aside>
+    </div>
+  </section>
+
+  <!-- 2 · PROBLEM -->
+  <section class="slide" id="s2" data-title="Problem">
+    <div class="slide-inner">
+      <div class="slide-head">
+        <p class="eyebrow"><span class="n">01</span> Problem</p>
+        <h2>Launching a satellite got cheap. Using it well did not.</h2>
+        <p class="lede">A satellite earns nothing until it is pointed at the right target at the right moment and its data comes down through a ground station rented by the minute. Past about ten satellites, deciding that by hand stops working.</p>
+      </div>
+      <div class="two wide-left">
+        <div class="fig" aria-label="Diagram: three satellites competing for one ground station's pass windows">
+          <svg viewBox="0 0 640 250" role="img">
+            <title>Three satellites, one station, overlapping windows</title>
+            <text x="12" y="22" class="strong">GROUND STATION · HYDERABAD · ₹255/min</text>
+            <line x1="12" y1="34" x2="628" y2="34" stroke="var(--line-strong)"/>
+            <g>
+              <text x="12" y="70">SAT-1</text>
+              <rect x="120" y="54" width="130" height="24" rx="3" fill="var(--blue-3)"/>
+              <text x="128" y="70" class="strong">pass 04:12–04:21</text>
+              <rect x="430" y="54" width="110" height="24" rx="3" fill="var(--blue-3)"/>
+              <text x="438" y="70" class="strong">pass 05:47–05:55</text>
+            </g>
+            <g>
+              <text x="12" y="118">SAT-2</text>
+              <rect x="200" y="102" width="140" height="24" rx="3" fill="var(--blue-3)"/>
+              <text x="208" y="118" class="strong">pass 04:18–04:28</text>
+              <rect x="470" y="102" width="120" height="24" rx="3" fill="var(--blue-3)"/>
+              <text x="478" y="118" class="strong">pass 05:50–05:58</text>
+            </g>
+            <g>
+              <text x="12" y="166">SAT-3</text>
+              <rect x="160" y="150" width="110" height="24" rx="3" fill="var(--blue-3)"/>
+              <text x="168" y="166" class="strong">pass 04:15–04:23</text>
+            </g>
+            <rect x="200" y="46" width="50" height="136" fill="var(--rose)" opacity=".18"/>
+            <text x="206" y="200" class="rose">conflict: one antenna, three satellites, 5 minutes</text>
+            <text x="12" y="236">Which pass wins? Whose customer waits? What does the losing order cost? × 20 satellites × 8 stations × 300 orders a week.</text>
+          </svg>
+        </div>
+        <div class="tiles" style="grid-template-columns: 1fr">
+          <div class="tile"><b>~$3 / min</b><span>What a commercial ground-station minute costs. A wasted or failed pass is a line item, not an inconvenience.</span></div>
+          <div class="tile"><b>Calendars, cron, spreadsheets</b><span>How fleets are actually run today — in-house tools built in a hurry, priority rules in one engineer's head, 24/7 shifts.</span></div>
+          <div class="tile"><b>~35%</b><span>Improvement of optimised scheduling over greedy first-come-first-served in the published literature. That value is left on the table every week.</span></div>
+        </div>
+      </div>
+      <aside class="notes"><span class="eyebrow">Evidence</span>Per-minute pricing: Payload Space market floor (~$3/min), AWS Ground Station model. Workflow evidence: Yamcs #584, OpenC3 #1200/#647, SatNOGS community threads — the maintainers of both leading open-source control engines say planning is an external system. 35%: AIAA two-step binary-linear-programming paper vs greedy. India specifics: Pixxel and Dhruva job postings show in-house ground software and shift-based 24/7 operations centres.</aside>
+    </div>
+  </section>
+
+  <!-- 3 · WHY NOW -->
+  <section class="slide" id="s3" data-title="Why now">
+    <div class="slide-inner">
+      <div class="slide-head">
+        <p class="eyebrow"><span class="n">02</span> Why now</p>
+        <h2>India in 2026 looks like the United States in 2019.</h2>
+        <p class="lede">Fleets are funded, in-house tooling is the incumbent, and the category has no domestic entrant. In the US that moment produced Quindar, Epsilon3 and Cognitive Space.</p>
+      </div>
+      <div class="tl">
+        <div><span class="yr">2020</span><strong>Sector opens</strong>Private companies allowed to build and operate; IN-SPACe created.</div>
+        <div><span class="yr">2023–25</span><strong>First fleets fly</strong>Space Policy sets the $44B-by-2033 goal. Pixxel launches India's first private constellation. Start-ups raise $200M in 2025, +143%.</div>
+        <div class="now"><span class="yr">2026 · now</span><strong>National fleets funded</strong>₹1,200 cr EO-PPP (12 satellites, Pixxel-led). ₹22,500 cr SBS-3 (52 satellites, 31 private-built). 440 start-ups. $871M cumulative.</div>
+        <div><span class="yr">2027–29</span><strong>Fleets deploy</strong>Both programmes go to orbit. This is when the planning pain arrives — and when a sovereign fleet cannot use foreign cloud software.</div>
+        <div><span class="yr">Moat</span><strong>Regulation + product</strong>Ownership and data-residency rules keep foreign SaaS out of defence-adjacent work. Self-hosted, explainable, domestic wins.</div>
+      </div>
+      <aside class="notes"><span class="eyebrow">Evidence</span>FICCI–EY ($8.4B in 2022 → $44B by 2033). BW Disrupt / Ascendants funding data. IN-SPACe EO-PPP award to the Allied Orbits consortium (Pixxel, Dhruva, PierSight, SatSure). SBS-3 via Raksha Anirveda / PIB. Risk stated openly: government timelines slip — the base case, not the exception — so the commercial data operators are the plan and the sovereign programmes are the upside.</aside>
+    </div>
+  </section>
+
+  <!-- 4 · SOLUTION -->
+  <section class="slide" id="s4" data-title="Solution">
+    <div class="slide-inner">
+      <div class="slide-head">
+        <p class="eyebrow"><span class="n">03</span> Solution</p>
+        <h2>One workflow, above the control system, denominated in money.</h2>
+        <p class="lede">Constellation OS owns the operator's day from order to repair. The command-and-control system underneath keeps every safety authority it has today.</p>
+      </div>
+      <div class="flow" aria-label="Workflow">
+        <div><b>Request</b><span>orders arrive, typed and versioned</span></div>
+        <div><b>Plan</b><span>solver chooses collections, downlinks, uplinks</span></div>
+        <div><b>Approve</b><span>a human signs an exact version</span></div>
+        <div><b>Send</b><span>only approved activities reach C2</span></div>
+        <div><b>Monitor</b><span>receipts show what really ran</span></div>
+        <div class="repair"><b>Repair</b><span>bounded re-solve when reality diverges</span></div>
+      </div>
+      <div class="tiles">
+        <div class="tile"><b>Money-first</b><span>The objective is rupees: value delivered on time minus station minutes minus lateness. Every refused order carries a typed reason.</span></div>
+        <div class="tile"><b>Proven, not guessed</b><span>Each plan ships a solver-proven certificate that no plan exists worth more than 10% above it. That is what lets an operator approve fast.</span></div>
+        <div class="tile"><b>Nothing to rip out</b><span>Integrates with the C2, flight-dynamics and ground-network tools the operator already built or bought. Self-hosted, on-prem, auditable.</span></div>
+      </div>
+      <aside class="notes"><span class="eyebrow">Boundary</span>Only a separate worker dispatches operator-approved, allow-listed activities to the C2 (Yamcs today). No browser, no AI model and no natural-language output can issue a spacecraft command or touch fault-protection settings. Flight software keeps that authority permanently. We never say "AI runs satellites", because it does not.</aside>
+    </div>
+  </section>
+
+  <!-- 5 · PRODUCT -->
+  <section class="slide" id="s5" data-title="Product">
+    <div class="slide-inner">
+      <div class="slide-head">
+        <p class="eyebrow"><span class="n">04</span> Product</p>
+        <h2>What the operator sees: a plan that explains itself.</h2>
+      </div>
+      <div class="two wide-left">
+        <div class="fig" aria-label="Stylised plan timeline">
+          <svg viewBox="0 0 640 300" role="img">
+            <title>A planned day across three satellites and two stations, with values and one rejection</title>
+            <text x="12" y="20" class="strong">PLAN R4 · AUTHORIZED · net ₹10,52,606 · proven gap 4.4%</text>
+            <line x1="12" y1="30" x2="628" y2="30" stroke="var(--line-strong)"/>
+            <g><text x="12" y="62">SAT-1</text>
+              <rect x="90" y="46" width="120" height="22" rx="3" fill="var(--amber-soft)" stroke="var(--amber)"/><text x="96" y="61" class="strong">collect · Kakinada · ₹1.8L</text>
+              <rect x="300" y="46" width="90" height="22" rx="3" fill="var(--blue-soft)" stroke="var(--blue)"/><text x="306" y="61" class="strong">downlink HYD</text>
+              <rect x="470" y="46" width="60" height="22" rx="3" fill="var(--green-soft)" stroke="var(--green)"/><text x="476" y="61" class="strong">uplink</text>
+            </g>
+            <g><text x="12" y="106">SAT-2</text>
+              <rect x="150" y="90" width="110" height="22" rx="3" fill="var(--amber-soft)" stroke="var(--amber)"/><text x="156" y="105" class="strong">collect · Port · ₹2.4L</text>
+              <rect x="400" y="90" width="100" height="22" rx="3" fill="var(--blue-soft)" stroke="var(--blue)"/><text x="406" y="105" class="strong">downlink BLR</text>
+            </g>
+            <g><text x="12" y="150">SAT-3</text>
+              <rect x="220" y="134" width="120" height="22" rx="3" fill="var(--surface-2)" stroke="var(--line-strong)" stroke-dasharray="4 3"/><text x="226" y="149">collect · Delta · ₹0.9L</text>
+              <text x="350" y="149" class="rose">✕ no downlink before deadline</text>
+              <rect x="470" y="134" width="80" height="22" rx="3" fill="var(--blue-soft)" stroke="var(--blue)"/><text x="476" y="149" class="strong">downlink HYD</text>
+            </g>
+            <line x1="12" y1="176" x2="628" y2="176" stroke="var(--line)"/>
+            <text x="12" y="200" class="strong">STATION HYD</text><rect x="300" y="188" width="90" height="16" rx="2" fill="var(--blue-2)"/><rect x="470" y="188" width="80" height="16" rx="2" fill="var(--blue-2)"/>
+            <text x="12" y="228" class="strong">STATION BLR</text><rect x="400" y="216" width="100" height="16" rx="2" fill="var(--blue-2)"/>
+            <text x="12" y="262" class="amber">Repair after HYD outage at 05:40 · preserved ₹8.9L committed · +₹12,300 station time · 2 activities moved</text>
+            <text x="12" y="286">Every block carries its rupee value; every gap carries a reason; every version is immutable and approved by name.</text>
+          </svg>
+        </div>
+        <div class="stack">
+          <div class="note"><p class="eyebrow">Fleet</p><p>Per-satellite health, storage, power and next contact — the common operating picture, time-first.</p></div>
+          <div class="note blue"><p class="eyebrow">Plan</p><p>Timeline and map of the authorised plan; four bounded edits (toggle, swap, trim, reassign) with the money consequence shown before committing; compare any two versions.</p></div>
+          <div class="note green"><p class="eyebrow">Economics</p><p>Planned value versus realised value, receipt-backed. The renewal conversation is on the screen.</p></div>
+        </div>
+      </div>
+      <aside class="notes"><span class="eyebrow">Status</span>Fleet, Plan timeline, Mission Parameters, Compare and Exceptions are shipped in the operator interface; Map mode is the next slice; the Economics page exists as a read-side projection and its UI is scheduled after the first design partner. The figure above is a stylised composite, not a screenshot — a live demo runs from a clean checkout on request.</aside>
+    </div>
+  </section>
+
+  <!-- 6 · PROOF -->
+  <section class="slide" id="s6" data-title="Proof">
+    <div class="slide-inner">
+      <div class="slide-head">
+        <p class="eyebrow"><span class="n">05</span> Proof so far</p>
+        <h2>Technical proof is done. Commercial proof is the next twelve months.</h2>
+      </div>
+      <div class="two">
+        <div class="stack">
+          <p class="eyebrow">Built, measured, reproducible</p>
+          <div class="checks">
+            <div class="check"><i></i><div>Joint collection + downlink + uplink optimiser with a solver-proven ≤ 10% gap<small>rupee objective, typed reason per rejection, independent second validator</small></div></div>
+            <div class="check"><i></i><div>Bounded, event-driven repair in under 5 seconds<small>stability-penalised; money-denominated repair report</small></div></div>
+            <div class="check"><i></i><div>Closed loop through a real, unmodified Yamcs mission-control instance<small>approve ≠ send; typed receipts; scripted disruptions replay byte-identically</small></div></div>
+            <div class="check"><i></i><div>16 real satellites, 10 station bundles at 8 sites, multi-tenant runtime, roles, customer intake API<small>4 India sites + Hawaii, Cape Town, Singapore, Dubbo</small></div></div>
+            <div class="check"><i class="wip"></i><div>Operator interface<small>Fleet, Plan, Parameters, Compare shipped; Map next</small></div></div>
+            <div class="check"><i class="no"></i><div>First design partner · first rupee of revenue<small>the milestone this raise exists to reach</small></div></div>
+          </div>
+        </div>
+        <div class="tiles two">
+          <div class="tile"><b class="num">16 × 200</b><span>satellites × stations planned inside the 10% proof at a 300-second budget</span></div>
+          <div class="tile"><b class="num">128</b><span>satellites planned inside 10% with seed-plan hints</span></div>
+          <div class="tile"><b class="num">3,000</b><span>customer requests in one solve at a 2.1% proven gap</span></div>
+          <div class="tile"><b class="num">614 · 263</b><span>commits · pull requests since July 2026, each spec-first with two independent reviews</span></div>
+        </div>
+      </div>
+      <aside class="notes"><span class="eyebrow">Four claims kept separate</span>Repeatability (proven by hashes). Protocol correctness (proven against stock Yamcs). Operational robustness (proven by scripted disruptions). Physical-flight reliability — not yet proven; it needs a real spacecraft, which is what the design partner provides. Investors reading DocSend's data spend the most time on team and financials; this slide exists so the traction question gets an honest answer rather than a vanity chart.</aside>
+    </div>
+  </section>
+
+  <!-- 7 · MARKET -->
+  <section class="slide" id="s7" data-title="Market">
+    <div class="slide-inner">
+      <div class="slide-head">
+        <p class="eyebrow"><span class="n">06</span> Market</p>
+        <h2>Sized from the software layer down, with every number labelled.</h2>
+        <p class="lede">The industry's big headline figures are mostly antennas. The slice we sell into is the planning and ground-segment software layer.</p>
+      </div>
+      <div class="two">
+        <div class="fig">
+          <svg viewBox="0 0 560 330" role="img" aria-label="Nested rings: TAM, SAM, SOM">
+            <title>TAM, SAM, SOM</title>
+            <path d="M40,300 A240,240 0 0 1 520,300 Z" fill="var(--blue-3)" stroke="var(--surface)" stroke-width="2"/>
+            <text x="280" y="98" text-anchor="middle" style="letter-spacing:.08em">TAM · MISSION-PLANNING SOFTWARE</text>
+            <text x="280" y="124" text-anchor="middle" class="strong" style="font-family:Archivo,sans-serif;font-size:20px;font-weight:700">$2.2B → $6.0B</text>
+            <text x="280" y="142" text-anchor="middle">GLOBAL · 2025 → 2034 · 11.8% CAGR</text>
+            <path d="M130,300 A150,150 0 0 1 430,300 Z" fill="var(--blue-2)" stroke="var(--surface)" stroke-width="2"/>
+            <text x="280" y="196" text-anchor="middle" style="letter-spacing:.08em">SAM · LEO FLEETS, 5–200 SATS</text>
+            <text x="280" y="218" text-anchor="middle" class="strong" style="font-family:Archivo,sans-serif;font-size:20px;font-weight:700">$25M – $80M / yr</text>
+            <path d="M205,300 A75,75 0 0 1 355,300 Z" fill="var(--blue)" stroke="var(--surface)" stroke-width="2"/>
+            <text x="280" y="262" text-anchor="middle" style="fill:var(--ground);letter-spacing:.08em">SOM · 36 MONTHS</text>
+            <text x="280" y="290" text-anchor="middle" style="fill:var(--ground);font-family:Archivo,sans-serif;font-size:16px;font-weight:700">$0.5–2M ARR</text>
+            <line x1="40" y1="300" x2="520" y2="300" stroke="var(--line-strong)"/>
+          </svg>
+        </div>
+        <div class="tablewrap">
+          <table>
+            <thead><tr><th>Anchor</th><th>Figure</th><th></th></tr></thead>
+            <tbody>
+              <tr><td class="k">Ground segment, all-in</td><td>≈ $106B, ~48% hardware</td><td><span class="pill src">sourced</span></td></tr>
+              <tr><td class="k">Mission-planning software</td><td>$2.21B → $6.03B (2025–34)</td><td><span class="pill src">sourced</span></td></tr>
+              <tr><td class="k">GSaaS growth</td><td>~20% CAGR, APAC fastest</td><td><span class="pill src">sourced</span></td></tr>
+              <tr><td class="k">Serviceable operators</td><td>~150–250 with 5–200 satellites</td><td><span class="pill est">estimate</span></td></tr>
+              <tr><td class="k">Annual contract value</td><td>$150K – $400K</td><td><span class="pill open">open</span></td></tr>
+              <tr><td class="k">India, qualified accounts</td><td>8–12 · 2–3 concentrated doors</td><td><span class="pill est">estimate</span></td></tr>
+              <tr><td class="k">SOM, 36 months</td><td>3–5 operators · $0.5–2M ARR</td><td><span class="pill tgt">target</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <aside class="notes"><span class="eyebrow">Sources and the honest caveat</span>Novaspace (ground segment), Dataintelo (mission-planning and ground-station software), MarketsandMarkets and GMInsights (GSaaS). No published figure exists for "constellation scheduling software, India" and we do not invent one. The contract-value assumption is the open variable; the first operator conversations include a structured price-sensitivity study. Everything downstream inherits that uncertainty and says so.</aside>
+    </div>
+  </section>
+
+  <!-- 8 · BUSINESS MODEL -->
+  <section class="slide" id="s8" data-title="Business model">
+    <div class="slide-inner">
+      <div class="slide-head">
+        <p class="eyebrow"><span class="n">07</span> Business model</p>
+        <h2>Priced in the unit the customer already counts: satellites.</h2>
+      </div>
+      <div class="two">
+        <div class="stack">
+          <div class="tiles" style="grid-template-columns:1fr">
+            <div class="tile"><b>Annual licence · per satellite under management</b><span>Self-hosted. Grows with every launch the customer makes. Upsell by capability: repair, economics, machine tasking API, then the multi-operator layer.</span></div>
+            <div class="tile"><b>One-time integration fee</b><span>Connecting to the operator's C2, ground network and tasking tools. Services kept under 20% of revenue so margins stay software-shaped.</span></div>
+            <div class="tile"><b>Why it sticks</b><span>The planner becomes the system of record for what the fleet did and why. On-prem inside a defence-adjacent programme, churn is a procurement event, not a click.</span></div>
+          </div>
+        </div>
+        <div class="stack">
+          <p class="eyebrow">Unit economics we are designing for <span class="pill tgt">targets</span></p>
+          <div class="tablewrap">
+            <table>
+              <thead><tr><th>Metric</th><th>Target</th><th>Why this number</th></tr></thead>
+              <tbody>
+                <tr><td class="k">Gross margin</td><td>≥ 80% on licence</td><td>Self-hosted software; no per-tenant cloud bill. Services priced separately.</td></tr>
+                <tr><td class="k">CAC payback</td><td>&lt; 12 months</td><td>Founder-led sales into 8–12 named accounts; the cost is time and travel, not ads.</td></tr>
+                <tr><td class="k">LTV / CAC</td><td>&gt; 3× by year 3</td><td>Seed-stage floor investors expect; per-satellite growth lifts LTV without new logos.</td></tr>
+                <tr><td class="k">Net revenue retention</td><td>&gt; 110%</td><td>Every launch adds satellites under management; expansion without a new sale.</td></tr>
+                <tr><td class="k">Sales cycle</td><td>9–18 months</td><td>Design-partner motion; grants bridge it. Planned for, not hoped against.</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <aside class="notes"><span class="eyebrow">Benchmarks used</span>2026 B2B SaaS medians: LTV:CAC ~3.2:1 (healthy 3–5:1), median CAC payback stretched to ~18 months in 2024 for enterprise, sub-12-month payback as the seed/Series-A bar. Price point is the open item: no public price exists for this layer; the assumed $150K–$400K annual contract comes from Quindar/Leanspace positioning and will be replaced by a Van Westendorp study with operators.</aside>
+    </div>
+  </section>
+
+  <!-- 9 · COMPETITION -->
+  <section class="slide" id="s9" data-title="Competition">
+    <div class="slide-inner">
+      <div class="slide-head">
+        <p class="eyebrow"><span class="n">08</span> Competition</p>
+        <h2>Three kinds of answer exist. None is domestic, on-prem and money-first.</h2>
+      </div>
+      <div class="two wide-left">
+        <div class="fig matrix">
+          <svg viewBox="0 0 640 380" role="img" aria-label="Positioning matrix">
+            <title>Positioning: control-centric vs planning-centric, foreign cloud vs self-hosted domestic</title>
+            <line x1="320" y1="30" x2="320" y2="340" stroke="var(--line-strong)"/>
+            <line x1="40" y1="185" x2="600" y2="185" stroke="var(--line-strong)"/>
+            <text x="320" y="18" text-anchor="middle" class="ax">PLANNING &amp; ECONOMICS-CENTRIC</text>
+            <text x="320" y="362" text-anchor="middle" class="ax">CONTROL &amp; TELEMETRY-CENTRIC</text>
+            <text x="40" y="180" class="ax">FOREIGN CLOUD / PROGRAMME-SCALE</text>
+            <text x="600" y="180" text-anchor="end" class="ax">SELF-HOSTED / DOMESTIC</text>
+            <circle cx="150" cy="80" r="5" fill="var(--blue-2)"/><text x="162" y="84" class="co">Cognitive Space (US, ~$11M)</text>
+            <circle cx="120" cy="120" r="5" fill="var(--blue-2)"/><text x="132" y="124" class="co">Quindar (US, ~$27M, on OpenC3)</text>
+            <circle cx="200" cy="150" r="5" fill="var(--blue-2)"/><text x="212" y="154" class="co">Leanspace (FR, €10M)</text>
+            <circle cx="90" cy="230" r="5" fill="var(--muted)"/><text x="102" y="234" class="co">Kratos · GMV Flexplan · Terma PLAN</text>
+            <circle cx="140" cy="290" r="5" fill="var(--muted)"/><text x="152" y="294" class="co">Major Tom (absorbed 2022)</text>
+            <circle cx="470" cy="260" r="5" fill="var(--muted)"/><text x="482" y="264" class="co">Dhruva ISOCS (in-house suite)</text>
+            <circle cx="430" cy="300" r="5" fill="var(--muted)"/><text x="442" y="304" class="co">Yamcs · OpenC3 (open source)</text>
+            <circle cx="520" cy="230" r="5" fill="var(--muted)"/><text x="532" y="234" class="co">Pixxel in-house</text>
+            <circle cx="500" cy="80" r="9" fill="var(--amber)"/><text x="514" y="84" class="us">Constellation OS</text>
+            <text x="514" y="100" class="co">domestic · on-prem · rupee objective · proven bound</text>
+          </svg>
+        </div>
+        <div class="stack">
+          <div class="note"><p class="eyebrow">New-space SaaS</p><p>Quindar, Cognitive Space, Leanspace, Saber. The category shape we are validating against — three years ahead, foreign cloud, no India presence, excluded from defence-adjacent work.</p></div>
+          <div class="note blue"><p class="eyebrow">Legacy vendors</p><p>Kratos, GMV, Terma, L3Harris. Decade-to-field programme procurement. Not addressing a forty-person operator, and heuristic schedulers with no proven bound.</p></div>
+          <div class="note rose"><p class="eyebrow">In-house</p><p>The real incumbent at Pixxel, Dhruva and GalaxEye. We do not replace it — we sit above it. Build-vs-buy flips as fleets pass ~10 satellites.</p></div>
+        </div>
+      </div>
+      <aside class="notes"><span class="eyebrow">Relationships, not just rivals</span>Dhruva is competitor, customer and channel at once — the most concentrated buyer of scheduling capability in India and a potential bundle with their Earth Stations. Digantara (SSA) and Epsilon3 (procedures) are partners. Antaris (Chennai/US) is the closest domestic name, positioned on satellite design and build rather than fleet-level economics. Funding figures from Tracxn and SpaceNews, mid-2026.</aside>
+    </div>
+  </section>
+
+  <!-- 10 · GO-TO-MARKET -->
+  <section class="slide" id="s10" data-title="Go-to-market">
+    <div class="slide-inner">
+      <div class="slide-head">
+        <p class="eyebrow"><span class="n">09</span> Go-to-market</p>
+        <h2>A named-account market, entered through a design-partner programme.</h2>
+      </div>
+      <div class="tiles">
+        <div class="tile hi"><b>1 · India, first door</b><span><strong>KaleidEO</strong> (hybrid stack, actively building tasking — the softest entry), then <strong>GalaxEye</strong> and <strong>Pixxel</strong> (in-house incumbents, fleets doubling), then <strong>Dhruva</strong> as buyer and channel. 8–12 qualified accounts total.</span></div>
+        <div class="tile"><b>2 · Sovereign programmes</b><span>SBS-3's 31 private-built satellites arrive through integrators (Ananth, Centum, Alpha Design) who build the fleet but do not plan it. EO-PPP's ops decisions sit with Pixxel + Dhruva jointly. Slow, large, on-prem only.</span></div>
+        <div class="tile"><b>3 · Small operators, global</b><span>The segment Quindar-class pricing leaves behind: 5–30 satellite fleets in Europe, Australia, South-East Asia. Sold from India, self-hosted, priced per satellite.</span></div>
+      </div>
+      <div class="two">
+        <div class="note green">
+          <p class="eyebrow">The design-partner offer, one page</p>
+          <p>Three to five operators. Self-hosted install beside their C2, integration to their ground network, one 45-minute call a fortnight and async feedback within five days. Preferential pricing locked for two years. A hard end date with a binary ask: go paid or don't.</p>
+        </div>
+        <div class="note">
+          <p class="eyebrow">Bridging the 9–18-month cycle</p>
+          <p>Non-dilutive first: IN-SPACe Seed Fund (≤ ₹1 cr, milestone tranches), iDEX Prime Space (mission-planning is a named problem statement), Technology Adoption Fund (≤ ₹25 cr, up to 60% of cost). T-Hub's ORBIT SpaceTech accelerator is in the founder's own city.</p>
+        </div>
+      </div>
+      <aside class="notes"><span class="eyebrow">Why this order</span>KaleidEO's public materials show a build-plus-buy model with mission planning under construction — the best design-partner hypothesis in the evidence base. Pixxel and Dhruva jointly control national-constellation ops decisions, so India is 2–3 concentrated doors rather than a volume market; concentrated-buyer risk is stated on the risks slide and countered by the global small-operator segment. Design-partner structure follows Bessemer and Tracsio guidance: small cohort, one-page agreement, defined commitments, conversion deadline.</aside>
+    </div>
+  </section>
+
+  <!-- 11 · TEAM -->
+  <section class="slide" id="s11" data-title="Team">
+    <div class="slide-inner">
+      <div class="slide-head">
+        <p class="eyebrow"><span class="n">10</span> Team</p>
+        <h2>One founder who has shipped regulated, distributed systems — and built this one alone.</h2>
+      </div>
+      <div class="team">
+        <img class="photo" src="data:image/jpeg;base64,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" alt="Sumanth Varma Vitrouthu">
+        <div class="stack">
+          <div class="prose">
+            <p><strong>Sumanth Varma Vitrouthu</strong> — founder. Master's in robotics and autonomous systems from Arizona State University, where the mathematics that plans a robot's path is the mathematics that plans a satellite's day. Engineer at Amazon Web Services, then Oracle Health, building the systems that move regulated data between large institutions: encrypted, multi-tenant, audited, unforgiving of mistakes. That discipline is how this product is built — correct and auditable before clever.</p>
+            <p>Over the last year: the full core of Constellation OS, solo, under a spec-first process with two independent reviews per change, closed end to end against a real mission-control system. Space has been the plan since a childhood photograph of an Apollo footprint; this is the first honest step of a long arc.</p>
+          </div>
+          <div class="creds">
+            <div class="cred"><span class="eyebrow">Industry</span>Amazon Web Services · Oracle Health — distributed systems, clinical data exchange, production incident recovery</div>
+            <div class="cred"><span class="eyebrow">Education</span>MS Robotics &amp; Autonomous Systems (AI), Arizona State University · BTech ECE, JNTU</div>
+            <div class="cred"><span class="eyebrow">Domain</span>TT&amp;C protocols, CCSDS standards, orbit propagation, Earth-observation pipelines</div>
+            <div class="cred"><span class="eyebrow">Looking for</span>An operations-side co-founder who has run a fleet · two to three mentors from mission operations, space procurement and enterprise SaaS</div>
+          </div>
+          <div class="cta">
+            <a class="btn primary" href="https://linkedin.com/in/sumanthvarmaa" target="_blank" rel="noopener">LinkedIn</a>
+            <a class="btn" href="https://github.com/SumanthVarma798" target="_blank" rel="noopener">GitHub</a>
+          </div>
+        </div>
+      </div>
+      <aside class="notes"><span class="eyebrow">Why this slide is honest about gaps</span>DocSend: the team slide gets the most reading time of any slide. A solo technical founder is a real risk and is named as one; the round funds the operations-side co-founder, and the build process was designed from day one so new engineers inherit written specs and review records rather than one person's memory. Mentors: the ask is specific — mission operations, Indian space procurement, enterprise SaaS go-to-market.</aside>
+    </div>
+  </section>
+
+  <!-- 12 · ROADMAP -->
+  <section class="slide" id="s12" data-title="Roadmap">
+    <div class="slide-inner">
+      <div class="slide-head">
+        <p class="eyebrow"><span class="n">11</span> Roadmap</p>
+        <h2>One milestone at a time, with the checkpoint stated in advance.</h2>
+      </div>
+      <div class="two">
+        <div class="ms">
+          <div><span class="when">Done</span><div>Core delivered: optimiser with proven bound, repair, closed loop through Yamcs, multi-tenant runtime, operator interface — reproducible from a clean checkout.</div></div>
+          <div><span class="when">Q4 2026</span><div>Interviews and pricing study with the 8–12 qualified Indian accounts. Design-partner offer out. IN-SPACe Seed and T-Hub ORBIT applications filed.</div></div>
+          <div class="key"><span class="when">15 Jan 2027</span><div><strong>Checkpoint.</strong> A signed design-partner letter of intent — or the plan changes to an insider path with the product as the credential. Stated now so nobody has to guess later.</div></div>
+          <div><span class="when">H1 2027</span><div>Deploy beside a live constellation. First receipt-backed execution history. Operations co-founder in seat.</div></div>
+          <div><span class="when">H2 2027</span><div>First paid contract. Second design partner. Pre-seed closed with 9+ months of runway in hand, never fewer than 3.</div></div>
+          <div><span class="when">2028–29</span><div>EO-PPP and SBS-3 fleets deploying. Third operator. Multi-operator layer specified from real execution history, not from the architecture document.</div></div>
+        </div>
+        <div class="stack">
+          <div class="tiles" style="grid-template-columns:1fr">
+            <div class="tile"><b>Chapter 1</b><span>Prove it with one operator. Grants bridge the cycle.</span></div>
+            <div class="tile"><b>Chapter 2</b><span>Embed and earn: India first, then small global operators.</span></div>
+            <div class="tile"><b>Chapter 3</b><span>The multi-operator layer — cross-operator capacity sharing without exposing anyone's tasking. The network effect the single-operator product earns the right to build.</span></div>
+          </div>
+        </div>
+      </div>
+      <aside class="notes"><span class="eyebrow">Why a checkpoint</span>Build-first gives up the insider-credibility route in exchange for speed and founder identity; the checkpoint converts that trade into a decision rule rather than a hope. Government timelines slip as the base case; commercial data operators are the plan, sovereign programmes are upside.</aside>
+    </div>
+  </section>
+
+  <!-- 13 · ASK -->
+  <section class="slide" id="s13" data-title="The ask">
+    <div class="slide-inner">
+      <div class="slide-head">
+        <p class="eyebrow"><span class="n">12</span> The ask</p>
+        <h2>A pre-seed round, alongside grants, to get from first design partner to first paid multi-operator deployment.</h2>
+        <p class="lede">Round size and terms are set with a lead. The milestones on the previous slide are what the money buys.</p>
+      </div>
+      <div class="tiles">
+        <div class="tile"><b>Design-partner deployment</b><span>Self-hosted install beside one Indian operator's C2; integration adapters; the execution history no simulator can produce.</span></div>
+        <div class="tile"><b>Team</b><span>An operations-side co-founder who has run a fleet, plus one or two engineers onboarded onto written specs and review records.</span></div>
+        <div class="tile"><b>Runway to the fleet ramp</b><span>Eighteen months, timed so the product is in an operator's hands before the 2027–29 launches.</span></div>
+      </div>
+      <div class="two">
+        <div class="note green">
+          <p class="eyebrow">What we can show today</p>
+          <p>A live demo from a clean checkout: submit an order → joint plan with proven gap → approve → send through Yamcs → simulated spacecraft executes → inject a station outage → telemetry-backed repair → planned-versus-realised rupees. Thirty minutes, on your screen.</p>
+        </div>
+        <div class="stack">
+          <p class="eyebrow">Also welcome</p>
+          <p>Introductions to heads of mission operations at satellite operators; mentors from space procurement and enterprise SaaS; an operations co-founder conversation.</p>
+          <div class="cta">
+            <a class="btn primary" href="https://linkedin.com/in/sumanthvarmaa" target="_blank" rel="noopener">Reach the founder on LinkedIn</a>
+            <a class="btn" href="https://github.com/SumanthVarma798" target="_blank" rel="noopener">Review the code first</a>
+          </div>
+        </div>
+      </div>
+      <aside class="notes"><span class="eyebrow">Framing</span>Pre-seed rounds in 2026 fund one milestone that unlocks the next round; here that milestone is a deployed design partner with contracted revenue. Non-dilutive money is pursued in parallel, not instead. A deck is not a term sheet: the appendix carries risks, technical detail and sources for anyone who wants to go deeper.</aside>
+    </div>
+  </section>
+
+  <!-- APPENDIX A · RISKS -->
+  <section class="slide" id="s14" data-title="Appendix · Risks">
+    <div class="slide-inner">
+      <div class="slide-head">
+        <p class="eyebrow"><span class="n">A1</span> Appendix · What could kill it</p>
+        <h2>Risks, named, with what we do about each.</h2>
+      </div>
+      <div class="tablewrap">
+        <table>
+          <thead><tr><th>Risk</th><th>How real</th><th>Mitigation</th></tr></thead>
+          <tbody>
+            <tr><td class="k">Government timelines slip</td><td>Base case</td><td>Sell to commercial data operators whose clocks are set by paying customers; sovereign programmes are upside, not the plan.</td></tr>
+            <tr><td class="k">Operators keep building in-house</td><td>The cheap kill</td><td>We integrate above their stack, never replace it. If a 20-satellite fleet still prefers a spreadsheet after a proven, explained plan runs against their own C2, the company stops having cost a year, not a round.</td></tr>
+            <tr><td class="k">2–3 buyers control India</td><td>True</td><td>High-value, sticky contracts once embedded; the same product to global small operators; Dhruva as channel as much as competitor.</td></tr>
+            <tr><td class="k">Quindar or Leanspace enters via a partner</td><td>Possible</td><td>Their answer is still a foreign cloud control plane. Ours is on-prem, auditable, domestic. Best defence: a working product in an Indian operator's hands first.</td></tr>
+            <tr><td class="k">Solo founder</td><td>Real</td><td>Named gaps: operations co-founder, first design partner. Spec-first process with two independent reviews so the codebase does not depend on one memory. Hard checkpoint 15 Jan 2027.</td></tr>
+            <tr><td class="k">Dynamic replanning demand unproven</td><td>Hypothesis</td><td>Public evidence validates planning and integration pain; live replanning demand is an interview question, labelled as such, never claimed.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- APPENDIX B · UNDER THE HOOD -->
+  <section class="slide" id="s15" data-title="Appendix · Under the hood">
+    <div class="slide-inner">
+      <div class="slide-head">
+        <p class="eyebrow"><span class="n">A2</span> Appendix · Under the hood</p>
+        <h2>Battle-tested components; the novelty is in how they are joined.</h2>
+      </div>
+      <div class="tablewrap">
+        <table>
+          <thead><tr><th>Component</th><th>What it does</th><th>Built on</th></tr></thead>
+          <tbody>
+            <tr><td class="k">Orbital geometry</td><td>Turns each satellite's element set into every physically possible imaging window, downlink and command-uplink pass. Deterministic, cached, stale inputs visible.</td><td class="mono">TAT-C · Skyfield · SGP4 · OMM XML</td></tr>
+            <tr><td class="k">Joint optimiser</td><td>Chooses collections, downlinks and uplinks together under power, storage, slew, antenna, minimum-duration and deadline constraints; rupee objective; proven gap ≤ 10%; typed reason per rejection.</td><td class="mono">Google OR-Tools CP-SAT</td></tr>
+            <tr><td class="k">Bounded repair</td><td>Event-driven re-solve from a hashed execution cutoff with a stability penalty; proven ≤ 10% in under 5 s on the reference fleet.</td><td class="mono">CP-SAT · seed-plan hints</td></tr>
+            <tr><td class="k">Independent validator</td><td>A second, solver-free implementation of every physical rule re-checks each plan and catches encoding bugs the optimiser cannot see about itself.</td><td class="mono">pure Python</td></tr>
+            <tr><td class="k">Ledger &amp; versions</td><td>Append-only events; immutable hashed scenario versions; approval as a derived, revocable stage; tenant-isolated Postgres with fail-closed identity.</td><td class="mono">PostgreSQL · SQLAlchemy · Alembic</td></tr>
+            <tr><td class="k">C2 seam</td><td>Sends approved plans to an unmodified Yamcs instance and correlates command, telemetry and health receipts back to the plan; deterministic spacecraft simulator with scripted disruptions.</td><td class="mono">Yamcs · Docker Compose</td></tr>
+            <tr><td class="k">API &amp; interface</td><td>Versioned read projections, guarded ledger-only actions, OIDC roles across platform / customer / operator planes, customer intake and machine tasking API.</td><td class="mono">FastAPI · React · TypeScript</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="note rose"><p class="eyebrow">Fixed safety boundary</p><p>Only the separate C2 worker may dispatch a typed, operator-approved, allow-listed activity. No browser or model gets arbitrary command access; no model output reaches commands, constraints or fault-protection configuration. Yamcs and flight software retain validation, queueing, uplink and FDIR authority.</p></div>
+    </div>
+  </section>
+
+  <!-- APPENDIX C · SOURCES -->
+  <section class="slide" id="s16" data-title="Appendix · Sources">
+    <div class="slide-inner">
+      <div class="slide-head">
+        <p class="eyebrow"><span class="n">A3</span> Appendix · Sources</p>
+        <h2>Where the numbers come from.</h2>
+      </div>
+      <div class="sources">
+        <ol>
+          <li>FICCI–EY, Indian space economy to $44B by 2033 (Mar 2025).</li>
+          <li>BW Disrupt — $871M across 241 rounds to Jul 2026; Ascendants — $200M in 2025.</li>
+          <li>Organiser — 440 start-ups, 113 IN-SPACe authorisations (Aug 2026).</li>
+          <li>Raksha Anirveda / PIB — SBS-3: 52 satellites, ₹22,500 cr, 31 private-built.</li>
+          <li>Pixxel press release; DeepTech India — EO-PPP: Allied Orbits, 12 satellites, ₹1,200 cr.</li>
+          <li>Novaspace, Ground Segment Market Prospects, 6th ed. (Dec 2025).</li>
+          <li>Dataintelo — Space Mission Planning Software; Satellite Ground Station Software market reports.</li>
+          <li>MarketsandMarkets; GMInsights — GSaaS growth, APAC.</li>
+          <li>Tracxn (Jul–Aug 2026) — Quindar, Cognitive Space, Antaris; SpaceNews — Leanspace Series A; Space &amp; Defense — Saber Commander.</li>
+          <li>Dhruva Space ground-station page; IN-SPACe GSaaS authorisation; Pixxel, GalaxEye, KaleidEO job postings and sites.</li>
+          <li>Yamcs #584, OpenC3 #1200 / #647, Libre Space Community — planning outside the engine.</li>
+          <li>Payload Space — ~$3/min GSaaS floor; AIAA two-step BLP paper — ~35% over greedy.</li>
+          <li>DocSend seed/pre-seed deck research (2026); Bessemer and Tracsio on design-partner programmes; SaaS unit-economics benchmarks 2026.</li>
+          <li>IN-SPACe Seed Fund scheme; iDEX Prime Space; Technology Adoption Fund; T-Hub ORBIT accelerator.</li>
+          <li>Constellation OS repository — README, research/, scale-wall evidence (Aug 2026), commit and PR counts as of 3 Sep 2026.</li>
+        </ol>
+      </div>
+      <p class="hint">Figures marked estimate or target are the founder's working assumptions, not measurements.</p>
+    </div>
+  </section>
+
+</main>
+
+<div class="chrome" role="navigation" aria-label="Deck controls">
+  <div class="chrome-inner">
+    <div class="brand">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3" fill="var(--amber)"/><ellipse cx="12" cy="12" rx="10" ry="4" fill="none" stroke="var(--ink)" stroke-width="1.4" transform="rotate(-25 12 12)"/><circle cx="20.2" cy="7.9" r="1.6" fill="var(--blue)"/></svg>
+      <span>Constellation OS</span>
+    </div>
+    <nav class="dots" id="dots" aria-label="Slides"></nav>
+    <div class="ctrls">
+      <button type="button" id="notesBtn" aria-pressed="false" title="Toggle speaker notes (N)">Notes</button>
+      <button type="button" id="prevBtn" aria-label="Previous slide">←</button>
+      <span class="counter" id="counter">1 / 16</span>
+      <button type="button" id="nextBtn" aria-label="Next slide">→</button>
+    </div>
+  </div>
+</div>
+
+<script>
+(function () {
+  var deck = document.getElementById('deck');
+  var slides = Array.prototype.slice.call(document.querySelectorAll('.slide'));
+  var dots = document.getElementById('dots');
+  var counter = document.getElementById('counter');
+  var current = 0;
+
+  slides.forEach(function (s, i) {
+    var a = document.createElement('a');
+    a.href = '#' + s.id; a.title = s.dataset.title || ('Slide ' + (i + 1));
+    a.setAttribute('aria-label', a.title);
+    if (i >= 13) a.className = 'appx';
+    a.addEventListener('click', function (e) { e.preventDefault(); go(i); });
+    dots.appendChild(a);
+  });
+
+  function setCurrent(i) {
+    current = i;
+    counter.textContent = (i + 1) + ' / ' + slides.length;
+    Array.prototype.forEach.call(dots.children, function (d, j) { d.setAttribute('aria-current', j === i ? 'true' : 'false'); });
+    if (history.replaceState) history.replaceState(null, '', '#' + slides[i].id);
+  }
+  function go(i) {
+    i = Math.max(0, Math.min(slides.length - 1, i));
+    slides[i].scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'start' });
+    setCurrent(i);
+  }
+
+  if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) { if (e.isIntersecting && e.intersectionRatio >= 0.5) setCurrent(slides.indexOf(e.target)); });
+    }, { root: deck, threshold: [0.5] });
+    slides.forEach(function (s) { io.observe(s); });
+  }
+
+  document.getElementById('prevBtn').addEventListener('click', function () { go(current - 1); });
+  document.getElementById('nextBtn').addEventListener('click', function () { go(current + 1); });
+  var notesBtn = document.getElementById('notesBtn');
+  function toggleNotes() {
+    var on = !document.body.classList.contains('show-notes');
+    document.body.classList.toggle('show-notes', on);
+    notesBtn.setAttribute('aria-pressed', on ? 'true' : 'false');
+    try { localStorage.setItem('cos-deck-notes', on ? '1' : '0'); } catch (e) {}
+  }
+  notesBtn.addEventListener('click', toggleNotes);
+  try { if (localStorage.getItem('cos-deck-notes') === '1') toggleNotes(); } catch (e) {}
+
+  document.addEventListener('keydown', function (e) {
+    if (e.target && /input|textarea|select/i.test(e.target.tagName)) return;
+    switch (e.key) {
+      case 'ArrowRight': case 'ArrowDown': case 'PageDown': case ' ': e.preventDefault(); go(current + 1); break;
+      case 'ArrowLeft': case 'ArrowUp': case 'PageUp': e.preventDefault(); go(current - 1); break;
+      case 'Home': e.preventDefault(); go(0); break;
+      case 'End': e.preventDefault(); go(slides.length - 1); break;
+      case 'n': case 'N': toggleNotes(); break;
+    }
+  });
+
+  var h = location.hash && document.getElementById(location.hash.slice(1));
+  if (h) { var idx = slides.indexOf(h); if (idx >= 0) { setTimeout(function () { go(idx); }, 50); } }
+  else setCurrent(0);
+})();
+</script>
+</body>
+</html>

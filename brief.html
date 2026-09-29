@@ -1,0 +1,941 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Constellation OS Brief</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+  :root {
+    --ground: #F2F4F7;
+    --surface: #FFFFFF;
+    --surface-2: #E9EDF2;
+    --ink: #111827;
+    --ink-2: #424D5E;
+    --muted: #7C8797;
+    --line: #D6DCE5;
+    --line-strong: #B9C2CF;
+    --amber: #B9711A;
+    --amber-soft: #F4E4CB;
+    --blue: #2A6597;
+    --blue-soft: #D8E6F3;
+    --blue-2: #7FA9CF;
+    --blue-3: #BBD1E6;
+    --rose: #B0433A;
+    --rose-soft: #F3D9D6;
+    --green: #2F7A4F;
+    --green-soft: #D6EBDD;
+    --focus: #2A6597;
+    --shadow: 0 1px 2px rgba(17,24,39,.06), 0 6px 20px rgba(17,24,39,.06);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --ground: #0C1420;
+      --surface: #131D2C;
+      --surface-2: #1A2637;
+      --ink: #E8EDF4;
+      --ink-2: #B3BFCF;
+      --muted: #74829A;
+      --line: #243349;
+      --line-strong: #34465F;
+      --amber: #E2A24A;
+      --amber-soft: #3A2B14;
+      --blue: #78ACDF;
+      --blue-soft: #16304A;
+      --blue-2: #3F76A8;
+      --blue-3: #244A6E;
+      --rose: #E4776E;
+      --rose-soft: #3E1F1D;
+      --green: #6CC08F;
+      --green-soft: #173324;
+      --focus: #78ACDF;
+      --shadow: 0 1px 2px rgba(0,0,0,.4), 0 8px 24px rgba(0,0,0,.35);
+    }
+  }
+  :root[data-theme="dark"] {
+    --ground: #0C1420;
+    --surface: #131D2C;
+    --surface-2: #1A2637;
+    --ink: #E8EDF4;
+    --ink-2: #B3BFCF;
+    --muted: #74829A;
+    --line: #243349;
+    --line-strong: #34465F;
+    --amber: #E2A24A;
+    --amber-soft: #3A2B14;
+    --blue: #78ACDF;
+    --blue-soft: #16304A;
+    --blue-2: #3F76A8;
+    --blue-3: #244A6E;
+    --rose: #E4776E;
+    --rose-soft: #3E1F1D;
+    --green: #6CC08F;
+    --green-soft: #173324;
+    --focus: #78ACDF;
+    --shadow: 0 1px 2px rgba(0,0,0,.4), 0 8px 24px rgba(0,0,0,.35);
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--ground);
+    color: var(--ink);
+    font-family: "IBM Plex Sans", "Helvetica Neue", Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  h1, h2, h3, h4 {
+    font-family: "Archivo", "Helvetica Neue", Arial, sans-serif;
+    letter-spacing: -0.015em;
+    text-wrap: balance;
+    margin: 0;
+    line-height: 1.15;
+  }
+  h1 { font-size: clamp(2rem, 4.2vw, 3.1rem); font-weight: 700; }
+  h2 { font-size: clamp(1.5rem, 2.6vw, 2rem); font-weight: 700; }
+  h3 { font-size: 1.2rem; font-weight: 600; }
+  h4 { font-size: 1rem; font-weight: 600; }
+  p { margin: 0; }
+  a { color: var(--blue); text-decoration-thickness: 1px; text-underline-offset: 2px; }
+  a:hover { color: var(--ink); }
+  code, .mono { font-family: "IBM Plex Mono", "SFMono-Regular", Menlo, monospace; }
+  .num { font-variant-numeric: tabular-nums; }
+  :focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+  button { font: inherit; color: inherit; }
+
+  .eyebrow {
+    font-family: "IBM Plex Mono", monospace;
+    font-size: .72rem;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .prose { max-width: 68ch; }
+  .prose p + p { margin-top: 1em; }
+  .lede { font-size: 1.12rem; color: var(--ink-2); max-width: 62ch; }
+  .stack { display: grid; gap: 1.25rem; }
+  .stack-lg { display: grid; gap: 2.5rem; }
+  .sr { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+
+  /* ---------- top bar ---------- */
+  .topbar {
+    position: sticky; top: 0; z-index: 20;
+    background: color-mix(in srgb, var(--ground) 88%, transparent);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--line);
+  }
+  .topbar-inner {
+    max-width: 1120px; margin: 0 auto; padding: 0 1.25rem;
+    display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+    height: 56px;
+  }
+  .brand { display: flex; align-items: center; gap: .6rem; font-family: "Archivo", sans-serif; font-weight: 600; font-size: .95rem; }
+  .brand svg { width: 22px; height: 22px; }
+  .nav { display: flex; gap: .25rem; }
+  .nav a {
+    text-decoration: none; color: var(--ink-2);
+    font-family: "IBM Plex Mono", monospace; font-size: .78rem; letter-spacing: .06em; text-transform: uppercase;
+    padding: .45rem .7rem; border-radius: 4px; border-bottom: 2px solid transparent;
+  }
+  .nav a[aria-current="true"] { color: var(--ink); border-bottom-color: var(--amber); }
+  .nav a:hover { color: var(--ink); background: var(--surface-2); }
+  @media (max-width: 640px) { .nav a { padding: .4rem .45rem; font-size: .7rem; } .brand span { display: none; } }
+
+  /* ---------- page ---------- */
+  .page { max-width: 1120px; margin: 0 auto; padding: 0 1.25rem 5rem; }
+  .hero { padding: 3.5rem 0 2.75rem; border-bottom: 1px solid var(--line); display: grid; gap: 1.5rem; }
+  .hero-grid { display: grid; grid-template-columns: minmax(0, 1.6fr) minmax(280px, 1fr); gap: 2.5rem; align-items: start; }
+  @media (max-width: 860px) { .hero-grid { grid-template-columns: 1fr; } }
+  .facts { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: 6px; overflow: hidden; }
+  .fact { background: var(--surface); padding: .9rem 1rem; display: grid; gap: .15rem; }
+  .fact b { font-family: "Archivo", sans-serif; font-size: 1.35rem; font-weight: 700; letter-spacing: -.01em; }
+  .fact span { font-size: .78rem; color: var(--muted); line-height: 1.35; }
+
+  section.part { padding: 3.5rem 0 1rem; scroll-margin-top: 72px; }
+  .part-head { display: grid; gap: .6rem; margin-bottom: 2rem; padding-top: 1.5rem; border-top: 3px solid var(--ink); }
+  .part-head .eyebrow { color: var(--amber); }
+  .sub { padding: 1.75rem 0; border-top: 1px solid var(--line); display: grid; gap: 1rem; }
+  .sub > h3 { max-width: 40ch; }
+  .two-col { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 2rem; align-items: start; }
+  @media (max-width: 800px) { .two-col { grid-template-columns: 1fr; } }
+
+  /* ---------- callouts ---------- */
+  .note {
+    border-left: 3px solid var(--amber); background: var(--surface); padding: .9rem 1.1rem; border-radius: 0 6px 6px 0;
+    display: grid; gap: .35rem; max-width: 72ch;
+  }
+  .note.blue { border-left-color: var(--blue); }
+  .note.rose { border-left-color: var(--rose); }
+  .note .eyebrow { color: inherit; opacity: .8; }
+  .quote { font-style: italic; color: var(--ink-2); }
+
+  /* ---------- pills ---------- */
+  .pill {
+    display: inline-block; font-family: "IBM Plex Mono", monospace; font-size: .68rem; letter-spacing: .06em; text-transform: uppercase;
+    padding: .15rem .5rem; border-radius: 999px; border: 1px solid var(--line-strong); color: var(--ink-2); white-space: nowrap;
+  }
+  .pill.src { background: var(--green-soft); border-color: transparent; color: var(--green); }
+  .pill.est { background: var(--amber-soft); border-color: transparent; color: var(--amber); }
+  .pill.tgt { background: var(--blue-soft); border-color: transparent; color: var(--blue); }
+  .pill.open { background: var(--rose-soft); border-color: transparent; color: var(--rose); }
+
+  /* ---------- tables ---------- */
+  .tablewrap { overflow-x: auto; border: 1px solid var(--line); border-radius: 6px; background: var(--surface); }
+  table { border-collapse: collapse; width: 100%; font-size: .92rem; }
+  th, td { text-align: left; padding: .65rem .85rem; vertical-align: top; border-bottom: 1px solid var(--line); }
+  th { font-family: "IBM Plex Mono", monospace; font-size: .7rem; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); font-weight: 500; background: var(--surface-2); }
+  tbody tr:last-child td { border-bottom: 0; }
+  td.k { font-weight: 600; white-space: nowrap; }
+  td .sm { display: block; font-size: .8rem; color: var(--muted); margin-top: .15rem; }
+
+  /* ---------- stack diagram (Problem) ---------- */
+  .stackdiag { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 1.5rem; align-items: start; }
+  @media (max-width: 800px) { .stackdiag { grid-template-columns: 1fr; } }
+  .layers { display: grid; gap: 4px; }
+  .layer {
+    display: grid; grid-template-columns: 1.6rem 1fr auto; align-items: center; gap: .75rem;
+    background: var(--surface); border: 1px solid var(--line); border-radius: 4px; padding: .65rem .8rem;
+    cursor: pointer; text-align: left; width: 100%;
+  }
+  .layer .idx { font-family: "IBM Plex Mono", monospace; font-size: .72rem; color: var(--muted); }
+  .layer .who { font-size: .74rem; color: var(--muted); font-family: "IBM Plex Mono", monospace; }
+  .layer[data-state="gap"] { border-color: var(--amber); background: var(--amber-soft); }
+  .layer[data-state="gap"] .who { color: var(--amber); }
+  .layer[aria-pressed="true"] { outline: 2px solid var(--blue); outline-offset: 1px; }
+  .layer:hover { border-color: var(--line-strong); }
+  .layerinfo { background: var(--surface); border: 1px solid var(--line); border-radius: 6px; padding: 1.1rem 1.25rem; display: grid; gap: .5rem; min-height: 200px; position: sticky; top: 72px; }
+  .layerinfo h4 { display: flex; gap: .6rem; align-items: center; }
+
+  /* ---------- approach tabs ---------- */
+  .tabs { display: flex; flex-wrap: wrap; gap: .35rem; border-bottom: 1px solid var(--line); padding-bottom: .5rem; }
+  .tab {
+    border: 1px solid var(--line); background: var(--surface); border-radius: 4px; padding: .4rem .8rem; cursor: pointer; font-size: .9rem;
+  }
+  .tab[aria-selected="true"] { background: var(--ink); color: var(--ground); border-color: var(--ink); }
+  .panel { display: grid; gap: .75rem; padding-top: .5rem; }
+  .panel[hidden] { display: none; }
+  .kv { display: grid; grid-template-columns: 9rem 1fr; gap: .4rem 1rem; font-size: .95rem; max-width: 72ch; }
+  .kv dt { font-family: "IBM Plex Mono", monospace; font-size: .72rem; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); padding-top: .2rem; }
+  .kv dd { margin: 0; }
+  @media (max-width: 560px) { .kv { grid-template-columns: 1fr; } }
+
+  /* ---------- flow stepper (Product) ---------- */
+  .flow { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 6px; }
+  @media (max-width: 760px) { .flow { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+  .step {
+    background: var(--surface); border: 1px solid var(--line); border-radius: 4px; padding: .7rem .6rem; cursor: pointer; text-align: left;
+    display: grid; gap: .25rem; position: relative;
+  }
+  .step .eyebrow { font-size: .62rem; }
+  .step b { font-family: "Archivo", sans-serif; font-weight: 600; font-size: 1rem; }
+  .step[aria-pressed="true"] { border-color: var(--blue); box-shadow: inset 0 -3px 0 var(--blue); }
+  .step.repair[aria-pressed="true"] { border-color: var(--rose); box-shadow: inset 0 -3px 0 var(--rose); }
+  .stepinfo { background: var(--surface); border: 1px solid var(--line); border-radius: 6px; padding: 1.1rem 1.25rem; display: grid; gap: .6rem; }
+  .stepinfo .money { font-family: "IBM Plex Mono", monospace; font-size: .9rem; color: var(--amber); }
+
+  /* ---------- status list ---------- */
+  .status { display: grid; gap: 2px; }
+  .status-row { display: grid; grid-template-columns: 1.4rem 1fr; gap: .6rem; padding: .55rem .2rem; border-bottom: 1px solid var(--line); font-size: .95rem; align-items: start; }
+  .status-row:last-child { border-bottom: 0; }
+  .dot { width: 10px; height: 10px; border-radius: 50%; margin-top: .45rem; background: var(--green); }
+  .dot.wip { background: var(--amber); }
+  .dot.no { background: var(--muted); }
+  .status-row span.sm { display: block; color: var(--muted); font-size: .82rem; }
+
+  /* ---------- market chart (Business) ---------- */
+  .market { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: 2rem; align-items: start; }
+  @media (max-width: 860px) { .market { grid-template-columns: 1fr; } }
+  .chart { background: var(--surface); border: 1px solid var(--line); border-radius: 6px; padding: 1rem; position: relative; }
+  .chart svg { width: 100%; height: auto; display: block; }
+  .ring { cursor: pointer; transition: opacity .15s; }
+  .ring text { font-family: "IBM Plex Mono", monospace; fill: var(--ink); pointer-events: none; }
+  .ring text.lab { font-size: 11px; fill: var(--ink-2); letter-spacing: .08em; }
+  .ring text.val { font-family: "Archivo", sans-serif; font-weight: 700; font-size: 20px; }
+  .chart .tip {
+    position: absolute; pointer-events: none; background: var(--ink); color: var(--ground); font-size: .8rem; padding: .35rem .55rem; border-radius: 4px;
+    opacity: 0; transform: translate(-50%, -110%); white-space: nowrap; transition: opacity .12s;
+  }
+  .ringinfo { background: var(--surface); border: 1px solid var(--line); border-radius: 6px; padding: 1.1rem 1.25rem; display: grid; gap: .6rem; }
+  .ringinfo .big { font-family: "Archivo", sans-serif; font-size: 2rem; font-weight: 700; letter-spacing: -.02em; line-height: 1; }
+  .ringinfo .how { font-size: .9rem; color: var(--ink-2); }
+  .ringinfo ul { margin: 0; padding-left: 1.1rem; font-size: .9rem; display: grid; gap: .25rem; }
+
+  /* ---------- timeline (why now) ---------- */
+  .tl { display: grid; gap: 0; border-left: 2px solid var(--line-strong); margin-left: .5rem; }
+  .tl-row { display: grid; grid-template-columns: 5.5rem 1fr; gap: 1rem; padding: .55rem 0 .55rem 1.25rem; position: relative; }
+  .tl-row::before { content: ""; position: absolute; left: -6px; top: 1.05rem; width: 10px; height: 10px; border-radius: 50%; background: var(--surface); border: 2px solid var(--line-strong); }
+  .tl-row.now::before { background: var(--amber); border-color: var(--amber); }
+  .tl-row .yr { font-family: "IBM Plex Mono", monospace; font-size: .8rem; color: var(--muted); padding-top: .2rem; }
+  .tl-row.now .yr { color: var(--amber); }
+
+  /* ---------- competitor filter ---------- */
+  .filters { display: flex; flex-wrap: wrap; gap: .35rem; }
+  .filters button { border: 1px solid var(--line); background: var(--surface); border-radius: 999px; padding: .3rem .8rem; cursor: pointer; font-size: .85rem; }
+  .filters button[aria-pressed="true"] { background: var(--ink); color: var(--ground); border-color: var(--ink); }
+  tr[hidden] { display: none; }
+  .rel { font-family: "IBM Plex Mono", monospace; font-size: .72rem; letter-spacing: .04em; }
+  .rel.c { color: var(--rose); } .rel.cu { color: var(--green); } .rel.p { color: var(--blue); } .rel.m { color: var(--amber); }
+
+  /* ---------- risks ---------- */
+  details { border: 1px solid var(--line); border-radius: 4px; background: var(--surface); }
+  details + details { margin-top: 4px; }
+  summary { cursor: pointer; padding: .7rem .9rem; font-weight: 600; list-style: none; display: flex; justify-content: space-between; gap: 1rem; }
+  summary::-webkit-details-marker { display: none; }
+  summary::after { content: "+"; font-family: "IBM Plex Mono", monospace; color: var(--muted); }
+  details[open] summary::after { content: "–"; }
+  details .body { padding: 0 .9rem .9rem; color: var(--ink-2); font-size: .95rem; max-width: 72ch; }
+
+  /* ---------- founder ---------- */
+  .founder { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(240px, 1fr); gap: 2rem; }
+  @media (max-width: 800px) { .founder { grid-template-columns: 1fr; } }
+  .creds { display: grid; gap: 2px; }
+  .cred { background: var(--surface); border: 1px solid var(--line); border-radius: 4px; padding: .6rem .8rem; font-size: .9rem; display: grid; gap: .1rem; }
+  .cred .eyebrow { font-size: .62rem; }
+
+  /* ---------- sources ---------- */
+  .sources { font-size: .82rem; color: var(--muted); columns: 2; column-gap: 2rem; }
+  .sources ol { margin: 0; padding-left: 1.2rem; }
+  .sources li { break-inside: avoid; margin-bottom: .3rem; }
+  @media (max-width: 700px) { .sources { columns: 1; } }
+  footer { border-top: 1px solid var(--line); padding-top: 1.5rem; margin-top: 3rem; display: grid; gap: 1rem; }
+
+  /* ---------- buttons & CTA ---------- */
+  .btn {
+    display: inline-flex; align-items: center; gap: .5rem; text-decoration: none;
+    font-family: "Archivo", sans-serif; font-weight: 600; font-size: .92rem;
+    padding: .6rem 1rem; border-radius: 4px; border: 1px solid var(--ink); color: var(--ink); background: transparent;
+  }
+  .btn:hover { background: var(--surface-2); color: var(--ink); }
+  .btn.primary { background: var(--ink); color: var(--ground); }
+  .btn.primary:hover { background: var(--ink-2); color: var(--ground); }
+  .btn svg { width: 18px; height: 18px; fill: currentColor; }
+  .cta { display: flex; flex-wrap: wrap; gap: .6rem; align-items: center; }
+  .cta .hint { font-size: .85rem; color: var(--muted); }
+  .toplinks { display: flex; gap: .3rem; }
+  .toplinks a { display: inline-flex; align-items: center; gap: .35rem; text-decoration: none; color: var(--ink-2); font-size: .8rem; padding: .35rem .55rem; border-radius: 4px; }
+  .toplinks a:hover { color: var(--ink); background: var(--surface-2); }
+  .toplinks svg { width: 16px; height: 16px; fill: currentColor; }
+  @media (max-width: 640px) { .toplinks a span { display: none; } }
+
+  /* ---------- chapters ---------- */
+  .chapters { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px; }
+  @media (max-width: 760px) { .chapters { grid-template-columns: 1fr; } }
+  .chapter { background: var(--surface); border: 1px solid var(--line); border-radius: 4px; padding: 1rem 1.1rem; display: grid; gap: .5rem; align-content: start; }
+  .chapter .eyebrow { color: var(--amber); }
+  .chapter h4 { font-size: 1.05rem; }
+  .chapter p { font-size: .92rem; color: var(--ink-2); }
+  .chapter.now { border-color: var(--amber); }
+
+  /* ---------- use of funds ---------- */
+  .funds { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px; }
+  @media (max-width: 760px) { .funds { grid-template-columns: 1fr; } }
+  .fund { background: var(--surface); border: 1px solid var(--line); border-radius: 4px; padding: .9rem 1rem; display: grid; gap: .3rem; }
+  .fund b { font-family: "Archivo", sans-serif; font-weight: 600; }
+  .fund p { font-size: .9rem; color: var(--ink-2); }
+  .milestones { display: grid; gap: 2px; }
+  .ms { display: grid; grid-template-columns: 7rem 1fr; gap: 1rem; padding: .55rem .2rem; border-bottom: 1px solid var(--line); font-size: .95rem; }
+  .ms:last-child { border-bottom: 0; }
+  .ms .when { font-family: "IBM Plex Mono", monospace; font-size: .78rem; color: var(--muted); padding-top: .2rem; }
+
+  @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="topbar-inner">
+    <div class="brand">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3" fill="var(--amber)"/><ellipse cx="12" cy="12" rx="10" ry="4" fill="none" stroke="var(--ink)" stroke-width="1.4" transform="rotate(-25 12 12)"/><circle cx="20.2" cy="7.9" r="1.6" fill="var(--blue)"/></svg>
+      <span>Constellation OS</span>
+    </div>
+    <nav class="nav" aria-label="Sections">
+      <a href="#problem">1 · Problem</a>
+      <a href="#product">2 · Product</a>
+      <a href="#business">3 · Business</a>
+      <a href="demo.html">Mentor demo guide</a>
+    </nav>
+    <div class="toplinks">
+      <a href="https://github.com/SumanthVarma798" target="_blank" rel="noopener" aria-label="GitHub"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg><span>GitHub</span></a>
+      <a href="https://linkedin.com/in/sumanthvarmaa" target="_blank" rel="noopener" aria-label="LinkedIn"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M0 1.15C0 .51.53 0 1.18 0h13.64C15.47 0 16 .51 16 1.15v13.7c0 .64-.53 1.15-1.18 1.15H1.18C.53 16 0 15.49 0 14.85V1.15zm4.94 12.24V6.17H2.54v7.22h2.4zM3.74 5.18c.84 0 1.36-.55 1.36-1.25-.02-.71-.52-1.25-1.34-1.25-.82 0-1.36.54-1.36 1.25 0 .7.52 1.25 1.33 1.25h.01zm3.53 8.21h2.4V9.36c0-.22.02-.43.08-.59.17-.43.57-.88 1.23-.88.87 0 1.22.66 1.22 1.63v3.87h2.4V9.25c0-2.22-1.18-3.25-2.76-3.25-1.27 0-1.84.7-2.16 1.19v.03h-.02l.02-.03V6.17h-2.4c.03.68 0 7.22 0 7.22z"/></svg><span>LinkedIn</span></a>
+    </div>
+  </div>
+</div>
+
+<main class="page">
+
+  <!-- ============================== HERO ============================== -->
+  <header class="hero">
+    <p class="eyebrow">Investor brief · September 2026 · Hyderabad</p>
+    <div class="hero-grid">
+      <div class="stack">
+        <h1>Software that makes a fleet of satellites earn its keep.</h1>
+        <p class="lede">Constellation OS plans the day for every satellite and every ground station a company runs, prices each decision in rupees, and repairs the plan when reality breaks it. It sits above the control systems operators already own. It never touches spacecraft safety.</p>
+        <div class="prose">
+          <p><strong>The two-minute version.</strong> A satellite in orbit only earns money when it is pointed at the right place at the right time and its data is brought back down through a ground station rented by the minute. Past about ten satellites, doing that by hand — calendars, spreadsheets, scripts, round-the-clock shifts — stops working. India is now funding real fleets. Nobody domestic sells the planning layer they will need. The core is built, independently reviewed and running against a real mission-control system; what it needs now is a first design partner and the capital to get there.</p>
+        </div>
+        <div class="cta">
+          <a class="btn primary" href="https://github.com/SumanthVarma798" target="_blank" rel="noopener"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>See the work on GitHub</a>
+          <a class="btn" href="https://linkedin.com/in/sumanthvarmaa" target="_blank" rel="noopener"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M0 1.15C0 .51.53 0 1.18 0h13.64C15.47 0 16 .51 16 1.15v13.7c0 .64-.53 1.15-1.18 1.15H1.18C.53 16 0 15.49 0 14.85V1.15zm4.94 12.24V6.17H2.54v7.22h2.4zM3.74 5.18c.84 0 1.36-.55 1.36-1.25-.02-.71-.52-1.25-1.34-1.25-.82 0-1.36.54-1.36 1.25 0 .7.52 1.25 1.33 1.25h.01zm3.53 8.21h2.4V9.36c0-.22.02-.43.08-.59.17-.43.57-.88 1.23-.88.87 0 1.22.66 1.22 1.63v3.87h2.4V9.25c0-2.22-1.18-3.25-2.76-3.25-1.27 0-1.84.7-2.16 1.19v.03h-.02l.02-.03V6.17h-2.4c.03.68 0 7.22 0 7.22z"/></svg>Founder on LinkedIn</a>
+          <span class="hint">Read the three sections below in order, or jump to <a href="#ask">the ask</a>.</span>
+        </div>
+      </div>
+      <div class="facts" aria-label="Key facts">
+        <div class="fact"><b class="num">₹22,500 cr</b><span>SBS-3: 52 surveillance satellites, 31 built by private industry</span></div>
+        <div class="fact"><b class="num">₹1,200 cr</b><span>EO-PPP: India's first private 12-satellite national EO constellation</span></div>
+        <div class="fact"><b class="num">$871M</b><span>raised by Indian space start-ups to July 2026, across 241 rounds</span></div>
+        <div class="fact"><b class="num">≤10%</b><span>solver-proven distance from the best possible plan, disclosed on every plan</span></div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ============================== 1 · PROBLEM ============================== -->
+  <section class="part" id="problem">
+    <div class="part-head">
+      <p class="eyebrow">Part 1 of 3</p>
+      <h2>The problem, and what the industry is doing about it</h2>
+      <p class="lede">Launch got cheap. Operations did not. The bottleneck moved from getting to orbit to using orbit well.</p>
+    </div>
+
+    <div class="sub">
+      <h3>What a satellite operator actually has to decide, every day</h3>
+      <div class="two-col">
+        <div class="prose">
+          <p>An Earth-observation satellite circles the planet every ~95 minutes. It can only photograph a target while it is overhead, only talk to a ground station while that station is in view (a few minutes per pass), and only hold so much data and battery in between. A company with twenty satellites, eight ground stations and three hundred customer orders faces tens of thousands of possible “windows” a week, most of which conflict with each other.</p>
+          <p>The plan has to answer: which order gets which satellite, which pass downlinks it, which pass carries the commands up, whether the battery and storage survive the sequence, and whether the customer’s deadline is met. Then a station goes offline, or a satellite enters safe mode, and the whole thing has to be re-decided in minutes without disturbing what has already been sent to the spacecraft.</p>
+          <p>Every ground-station minute costs real money — the commercial floor is roughly <span class="mono">$3/min</span> — so a failed or wasted pass is a line item, not an inconvenience.</p>
+        </div>
+        <div class="note">
+          <p class="eyebrow">Why it gets hard past ~10 satellites</p>
+          <p>Conflicts grow with satellites × stations × orders × constraints. A person can hold a 3-satellite week in their head. A 20-satellite week is a combinatorial optimisation problem, and greedy “first come, first served” schedules leave measurable value on the table. In the academic literature, two-step optimisation beats greedy scheduling by about 35%.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="sub">
+      <h3>Where the work hides today — the operator’s stack</h3>
+      <p class="lede">Tap a layer. The amber layers are where Indian operators’ home-grown stacks have a gap; the rest is already well served and should not be rebuilt.</p>
+      <div class="stackdiag">
+        <div class="layers" id="layers" role="group" aria-label="Operator stack layers">
+          <button class="layer" data-layer="intent" aria-pressed="false"><span class="idx">1</span><span>Customer orders &amp; mission intent</span><span class="who">product / sales</span></button>
+          <button class="layer" data-layer="tasking" data-state="gap" aria-pressed="false"><span class="idx">2</span><span>Collection planning &amp; payload tasking</span><span class="who">gap</span></button>
+          <button class="layer" data-layer="fd" aria-pressed="false"><span class="idx">3</span><span>Flight dynamics &amp; orbit prediction</span><span class="who">solved · STK / Orekit / GMAT</span></button>
+          <button class="layer" data-layer="contact" data-state="gap" aria-pressed="false"><span class="idx">4</span><span>Contact scheduling &amp; station booking</span><span class="who">gap</span></button>
+          <button class="layer" data-layer="c2" aria-pressed="false"><span class="idx">5</span><span>Command &amp; control (C2), procedures</span><span class="who">solved · Yamcs / OpenC3</span></button>
+          <button class="layer" data-layer="data" aria-pressed="false"><span class="idx">6</span><span>Downlink, processing, delivery</span><span class="who">operator’s core IP</span></button>
+          <button class="layer" data-layer="feedback" data-state="gap" aria-pressed="false"><span class="idx">7</span><span>Planned-vs-executed feedback &amp; replanning</span><span class="who">gap</span></button>
+        </div>
+        <div class="layerinfo" id="layerinfo" aria-live="polite">
+          <h4>Select a layer</h4>
+          <p class="quote">Evidence comes from public job postings, vendor pages and open-source issue trackers, gathered July 2026. Where a claim is inferred rather than observed, it says so.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="sub">
+      <h3>What industry experts are doing about it</h3>
+      <p class="lede">Four responses exist. Each solves part of the problem for a different kind of buyer.</p>
+      <div class="tabs" role="tablist" aria-label="Industry approaches">
+        <button class="tab" role="tab" aria-selected="true" data-panel="p-inhouse">Build it in-house</button>
+        <button class="tab" role="tab" aria-selected="false" data-panel="p-legacy">Legacy ground-segment vendors</button>
+        <button class="tab" role="tab" aria-selected="false" data-panel="p-newspace">New-space SaaS start-ups</button>
+        <button class="tab" role="tab" aria-selected="false" data-panel="p-oss">Open source + glue</button>
+      </div>
+      <div class="panel" id="p-inhouse" role="tabpanel">
+        <dl class="kv">
+          <dt>Who</dt><dd>Pixxel, Dhruva Space, GalaxEye in India; Planet, Spire and most large operators globally.</dd>
+          <dt>How</dt><dd>Hire ground-software engineers to write monitoring, tasking and scheduling tools; run a 24/7 shift-based mission control; stitch external ground networks (KSAT, AWS Ground Station) in with scripts.</dd>
+          <dt>Works when</dt><dd>The fleet is small, the team is close to the spacecraft, and the ops problem is mostly “keep the lights on”.</dd>
+          <dt>Breaks when</dt><dd>The fleet doubles. Priority rules become tribal knowledge, planning and downlink are optimised in different tools, and a feasible image plan turns out impossible to downlink on time. The US market looked exactly like this around 2019 before Quindar, Epsilon3 and Cognitive Space were funded.</dd>
+        </dl>
+      </div>
+      <div class="panel" id="p-legacy" role="tabpanel" hidden>
+        <dl class="kv">
+          <dt>Who</dt><dd>Kratos OpenSpace, GMV Flexplan, Terma PLAN, L3Harris, Airbus ground segments.</dd>
+          <dt>How</dt><dd>Configurable mission-planning suites with rule engines and genetic-algorithm schedulers, sold into agencies and defence primes as multi-year programmes.</dd>
+          <dt>Works when</dt><dd>The buyer is a government programme with a decade-long timeline and a procurement office.</dd>
+          <dt>Breaks when</dt><dd>The buyer is a 40-person start-up with a fleet arriving next year. Quindar’s own pitch: legacy ground systems take “more than a decade to field”. Price and integration time exclude the operators India is now producing.</dd>
+        </dl>
+      </div>
+      <div class="panel" id="p-newspace" role="tabpanel" hidden>
+        <dl class="kv">
+          <dt>Who</dt><dd>Quindar (US, ~$27M, Series A Nov 2025), Cognitive Space (US, ~$11M), Leanspace (France, €10M Series A Nov 2025, 20+ operators), Saber Astronautics (Australia/US, Saber Commander launched July 2026), Antaris (US/Chennai).</dd>
+          <dt>How</dt><dd>Cloud mission-management SaaS that sits on an open-source C2 engine (Quindar runs on OpenC3 COSMOS) and orchestrates scheduling, ground-network booking and automation above it. This is the market-validated shape of the category.</dd>
+          <dt>Works when</dt><dd>The customer is a US or European commercial operator comfortable with a foreign cloud control plane.</dd>
+          <dt>Breaks when</dt><dd>The work is defence-adjacent in India. Ownership and data-residency rules keep foreign SaaS out of SBS-3-class programmes, and none of these companies has an Indian presence. Cautionary tale: Major Tom, the earliest cloud mission-control product, ran ~a dozen satellites after eight years and was absorbed by a small operator in 2022. Standalone “cloud mission control” at small scale is a hard business; the wedge has to be measurable money.</dd>
+        </dl>
+      </div>
+      <div class="panel" id="p-oss" role="tabpanel" hidden>
+        <dl class="kv">
+          <dt>Who</dt><dd>Yamcs (Space Applications Services), OpenC3 COSMOS, NASA OpenMCT, SatNOGS, Orekit, TAT-C.</dd>
+          <dt>How</dt><dd>Free, flight-proven command-and-control and visualisation engines. Operators run them and write the planning layer themselves.</dd>
+          <dt>Works when</dt><dd>You need telemetry and commanding — that layer is genuinely solved by open source and should never be rebuilt.</dd>
+          <dt>Breaks when</dt><dd>You need a plan. The maintainers say so themselves: OpenC3’s calendar is “typically used with a separately developed integration to full fledged mission planning software”; Yamcs users asking for pass scheduling were pointed to external scripts. SatNOGS operators maintain hand-edited priority files driven by cron. Planning lives outside the engine, in whatever the team improvised.</dd>
+        </dl>
+      </div>
+      <div class="note blue">
+        <p class="eyebrow">The gap in one sentence</p>
+        <p>Command-and-control is solved. Flight dynamics is solved. The layer that turns customer orders into a conflict-free, money-aware plan across satellites and stations — and learns from what actually executed — is either a decade-old defence product, a foreign cloud SaaS, or a spreadsheet. In India it is a spreadsheet.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================== 2 · PRODUCT ============================== -->
+  <section class="part" id="product">
+    <div class="part-head">
+      <p class="eyebrow">Part 2 of 3</p>
+      <h2>The product: what it does, what it is worth, what is under the hood</h2>
+      <p class="lede">A money-first planning and mission-operations layer that sits above existing command-and-control. It owns the operator’s workflow end to end and leaves spacecraft safety exactly where it is.</p>
+    </div>
+
+    <div class="sub">
+      <h3>The workflow it owns — click through it</h3>
+      <div class="flow" role="group" aria-label="Operator workflow">
+        <button class="step" data-step="request" aria-pressed="true"><span class="eyebrow">1</span><b>Request</b><span class="sm">orders come in</span></button>
+        <button class="step" data-step="plan" aria-pressed="false"><span class="eyebrow">2</span><b>Plan</b><span class="sm">solver decides</span></button>
+        <button class="step" data-step="approve" aria-pressed="false"><span class="eyebrow">3</span><b>Approve</b><span class="sm">a human signs</span></button>
+        <button class="step" data-step="send" aria-pressed="false"><span class="eyebrow">4</span><b>Send</b><span class="sm">to the real C2</span></button>
+        <button class="step" data-step="monitor" aria-pressed="false"><span class="eyebrow">5</span><b>Monitor</b><span class="sm">what really ran</span></button>
+        <button class="step repair" data-step="repair" aria-pressed="false"><span class="eyebrow">6</span><b>Repair</b><span class="sm">when it breaks</span></button>
+      </div>
+      <div class="stepinfo" id="stepinfo" aria-live="polite"></div>
+    </div>
+
+    <div class="sub">
+      <h3>The value proposition, in the customer’s units</h3>
+      <div class="two-col">
+        <div class="prose">
+          <p><strong>More delivered value per rupee of ground-segment spend.</strong> The optimiser’s objective is literally rupees: customer value delivered on time, minus station minutes at the station’s per-minute rate, minus lateness penalties. Every plan states its exact value and every refused order carries a typed reason (“no downlink capacity before deadline”, “would breach storage”, “displaced by a higher-value order”). An operations lead can read a plan the way a finance lead reads a budget.</p>
+          <p><strong>A proven bound, not a guess.</strong> Most schedulers return “a good plan”. This one returns a plan plus a solver-proven certificate that no plan exists worth more than 10% above it. That is the difference between a heuristic and an answer — and it is what lets an operator approve quickly.</p>
+          <p><strong>Repair without rewriting.</strong> When a station drops or an urgent order lands, the re-solve starts from what has already executed, is penalised for moving commitments, and reports in money: “preserved ₹X of committed value, cost ₹Y of extra station time, moved N activities (listed)”.</p>
+          <p><strong>Nothing to rip out.</strong> It integrates with the C2 and flight-dynamics tools the operator already built or bought. Self-hostable, on-premises, auditable — the shape that defence-adjacent Indian buyers can actually accept.</p>
+        </div>
+        <div class="stack">
+          <div class="note">
+            <p class="eyebrow">Who buys, and why each cares</p>
+            <p><strong>Data operators</strong> (Pixxel, GalaxEye, PierSight) sell pixels against customer clocks — they buy on-time delivery and unallocated passes turned into revenue.</p>
+            <p><strong>Operations providers</strong> (Dhruva) sell contact minutes to other operators — they buy utilisation and explainable displacement.</p>
+            <p><strong>Sovereign programmes</strong> (SBS-3, EO-PPP) answer to a mandate — they buy auditability, on-prem deployment and a domestic vendor.</p>
+          </div>
+          <div class="note rose">
+            <p class="eyebrow">The fixed safety boundary</p>
+            <p>Only the operator-approved, allow-listed plan reaches the control system, and only through a separate worker. No browser, no AI model, and no natural-language output can ever issue a spacecraft command or touch fault-protection settings. Flight software keeps that authority, permanently and by design. The public claim is never “AI runs satellites”, because it doesn’t.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sub">
+      <h3>Under the hood</h3>
+      <div class="tablewrap">
+        <table>
+          <thead><tr><th>Component</th><th>What it does</th><th>Built on</th></tr></thead>
+          <tbody>
+            <tr><td class="k">Orbital geometry</td><td>Turns each satellite’s orbital element set into every physically possible imaging window, downlink pass and command-uplink pass over the horizon. Deterministic and cached; stale inputs are visible.</td><td class="mono">TAT-C · Skyfield · SGP4 · OMM XML</td></tr>
+            <tr><td class="k">Joint optimiser</td><td>Chooses collections, downlinks and uplinks together under power, storage, slew, antenna, minimum-duration and deadline constraints, maximising a rupee objective. Ships a solver-proven optimality gap ≤ 10% and a typed reason for every rejection.</td><td class="mono">Google OR-Tools CP-SAT 9.15</td></tr>
+            <tr><td class="k">Bounded repair</td><td>Event-driven re-solve from a hashed execution cutoff, with a stability penalty so committed work stays put. Proven ≤ 10% gap in under five seconds on the reference fleet.</td><td class="mono">CP-SAT · seed-plan hints</td></tr>
+            <tr><td class="k">Independent validator</td><td>A second, solver-free implementation of every physical rule re-checks each plan. Catches encoding bugs the optimiser cannot see about itself. 17 cross-entity rules plus command-reachability.</td><td class="mono">pure Python</td></tr>
+            <tr><td class="k">Ledger &amp; versions</td><td>Append-only event log; immutable, hashed scenario versions; approval is a derived stage (revocable until something physically uplinks). Tenant-isolated Postgres with fail-closed connection identity.</td><td class="mono">PostgreSQL · SQLAlchemy · Alembic</td></tr>
+            <tr><td class="k">C2 seam</td><td>Sends approved plans to a real, unmodified Yamcs mission-control instance and correlates command, telemetry and health receipts back to the plan. A deterministic spacecraft simulator with scripted disruptions proves the loop end to end.</td><td class="mono">Yamcs (headless) · Docker Compose</td></tr>
+            <tr><td class="k">API &amp; operator UI</td><td>Versioned read projections, guarded ledger-only actions, OIDC roles (platform / customer / operator planes), customer submit-only intake and a machine tasking API. Operator workspace: Fleet, Plan timeline, Map, Mission Control, Economics, Execution, Compare, Mission Parameters.</td><td class="mono">FastAPI · React · TypeScript · Cesium</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="sub">
+      <h3>What exists today, measured</h3>
+      <div class="two-col">
+        <div class="status">
+          <div class="status-row"><span class="dot"></span><div>Typed constellation model, validator, event ledger<span class="sm">immutable hashed versions; 17 rules; second independent validator</span></div></div>
+          <div class="status-row"><span class="dot"></span><div>Opportunity generation from real orbital data<span class="sm">16 authenticated real satellites; 10 station bundles at 8 sites — 4 in India plus Hawaii, Cape Town, Singapore, Dubbo</span></div></div>
+          <div class="status-row"><span class="dot"></span><div>Joint collection + downlink + uplink optimiser<span class="sm">rupee objective; proven ≤10% gap; typed rejection reasons</span></div></div>
+          <div class="status-row"><span class="dot"></span><div>Bounded, event-driven repair<span class="sm">&lt;5 s; stability-penalised; money-denominated repair report</span></div></div>
+          <div class="status-row"><span class="dot"></span><div>Closed loop through real Yamcs + deterministic spacecraft simulator<span class="sm">approve ≠ send; typed receipts; scripted disruptions replay byte-identically</span></div></div>
+          <div class="status-row"><span class="dot"></span><div>Multi-tenant runtime, roles, customer intake, machine API<span class="sm">platform / customer / operator identity planes; Docker Compose proof</span></div></div>
+          <div class="status-row"><span class="dot"></span><div>Operator interface<span class="sm">Fleet, Plan, Map, Mission Control, Economics, Execution and Compare available</span></div></div>
+          <div class="status-row"><span class="dot"></span><div>Customer storefront<span class="sm">order cards and search; receipt-backed promise analytics; archive search is a preview with mock figures; Reach-us assistant is local demo only</span></div></div>
+          <div class="status-row"><span class="dot wip"></span><div>Mentor demo readiness<span class="sm">request → plan → approval can be practised locally; full Q09 rehearsal and explicit DEMO_GO remain open · <a href="demo.html">walkthrough</a></span></div></div>
+          <div class="status-row"><span class="dot no"></span><div>First design partner<span class="sm">the open item — and the reason for this brief</span></div></div>
+        </div>
+        <div class="stack">
+          <div class="facts">
+            <div class="fact"><b class="num">16 × 200</b><span>satellites × stations planned within the 10% proof at a 300 s budget</span></div>
+            <div class="fact"><b class="num">128</b><span>satellites planned within 10% with seed-plan hints (10 stations)</span></div>
+            <div class="fact"><b class="num">3,000</b><span>customer requests in one solve at a 2.1% proven gap</span></div>
+            <div class="fact"><b class="num">614 / 263</b><span>commits / pull requests since July 2026, each spec-first and independently gated</span></div>
+          </div>
+          <div class="note blue">
+            <p class="eyebrow">How it is built</p>
+            <p>Every feature is one written spec, one issue, one PR, with an independent review of the spec and a second independent review of the implementation before merge. Everything is reproducible from a clean checkout — the same inputs give byte-identical plans. Four claim classes stay separate and are never collapsed: repeatability (proven by hashes), protocol correctness (proven against stock Yamcs), operational robustness (proven by scripted disruptions), and physical-flight reliability (not yet proven — it needs a real spacecraft).</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================== 3 · BUSINESS ============================== -->
+  <section class="part" id="business">
+    <div class="part-head">
+      <p class="eyebrow">Part 3 of 3</p>
+      <h2>The business: market, timing, competitors</h2>
+      <p class="lede">A named-account market with a regulatory moat, entered at the same point in the cycle where the US category was born — and a business model the customer can check against their own ground-station bill. Numbers are labelled: <span class="pill src">sourced</span> <span class="pill est">estimate</span> <span class="pill tgt">target</span> <span class="pill open">open</span></p>
+    </div>
+
+    <div class="sub">
+      <h3>Why now</h3>
+      <div class="two-col">
+        <div class="tl">
+          <div class="tl-row"><span class="yr">2020</span><div>India opens the space sector to private companies; IN-SPACe created as regulator and promoter.</div></div>
+          <div class="tl-row"><span class="yr">2023</span><div>Indian Space Policy 2023 sets the $44B-by-2033 ambition (from ~$8.4B in 2022, FICCI-EY).</div></div>
+          <div class="tl-row"><span class="yr">Jan 2025</span><div>Pixxel launches India’s first private commercial constellation (Fireflies). Space start-ups raise $200M in 2025, +143% on 2024.</div></div>
+          <div class="tl-row now"><span class="yr">2026</span><div>IN-SPACe awards the ₹1,200-crore EO-PPP to the Pixxel-led Allied Orbits consortium (12 optical/hyperspectral/SAR satellites). SBS-3 funds 52 surveillance satellites at ₹22,500 crore, 31 of them from private industry. 440 space start-ups, 113 IN-SPACe authorisations, $871M cumulative funding.</div></div>
+          <div class="tl-row"><span class="yr">2027–29</span><div>Both fleets deploy. This is when the scheduling pain arrives: 12 heterogeneous payloads on shared ground infrastructure, plus a sovereign fleet that cannot use foreign cloud software.</div></div>
+        </div>
+        <div class="stack">
+          <div class="note">
+            <p class="eyebrow">The pattern we are following</p>
+            <p>US operators built everything in-house until fleets scaled past ~10 satellites around 2019. Then Quindar, Epsilon3 and Cognitive Space were founded and funded. India in 2026 looks like the US in 2019: in-house is the incumbent, the fleets are about to double, and the category has no domestic entrant.</p>
+          </div>
+          <div class="note blue">
+            <p class="eyebrow">The moat</p>
+            <p>Ownership and data-residency rules keep foreign SaaS out of defence-adjacent Indian work. A self-hosted, explainable, domestic product is defensible in a way a US cloud competitor’s is not — and the same product sells to small operators worldwide that Quindar-class pricing leaves behind.</p>
+          </div>
+          <div class="note rose">
+            <p class="eyebrow">The honest risk</p>
+            <p>Government timelines slip; treat that as the base case, not the exception. And the concentrated-buyer structure below is real.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sub">
+      <h3>Market size — TAM, SAM, SOM</h3>
+      <p class="lede">Hover or tap a ring. The big headline numbers in this industry are mostly antennas and hardware; only the software slice is relevant, so this is sized from the software layer down, and each number says where it came from.</p>
+      <div class="market">
+        <div class="chart" id="chart">
+          <svg viewBox="0 0 560 330" role="img" aria-labelledby="chart-title chart-desc">
+            <title id="chart-title">Nested market rings: TAM, SAM, SOM</title>
+            <desc id="chart-desc">Three nested half-circles. TAM about 2.2 billion dollars, SAM roughly 25 to 80 million dollars a year, SOM a 3-year target of 0.5 to 2 million dollars ARR.</desc>
+            <g class="ring" data-ring="tam" tabindex="0" role="button" aria-label="TAM">
+              <path d="M40,300 A240,240 0 0 1 520,300 Z" fill="var(--blue-3)" stroke="var(--surface)" stroke-width="2"/>
+              <text class="lab" x="280" y="98" text-anchor="middle">TAM · MISSION-PLANNING SOFTWARE</text>
+              <text class="val" x="280" y="122" text-anchor="middle">$2.2B → $6.0B</text>
+              <text class="lab" x="280" y="140" text-anchor="middle">GLOBAL · 2025 → 2034 · 11.8% CAGR</text>
+            </g>
+            <g class="ring" data-ring="sam" tabindex="0" role="button" aria-label="SAM">
+              <path d="M130,300 A150,150 0 0 1 430,300 Z" fill="var(--blue-2)" stroke="var(--surface)" stroke-width="2"/>
+              <text class="lab" x="280" y="196" text-anchor="middle">SAM · LEO FLEETS, 5–200 SATS</text>
+              <text class="val" x="280" y="218" text-anchor="middle">$25M – $80M / yr</text>
+            </g>
+            <g class="ring" data-ring="som" tabindex="0" role="button" aria-label="SOM">
+              <path d="M205,300 A75,75 0 0 1 355,300 Z" fill="var(--blue)" stroke="var(--surface)" stroke-width="2"/>
+              <text class="lab" x="280" y="262" text-anchor="middle" style="fill: var(--ground)">SOM · 36 MONTHS</text>
+              <text class="val" x="280" y="290" text-anchor="middle" style="fill: var(--ground); font-size: 16px">$0.5–2M ARR</text>
+            </g>
+            <line x1="40" y1="300" x2="520" y2="300" stroke="var(--line-strong)" stroke-width="1"/>
+          </svg>
+          <div class="tip" id="tip"></div>
+        </div>
+        <div class="ringinfo" id="ringinfo" aria-live="polite"></div>
+      </div>
+      <div class="tablewrap">
+        <table>
+          <thead><tr><th>Anchor</th><th>Figure</th><th>Status</th><th>Source / method</th></tr></thead>
+          <tbody>
+            <tr><td class="k">Ground segment, total</td><td class="num">≈ $106B</td><td><span class="pill src">sourced</span></td><td>Novaspace, Ground Segment Market Prospects, Dec 2025. Hardware ≈ 48% — most of this is antennas, not software.</td></tr>
+            <tr><td class="k">Space mission-planning software</td><td class="num">$2.21B (2025) → $6.03B (2034)</td><td><span class="pill src">sourced</span></td><td>Dataintelo, Space Mission Planning Software Market. Used as TAM.</td></tr>
+            <tr><td class="k">Ground-station software</td><td class="num">$1.85B (2024) → $3.92B (2033)</td><td><span class="pill src">sourced</span></td><td>Dataintelo, Satellite Ground Station Software Market, 8.7% CAGR. Adjacent layer, overlaps TAM.</td></tr>
+            <tr><td class="k">GSaaS growth</td><td class="num">~20% CAGR; APAC fastest region</td><td><span class="pill src">sourced</span></td><td>MarketsandMarkets; GMInsights. Per-minute station pricing is what makes the product’s value measurable in currency.</td></tr>
+            <tr><td class="k">Serviceable operators</td><td class="num">~150–250 companies</td><td><span class="pill est">estimate</span></td><td>Commercial operators with 5–200 satellites flying or funded, excluding legacy-prime buyers. Derived from Tracxn-type counts and the founder’s 16-account target list (1,450+ satellites). To be replaced by a counted list.</td></tr>
+            <tr><td class="k">Annual contract value</td><td class="num">$150K – $400K</td><td><span class="pill open">open</span></td><td>No published price exists for this layer. Assumed from Quindar/Leanspace positioning; a pricing study with operators is the first validation task. Everything downstream inherits this uncertainty.</td></tr>
+            <tr><td class="k">India, qualified accounts</td><td class="num">8–12 · 2–3 concentrated doors</td><td><span class="pill est">estimate</span></td><td>Pixxel + Dhruva jointly control national-constellation ops decisions; SBS-3 procurement is the third door. A named-account market, not a volume market.</td></tr>
+            <tr><td class="k">SOM, 36 months</td><td class="num">3–5 paying operators · $0.5M–$2M ARR</td><td><span class="pill tgt">target</span></td><td>1–2 Indian design partners plus 2–3 small global operators priced out of Quindar-class SaaS, at the assumed ACV. Grants (IN-SPACe Seed ≤ ₹1 cr, Technology Adoption Fund ≤ ₹25 cr) bridge the 9–18-month sales cycle.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="sub">
+      <h3>Business model</h3>
+      <div class="two-col">
+        <div class="prose">
+          <p><strong>Annual software licence, self-hosted, priced per satellite under management</strong> — the unit the customer already counts in, and one that grows with every launch they make. A one-time integration fee covers connecting to the operator’s C2, ground network and tasking tools. Upsell is by capability: repair, economics, the machine tasking API, then the multi-operator layer.</p>
+          <p><strong>Why per satellite.</strong> Ground-station time is already sold by the minute, so the customer can compute the return themselves: one avoided wasted pass a week pays for a satellite’s licence. The product’s own economics page shows planned-versus-realised rupees, which becomes the renewal conversation.</p>
+          <p><strong>What is not yet known.</strong> The price point. No public number exists for this layer; the first operator conversations run a structured price-sensitivity study before any contract is quoted. Until then every revenue figure on this page inherits that uncertainty and says so.</p>
+        </div>
+        <div class="stack">
+          <div class="note">
+            <p class="eyebrow">Revenue shape, years 1–3</p>
+            <p>Grants and one to two design-partner contracts carry years one and two; IN-SPACe Seed (≤ ₹1 cr) and the Technology Adoption Fund (≤ ₹25 cr, up to 60% of project cost) exist precisely for this stage. The venture-scale story is the multi-operator phase as the EO-PPP and SBS-3 fleets ramp in 2027–29.</p>
+          </div>
+          <div class="note blue">
+            <p class="eyebrow">Why it sticks</p>
+            <p>Once the planner holds an operator’s constraints, priorities and execution history, it is the system of record for what the fleet did and why. Switching means re-teaching a year of operational knowledge. Combined with on-prem deployment inside a defence-adjacent programme, churn is a procurement event, not a click.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sub">
+      <h3>Who else is in the arena</h3>
+      <p class="lede">Filter by region. “Relationship” is how each one actually relates to us — competitor, customer, partner, or more than one at once.</p>
+      <div class="filters" role="group" aria-label="Filter competitors">
+        <button data-f="all" aria-pressed="true">All</button>
+        <button data-f="india" aria-pressed="false">India</button>
+        <button data-f="newspace" aria-pressed="false">Overseas new-space</button>
+        <button data-f="legacy" aria-pressed="false">Legacy vendors</button>
+        <button data-f="adjacent" aria-pressed="false">Adjacent &amp; open source</button>
+      </div>
+      <div class="tablewrap">
+        <table id="comp">
+          <thead><tr><th>Company</th><th>Where</th><th>What they sell</th><th>Money / stage</th><th>Relationship to us</th></tr></thead>
+          <tbody>
+            <tr data-f="india"><td class="k">Dhruva Space</td><td>Hyderabad</td><td>Satellite platforms, ground stations as a product, in-house ISOCS ops suite (TT&amp;C, scheduling, multi-satellite tracking); runs mission ops for EO-PPP. GSaaS-authorised by IN-SPACe, 13 partner stations in 10 countries.</td><td>Series A; oldest private Indian space company</td><td><span class="rel c">competitor</span> · <span class="rel cu">customer</span> · <span class="rel p">partner</span><span class="sm">Most concentrated buyer of scheduling capability in India; also the likeliest in-house builder. Could bundle our layer with their stations.</span></td></tr>
+            <tr data-f="india"><td class="k">Pixxel</td><td>Bengaluru</td><td>Hyperspectral EO constellation (Fireflies); leads EO-PPP. Builds its own ground-segment software, tasking and flight dynamics; uses KSATlite for global downlink.</td><td>$71M+; Google-backed</td><td><span class="rel cu">customer</span><span class="sm">In-house is the incumbent. Wedge: the joint planning layer their stack lacks, integrating with what they built.</span></td></tr>
+            <tr data-f="india"><td class="k">GalaxEye</td><td>Bengaluru</td><td>Multi-sensor (SAR + optical) EO satellites; staffing a shift-based mission operations centre and in-house telemetry/planning tools.</td><td>Series A</td><td><span class="rel cu">customer</span><span class="sm">Stack under construction; headcount and integration cost visible in job postings.</span></td></tr>
+            <tr data-f="india"><td class="k">KaleidEO (SatSure)</td><td>Bengaluru</td><td>EO satellites with a hybrid model: in-orbit ops via commercial providers, mission design and tasking tools built in-house.</td><td>SatSure-backed</td><td><span class="rel cu">customer</span><span class="sm">Best first design-partner hypothesis: already buys, actively building the planning layer.</span></td></tr>
+            <tr data-f="india"><td class="k">PierSight</td><td>Ahmedabad</td><td>SAR + AIS maritime surveillance constellation; EO-PPP consortium member.</td><td>Seed / Series A</td><td><span class="rel cu">customer</span><span class="sm">Ground/ops stack publicly unknown — an interview question, not a claim.</span></td></tr>
+            <tr data-f="india"><td class="k">Antaris</td><td>Chennai / US</td><td>Cloud platform for satellite design, build and operations (“SatOS”); AI-driven.</td><td>Unfunded on Tracxn; founded 2023</td><td><span class="rel c">competitor</span><span class="sm">Closest domestic name in the category, positioned on design/build rather than fleet-level economics.</span></td></tr>
+            <tr data-f="india"><td class="k">Space TS · ASIL</td><td>Bengaluru</td><td>Flight-operations and satellite-control software with ISRO heritage, for domestic and export customers.</td><td>Private</td><td><span class="rel c">competitor</span> · <span class="rel p">partner</span><span class="sm">C2-layer specialists, not planning; verify current products before a head-to-head claim.</span></td></tr>
+            <tr data-f="india"><td class="k">Ananth Technologies · Centum · Alpha Design</td><td>Hyderabad / Bengaluru</td><td>Satellite integrators for SBS-3’s 31 private-built spacecraft.</td><td>Established primes</td><td><span class="rel p">partner</span><span class="sm">They build the fleet; someone will have to plan it. Channel, not competition.</span></td></tr>
+            <tr data-f="india"><td class="k">Digantara</td><td>Bengaluru</td><td>Space situational awareness; orbit-level tracking data.</td><td>$50M Series B (2025), Reliance-backed</td><td><span class="rel p">partner</span><span class="sm">Deconfliction data feeds our planner. Partner, not competitor.</span></td></tr>
+
+            <tr data-f="newspace"><td class="k">Quindar</td><td>Denver, US</td><td>Cloud mission-management SaaS orchestrating on OpenC3 COSMOS; integrates KSAT, Leafspace, ATLAS, RBC Signals.</td><td>~$27M; Series A Nov 2025; founded 2022 by ex-OneWeb</td><td><span class="rel c">competitor</span><span class="sm">Three years ahead; the shape we are validating against. No India presence; foreign cloud excluded from defence-adjacent work.</span></td></tr>
+            <tr data-f="newspace"><td class="k">Cognitive Space</td><td>Houston, US</td><td>AI-driven constellation management and near-real-time dynamic rescheduling (CNTIENT).</td><td>~$11.2M over 7 rounds</td><td><span class="rel c">competitor</span><span class="sm">Closest on the scheduling thesis; US government-leaning.</span></td></tr>
+            <tr data-f="newspace"><td class="k">Leanspace</td><td>Strasbourg, France</td><td>Software-defined satellite and ground-segment operations platform; 20+ operators; 7 agency/prime contracts in Europe.</td><td>€10M Series A, Nov 2025</td><td><span class="rel c">competitor</span><span class="sm">Enterprise/institutional Europe; broad platform rather than money-first planning.</span></td></tr>
+            <tr data-f="newspace"><td class="k">Saber Astronautics</td><td>Sydney / Boulder</td><td>Saber Commander constellation-operations software (July 2026), built on its PIGI ground interface.</td><td>Founded 2008; defence contracts</td><td><span class="rel c">competitor</span><span class="sm">Defence-oriented; Australia/US.</span></td></tr>
+            <tr data-f="newspace"><td class="k">Major Tom (Xplore)</td><td>Redmond, US</td><td>Earliest cloud mission control incl. ground-station scheduling and AWS Ground Station integration.</td><td>Acquired by operator Xplore, 2022</td><td><span class="rel m">cautionary tale</span><span class="sm">~a dozen satellites after eight years. Cloud mission control alone is not a business; the money wedge is.</span></td></tr>
+
+            <tr data-f="legacy"><td class="k">Kratos OpenSpace</td><td>US</td><td>Software-defined ground systems; Epic C2; sold to defence and government.</td><td>Public (KTOS)</td><td><span class="rel c">competitor</span><span class="sm">Programme-scale procurement; decade-long field time by the new-space entrants’ own account.</span></td></tr>
+            <tr data-f="legacy"><td class="k">GMV Flexplan</td><td>Spain</td><td>Configurable mission-planning and scheduling with reusable constraint/rule definitions; agency heritage.</td><td>Private; large</td><td><span class="rel c">competitor</span><span class="sm">Closest legacy analogue to our planner; priced and packaged for agencies.</span></td></tr>
+            <tr data-f="legacy"><td class="k">Terma PLAN</td><td>Denmark</td><td>Constellation and ground-segment scheduling via genetic algorithms and configurable rules.</td><td>Private; defence group</td><td><span class="rel c">competitor</span><span class="sm">Heuristic scheduler — no proven bound; European institutional market.</span></td></tr>
+            <tr data-f="legacy"><td class="k">L3Harris · Airbus</td><td>US / EU</td><td>Full ground segments bundled with satellites and defence programmes.</td><td>Public primes</td><td><span class="rel c">competitor</span><span class="sm">Not addressable by, or addressing, a 40-person operator.</span></td></tr>
+
+            <tr data-f="adjacent"><td class="k">Epsilon3</td><td>Los Angeles, US</td><td>Procedures and workflow management for space operations.</td><td>Series B</td><td><span class="rel p">adjacent</span><span class="sm">Explicitly not scheduling; a category boundary and potential integration.</span></td></tr>
+            <tr data-f="adjacent"><td class="k">Kayhan Space</td><td>Boulder, US</td><td>Satcat: space traffic coordination and conjunction risk.</td><td>Series A</td><td><span class="rel p">adjacent</span><span class="sm">Safety-of-flight data, not tasking.</span></td></tr>
+            <tr data-f="adjacent"><td class="k">Yamcs · OpenC3 COSMOS · OpenMCT</td><td>Open source</td><td>Command-and-control, telemetry and visualisation engines with flight heritage (Capella, Kepler, ESA-adjacent).</td><td>Open core + enterprise</td><td><span class="rel p">foundation</span><span class="sm">We run on top of them. Never rebuild this layer.</span></td></tr>
+            <tr data-f="adjacent"><td class="k">SatNOGS</td><td>Open source</td><td>Community ground-station network, 500+ stations, readable auto-scheduler.</td><td>Libre Space Foundation</td><td><span class="rel p">reference</span><span class="sm">Where the “priority files + cron” pain is documented in public.</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="sub">
+      <h3>What could kill it, and what we do about each</h3>
+      <div>
+        <details><summary>Government timelines slip<span></span></summary><div class="body">Base case, not exception. Mitigation: sell to the commercial data operators (Pixxel, GalaxEye, KaleidEO) whose clocks are set by paying customers, and to small global operators, so the sovereign programmes are upside rather than the plan.</div></details>
+        <details><summary>Operators keep building in-house<span></span></summary><div class="body">The cheap kill, by design. We are not asking anyone to replace their stack — we integrate above it. If a fleet of 20 still prefers a spreadsheet after seeing a proven, explained, money-denominated plan run against their own Yamcs, the company stops having cost a webpage and a year, not a funding round.</div></details>
+        <details><summary>Two or three buyers control the Indian market<span></span></summary><div class="body">True. Countered by high-value, sticky contracts once embedded, by selling the same product to the global small-operator segment from India, and by treating Dhruva as a channel as much as a competitor.</div></details>
+        <details><summary>Quindar or Leanspace enters India through a partner<span></span></summary><div class="body">Possible. Their answer is still a foreign cloud control plane, which defence-adjacent buyers cannot accept. Our answer is on-prem, auditable and domestic. The best defence is a working product in an Indian operator’s hands before they arrive.</div></details>
+        <details><summary>Solo founder<span></span></summary><div class="body">Real. Named gaps are a co-founder and a first design partner. The build has been run under an independent-review process from day one precisely so the codebase does not depend on one person’s memory. There is a hard checkpoint on 15 January 2027: design-partner traction by then, or the product becomes the credential for an insider path inside an operator.</div></details>
+      </div>
+    </div>
+
+    <div class="sub">
+      <h3>Where this goes</h3>
+      <div class="chapters">
+        <div class="chapter now">
+          <p class="eyebrow">Chapter 1 · now → mid-2027</p>
+          <h4>Prove it with one operator</h4>
+          <p>Money-first planning layer above existing C2, closed end to end through a real mission-control system. Land the first design partner in India. Grants bridge the sales cycle.</p>
+        </div>
+        <div class="chapter">
+          <p class="eyebrow">Chapter 2 · 2027 → 2029</p>
+          <h4>Embed and earn</h4>
+          <p>One deeply embedded operator, production hardening, first paid deployments in India and among small global operators. The EO-PPP and SBS-3 fleets come online in exactly this window.</p>
+        </div>
+        <div class="chapter">
+          <p class="eyebrow">Chapter 3 · 2029 →</p>
+          <h4>The multi-operator layer</h4>
+          <p>Cross-operator capacity sharing without exposing anyone’s tasking, deconfliction, coordinated planning. The network effect the single-operator product earns the right to build — and the first step of a vertically integrated Indian space company.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="sub">
+      <h3>The founder</h3>
+      <div class="founder">
+        <div class="prose">
+          <p>Sumanth Varma Vitrouthu is a software engineer in Hyderabad with a master’s in robotics and autonomous systems from Arizona State University — the same mathematics that plans a robot’s path plans a satellite’s day. At Oracle Health he designed and ran the systems that move sensitive clinical records between large American health insurers and hospitals: regulated, encrypted, multi-tenant, and unforgiving of mistakes. That is the discipline this product is built with — correct, auditable and dependable before clever.</p>
+          <p>Over the last year he has built the core of Constellation OS alone, with AI-assisted engineering under a strict spec-and-review process: a planner that proves how close its plans are to the best possible, a live link to an industry-standard mission-control system, and a full, reproducible record of every decision. The code, the evidence and the decision history are public.</p>
+          <div class="cta">
+            <a class="btn primary" href="https://github.com/SumanthVarma798" target="_blank" rel="noopener">Projects on GitHub</a>
+            <a class="btn" href="https://linkedin.com/in/sumanthvarmaa" target="_blank" rel="noopener">Profile on LinkedIn</a>
+          </div>
+        </div>
+        <div class="creds">
+          <div class="cred"><span class="eyebrow">Now</span>Founder, Constellation OS · Hyderabad</div>
+          <div class="cred"><span class="eyebrow">Industry</span>Software Developer 2, Oracle Health (Seattle) — HIPAA-compliant clinical data exchange between national health plans and providers; multi-payer platform; production incident recovery</div>
+          <div class="cred"><span class="eyebrow">Education</span>MS Robotics &amp; Autonomous Systems (AI), Arizona State University, 2021 — machine learning, reinforcement learning, path planning, control</div>
+          <div class="cred"><span class="eyebrow">Domain prep</span>TT&amp;C protocols, CCSDS standards, orbit propagation, Earth-observation and geospatial pipelines</div>
+          <div class="cred"><span class="eyebrow">Named gaps</span>A co-founder on the operations side, and a first design partner. Both are what this round buys.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sub" id="ask">
+      <h3>The ask</h3>
+      <div class="two-col">
+        <div class="stack">
+          <div class="note">
+            <p class="eyebrow">What we are raising for</p>
+            <p>A pre-seed round, alongside IN-SPACe grant applications, to fund the eighteen months from first design partner to first paid multi-operator deployment. Round size and terms are set with a lead; the milestones below are what the money buys.</p>
+          </div>
+          <div class="funds">
+            <div class="fund"><b>Design partner deployment</b><p>Self-hosted install beside one Indian operator’s C2; integration adapters for their ground network and tasking tools; the receipt-backed execution history that no simulator can produce.</p></div>
+            <div class="fund"><b>Team</b><p>An operations-side co-founder who has run a fleet, plus one or two engineers. The build process is already designed to onboard them — every feature has a written spec and two independent reviews.</p></div>
+            <div class="fund"><b>Runway to the fleet ramp</b><p>Eighteen months of solo-founder-scale burn, timed so the product is in an operator’s hands before the EO-PPP and SBS-3 satellites launch in 2027–29.</p></div>
+          </div>
+        </div>
+        <div class="stack">
+          <p class="eyebrow">Milestones</p>
+          <div class="milestones">
+            <div class="ms"><span class="when">done</span><div>Core delivered: joint optimiser with proven bound, bounded repair, closed loop through real Yamcs, multi-tenant runtime — reproducible from a clean checkout.</div></div>
+            <div class="ms"><span class="when">Q4 2026</span><div>Operator interviews and pricing study with the 8–12 qualified Indian accounts; IN-SPACe Seed application filed.</div></div>
+            <div class="ms"><span class="when">15 Jan 2027</span><div>Hard checkpoint: a signed design-partner letter of intent, or the plan changes. Stated in advance so nobody has to guess.</div></div>
+            <div class="ms"><span class="when">2027</span><div>First deployment beside a live constellation; first paid contract; operations-side co-founder in seat.</div></div>
+            <div class="ms"><span class="when">2028–29</span><div>EO-PPP and SBS-3 fleets deploying; second and third operators; multi-operator layer specified from real execution history.</div></div>
+          </div>
+          <div class="cta">
+            <a class="btn primary" href="https://linkedin.com/in/sumanthvarmaa" target="_blank" rel="noopener">Reach the founder on LinkedIn</a>
+            <a class="btn" href="https://github.com/SumanthVarma798" target="_blank" rel="noopener">Review the code first</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p class="eyebrow">Sources</p>
+    <div class="sources">
+      <ol>
+        <li>FICCI–EY, Indian space economy to reach $44B by 2033 (Mar 2025); WION / IndBiz coverage.</li>
+        <li>BW Disrupt, India SpaceTech raises $871M across 285 companies, 241 rounds (Jul 2026); Ascendants, $200M in 2025 across 53 rounds.</li>
+        <li>Organiser, 440 space start-ups, 113 IN-SPACe authorisations (Aug 2026).</li>
+        <li>Raksha Anirveda / Vajiram, SBS-3: 52 satellites, ₹22,500 cr, 31 private-built (Ananth, Centum, Alpha Design).</li>
+        <li>Pixxel press release; DeepTech India; EFY — EO-PPP: Allied Orbits consortium, 12 satellites, ₹1,200 cr (~$135M).</li>
+        <li>Novaspace, Ground Segment Market Prospects, 6th ed. (Dec 2025) — ≈$106B, hardware ≈48%.</li>
+        <li>Dataintelo, Space Mission Planning Software Market ($2.21B 2025 → $6.03B 2034) and Satellite Ground Station Software Market ($1.85B 2024 → $3.92B 2033).</li>
+        <li>MarketsandMarkets, Satellite Ground Station Market — GSaaS ~20% CAGR; GMInsights — APAC fastest region.</li>
+        <li>Tracxn company profiles (Jul–Aug 2026): Quindar ~$27M, Series A Nov 2025; Cognitive Space $11.2M; Antaris unfunded; 31 mission-management start-ups.</li>
+        <li>SpaceNews, Leanspace €10M Series A (Nov 2025); Space &amp; Defense, Saber Commander release (Jul 2026); Xplore, Major Tom.</li>
+        <li>Terma PLAN, GMV Flexplan, Kratos OpenSpace product pages; Space Intel Report on Kratos.</li>
+        <li>Dhruva Space ground-station page; IN-SPACe GSaaS authorisation (Jul 2024); Pixxel and GalaxEye job postings; KaleidEO careers page.</li>
+        <li>Yamcs #584, OpenC3 #1200 / #647, Libre Space Community threads — planning-outside-the-engine evidence.</li>
+        <li>Payload Space, ~$3/min GSaaS market floor; AIAA two-step BLP scheduling paper (~35% over greedy).</li>
+        <li>Constellation OS repository: README, NORTH-STAR, research/ evidence, scale-wall findings (Aug 2026), commit and PR counts as of 3 Sep 2026.</li>
+      </ol>
+    </div>
+    <p class="eyebrow">Prepared 3 September 2026 · product status updated 29 September 2026 · Sumanth Varma Vitrouthu · <a href="https://github.com/SumanthVarma798" target="_blank" rel="noopener">github.com/SumanthVarma798</a> · <a href="https://linkedin.com/in/sumanthvarmaa" target="_blank" rel="noopener">linkedin.com/in/sumanthvarmaa</a></p>
+    <p class="eyebrow">Figures marked estimate or target are the founder’s working assumptions, not measurements.</p>
+  </footer>
+</main>
+
+<script>
+(function () {
+  // ---------- section nav highlight ----------
+  var links = Array.prototype.slice.call(document.querySelectorAll('.nav a'));
+  var parts = Array.prototype.slice.call(document.querySelectorAll('section.part'));
+  function setCurrent(id) {
+    links.forEach(function (a) { a.setAttribute('aria-current', a.getAttribute('href') === '#' + id ? 'true' : 'false'); });
+  }
+  if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) { if (e.isIntersecting) setCurrent(e.target.id); });
+    }, { rootMargin: '-40% 0px -55% 0px' });
+    parts.forEach(function (p) { io.observe(p); });
+  }
+  links.forEach(function (a) { a.addEventListener('click', function () { setCurrent(a.getAttribute('href').slice(1)); }); });
+
+  // ---------- stack layers ----------
+  var layerText = {
+    intent: { t: 'Customer orders & mission intent', s: 'Served by product and sales tools', b: 'Orders, internal priorities, mission rules and urgent requests arrive through separate business systems. Operators translate them into technical task parameters by hand. Every new customer, sensor mode or SLA adds a policy branch that lives in someone’s head.' },
+    tasking: { t: 'Collection planning & payload tasking', s: 'Gap — built in-house, optimised alone', b: 'Pixxel explicitly builds image planning and tasking in-house; KaleidEO is building and testing its own tasking models. The problem is not that the layer is missing — it is that it is optimised separately from downlink. A feasible image plan can be impossible to downlink on time, and nobody finds out until the pass is over.' },
+    fd: { t: 'Flight dynamics & orbit prediction', s: 'Solved — do not rebuild', b: 'STK, GMAT, FreeFlyer, Orekit and Python scripts. The astrodynamics is mature and licensed or open. The only work here is keeping analysis assumptions aligned with operational truth. Constellation OS consumes ephemerides and windows through adapters; it never re-implements a propagator.' },
+    contact: { t: 'Contact scheduling & station booking', s: 'Gap — spreadsheets, scripts, priority files', b: 'Antenna and RF-chain conflicts, setup and turnaround times, pass trimming, priority negotiation and manual recovery. Complexity grows combinatorially with satellites × stations × bands × constraints; a per-station or greedy schedule stops being globally good. Public evidence: hand-maintained priority files run by cron, and requests to “shorten overlapping observations” by priority.' },
+    c2: { t: 'Command & control, procedures', s: 'Solved — Yamcs, OpenC3 COSMOS, GalaxEye’s own interfaces', b: 'Telemetry, commanding, procedures and operator approvals. Rebuilding this creates certification and trust cost for nothing. The maintainers of both leading open-source engines say mission planning is an external system. Constellation OS integrates here through a typed seam and leaves safety-critical command authority where it is.' },
+    data: { t: 'Downlink, processing, delivery', s: 'The operator’s core IP', b: 'Pixxel and GalaxEye build substantial in-house pipelines; the data products are the business. We never compete here. The gap is only that downlink choices are made without awareness of downstream backlog or SLA urgency — a signal the planner should ingest, not a system it should replace.' },
+    feedback: { t: 'Planned-vs-executed feedback & replanning', s: 'Gap — spread across five systems', b: 'What actually ran, whether the contact was useful, what failed, what to retry — spread across booking systems, station logs, C2 telemetry and processing pipelines. Without one event history the next plan repeats bad assumptions, and recovery depends on the people who know every system. Dynamic replanning demand is still an interview hypothesis; the missing single ledger is verified.' }
+  };
+  var layerBtns = document.querySelectorAll('.layer');
+  var layerInfo = document.getElementById('layerinfo');
+  function showLayer(key) {
+    var d = layerText[key];
+    var gap = /Gap/.test(d.s);
+    layerInfo.innerHTML = '<h4>' + d.t + (gap ? ' <span class="pill est">gap</span>' : '') + '</h4><p class="eyebrow">' + d.s + '</p><p>' + d.b + '</p>';
+    layerBtns.forEach(function (b) { b.setAttribute('aria-pressed', b.dataset.layer === key ? 'true' : 'false'); });
+  }
+  layerBtns.forEach(function (b) {
+    b.addEventListener('click', function () { showLayer(b.dataset.layer); });
+    b.addEventListener('mouseenter', function () { showLayer(b.dataset.layer); });
+  });
+  showLayer('contact');
+
+  // ---------- approach tabs ----------
+  var tabs = document.querySelectorAll('.tab');
+  tabs.forEach(function (t) {
+    t.addEventListener('click', function () {
+      tabs.forEach(function (x) { x.setAttribute('aria-selected', x === t ? 'true' : 'false'); });
+      document.querySelectorAll('.panel').forEach(function (p) { p.hidden = p.id !== t.dataset.panel; });
+    });
+  });
+
+  // ---------- workflow stepper ----------
+  var stepText = {
+    request: { h: 'Request — orders come in', p: 'A customer, a sales system or a machine API submits an order: target, deadline, priority, and the value in rupees the customer pays. Operators submit their own too. Every request is a typed, versioned record; nothing is a free-text ticket.', m: 'Input: ₹ value per order, deadline, priority class' },
+    plan: { h: 'Plan — the solver decides', p: 'The optimiser turns every physically possible window into a single conflict-free plan across all satellites and stations: which order gets imaged when, which pass downlinks it, which pass carries the commands up, with power, storage, slew and antenna limits enforced. It ships with a proven optimality gap and a typed reason for every order it could not fit.', m: 'Output: exact ₹ net value · proven gap ≤ 10% · reason per rejection' },
+    approve: { h: 'Approve — a human signs', p: 'An operator reviews the plan on a timeline or map, can make four bounded edits (toggle, swap, trim, reassign) and see the money consequence before committing, then approves an exact version. Approval is a ledger event, revocable until something physically uplinks.', m: 'Every edit and approval is attributed, immutable and reviewable' },
+    send: { h: 'Send — to the real C2', p: 'A separate worker dispatches only the approved, allow-listed activities to the operator’s command-and-control system (Yamcs today). Constellation OS never issues arbitrary commands; the C2 and flight software keep validation, queueing, uplink and all safety authority.', m: 'Approve and send are two different actions on purpose' },
+    monitor: { h: 'Monitor — what really ran', p: 'Command acknowledgements, telemetry and health receipts flow back and are correlated to the plan. The system knows whether a pass was accepted, executing, completed or rejected — and reconstructs planned-versus-realised value from evidence, never from assumptions.', m: 'Planned ₹ vs realised ₹, receipt-backed' },
+    repair: { h: 'Repair — when reality breaks the plan', p: 'A station outage, a missed contact or an urgent order triggers a bounded re-solve from the execution cutoff. Completed work is immutable; moving a commitment costs a penalty, so the plan stabilises rather than churns. The operator gets a money-denominated repair report and re-approves.', m: '“Preserved ₹X committed · cost ₹Y extra station time · moved N activities” in < 5 s' }
+  };
+  var stepBtns = document.querySelectorAll('.step');
+  var stepInfo = document.getElementById('stepinfo');
+  function showStep(key) {
+    var d = stepText[key];
+    stepInfo.innerHTML = '<h4>' + d.h + '</h4><p>' + d.p + '</p><p class="money">' + d.m + '</p>';
+    stepBtns.forEach(function (b) { b.setAttribute('aria-pressed', b.dataset.step === key ? 'true' : 'false'); });
+  }
+  stepBtns.forEach(function (b) { b.addEventListener('click', function () { showStep(b.dataset.step); }); });
+  showStep('plan');
+
+  // ---------- market rings ----------
+  var ringText = {
+    tam: { big: '$2.2B → $6.0B', lab: 'TAM · global space mission-planning software, 2025 → 2034', pill: '<span class="pill src">sourced</span>', how: 'Dataintelo market sizing at 11.8% CAGR. The total ground segment is ≈$106B, but roughly half is hardware; this is the software layer we actually sell into.', pts: ['Includes agency and defence programmes we will not win', 'Adjacent ground-station software ($1.85B → $3.92B) overlaps this', 'Analysts name automation and AI-driven scheduling as the growth driver'] },
+    sam: { big: '$25M – $80M / yr', lab: 'SAM · commercial LEO operators with 5–200 satellites, today', pill: '<span class="pill est">estimate</span>', how: 'Bottom-up: ~150–250 serviceable operators worldwide × an assumed $150K–$400K annual contract. Excludes legacy-prime buyers. The ACV is the open variable — no public price exists for this layer yet.', pts: ['Grows with fleet counts, not with GDP', 'APAC is the fastest-growing region; GSaaS ~20% CAGR', 'Replace the operator count with a named list before any investor conversation'] },
+    som: { big: '$0.5M – $2M ARR', lab: 'SOM · what we can realistically win in 36 months', pill: '<span class="pill tgt">target</span>', how: '1–2 Indian design partners from the 8–12 qualified accounts, plus 2–3 small global operators priced out of Quindar-class SaaS. Grants bridge the 9–18-month sales cycle.', pts: ['India is 2–3 concentrated doors: Pixxel + Dhruva, then SBS-3 procurement', 'Checkpoint: design-partner traction by 15 Jan 2027', 'Scale story (multi-operator layer) comes after, not before'] }
+  };
+  var rings = document.querySelectorAll('.ring');
+  var ringInfo = document.getElementById('ringinfo');
+  var chart = document.getElementById('chart');
+  var tip = document.getElementById('tip');
+  function showRing(key) {
+    var d = ringText[key];
+    ringInfo.innerHTML = '<p class="eyebrow">' + d.lab + '</p><div class="big">' + d.big + '</div><div>' + d.pill + '</div><p class="how">' + d.how + '</p><ul>' + d.pts.map(function (p) { return '<li>' + p + '</li>'; }).join('') + '</ul>';
+    rings.forEach(function (r) { r.style.opacity = (r.dataset.ring === key) ? '1' : '.75'; });
+  }
+  rings.forEach(function (r) {
+    r.addEventListener('mouseenter', function () { showRing(r.dataset.ring); tip.textContent = ringText[r.dataset.ring].big; tip.style.opacity = '1'; });
+    r.addEventListener('mousemove', function (e) { var b = chart.getBoundingClientRect(); tip.style.left = (e.clientX - b.left) + 'px'; tip.style.top = (e.clientY - b.top) + 'px'; });
+    r.addEventListener('mouseleave', function () { tip.style.opacity = '0'; });
+    r.addEventListener('click', function () { showRing(r.dataset.ring); });
+    r.addEventListener('focus', function () { showRing(r.dataset.ring); });
+    r.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); showRing(r.dataset.ring); } });
+  });
+  showRing('sam');
+
+  // ---------- competitor filter ----------
+  var fbtns = document.querySelectorAll('.filters button');
+  var rows = document.querySelectorAll('#comp tbody tr');
+  fbtns.forEach(function (b) {
+    b.addEventListener('click', function () {
+      fbtns.forEach(function (x) { x.setAttribute('aria-pressed', x === b ? 'true' : 'false'); });
+      rows.forEach(function (r) { r.hidden = !(b.dataset.f === 'all' || r.dataset.f === b.dataset.f); });
+    });
+  });
+})();
+</script>
+</body>
+</html>

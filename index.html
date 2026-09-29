@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Founder Ops</title>
+<meta name="description" content="Constellation OS founder pages: investor brief, pitch deck, founder roadmap, and mentor demo guide.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+  :root { --ground:#F2F4F7; --surface:#FFFFFF; --surface-2:#E9EDF2; --ink:#111827; --ink-2:#424D5E; --muted:#7C8797; --line:#D6DCE5; --line-strong:#B9C2CF; --amber:#B9711A; --blue:#2A6597; --green:#2F7A4F; --rose:#B0433A; }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --ground:#0C1420; --surface:#131D2C; --surface-2:#1A2637; --ink:#E8EDF4; --ink-2:#B3BFCF; --muted:#74829A; --line:#243349; --line-strong:#34465F; --amber:#E2A24A; --blue:#78ACDF; --green:#6CC08F; --rose:#E4776E; } }
+  :root[data-theme="dark"] { --ground:#0C1420; --surface:#131D2C; --surface-2:#1A2637; --ink:#E8EDF4; --ink-2:#B3BFCF; --muted:#74829A; --line:#243349; --line-strong:#34465F; --amber:#E2A24A; --blue:#78ACDF; --green:#6CC08F; --rose:#E4776E; }
+  * { box-sizing: border-box; }
+  body { margin:0; background:var(--ground); color:var(--ink); font-family:"IBM Plex Sans","Helvetica Neue",Arial,sans-serif; line-height:1.55; -webkit-font-smoothing:antialiased; }
+  main { max-width: 960px; margin: 0 auto; padding: clamp(2rem, 6vw, 5rem) 1.25rem 4rem; display: grid; gap: 2rem; }
+  h1 { font-family:"Archivo",sans-serif; font-size: clamp(1.8rem, 4vw, 2.6rem); letter-spacing:-.02em; margin:0; line-height:1.1; text-wrap: balance; }
+  p { margin:0; }
+  .eyebrow { font-family:"IBM Plex Mono",monospace; font-size:.72rem; letter-spacing:.12em; text-transform:uppercase; color:var(--muted); }
+  .lede { color: var(--ink-2); max-width: 60ch; }
+  .cards { display:grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 8px; }
+  @media (max-width: 760px) { .cards { grid-template-columns: 1fr; } }
+  a.card { display:grid; gap:.5rem; align-content:start; background:var(--surface); border:1px solid var(--line); border-radius:6px; padding:1.1rem 1.2rem; text-decoration:none; color:inherit; min-height: 200px; }
+  a.card:hover { border-color: var(--line-strong); }
+  a.card h2 { font-family:"Archivo",sans-serif; font-size:1.2rem; margin:0; }
+  a.card p { font-size:.92rem; color:var(--ink-2); }
+  a.card .who { font-family:"IBM Plex Mono",monospace; font-size:.7rem; letter-spacing:.08em; text-transform:uppercase; margin-top:auto; padding-top:.5rem; }
+  a.card.deck .who { color: var(--amber); } a.card.brief .who { color: var(--blue); } a.card.road .who { color: var(--green); } a.card.demo .who { color: var(--amber); }
+  .links { display:flex; flex-wrap:wrap; gap:1rem; font-size:.9rem; }
+  a { color: var(--blue); }
+  footer { border-top:1px solid var(--line); padding-top:1rem; font-size:.8rem; color:var(--muted); }
+</style>
+</head>
+<body>
+<main>
+  <div>
+    <p class="eyebrow">Constellation OS · founder pages</p>
+    <h1>Four pages for the pitch and practice.</h1>
+  </div>
+  <p class="lede">The pitch, the longer evidence brief, the founder's operating roadmap, and a practical mentor demo guide. Each works on a phone, a tablet and a desktop.</p>
+  <div class="cards">
+    <a class="card deck" href="deck.html"><h2>Pitch deck</h2><p>Thirteen slides and a short appendix. Arrow keys or swipe to move; press N for speaker notes with the evidence behind each slide.</p><span class="who">investors · mentors · SMEs</span></a>
+    <a class="card brief" href="brief.html"><h2>Investor brief</h2><p>The long-form version: the problem and what the industry is doing about it, the product and the tech under it, market, competitors, business model and the ask.</p><span class="who">anyone going deeper</span></a>
+    <a class="card road" href="founder-roadmap.html"><h2>Founder roadmap</h2><p>When to talk to customers, why and when to raise, where to raise, how much, what the unit economics must look like, and a runway calculator with your own numbers.</p><span class="who">founder only</span></a>
+    <a class="card demo" href="demo.html"><h2>Mentor demo guide</h2><p>Practise request intake, planning jobs, Compare and approval. Includes the current send and repair prerequisites.</p><span class="who">founder · mentor practice</span></a>
+  </div>
+  <div class="links">
+    <a href="https://github.com/SumanthVarma798" target="_blank" rel="noopener">github.com/SumanthVarma798</a>
+    <a href="https://linkedin.com/in/sumanthvarmaa" target="_blank" rel="noopener">linkedin.com/in/sumanthvarmaa</a>
+  </div>
+  <footer>Sumanth Varma Vitrouthu · Hyderabad · September 2026</footer>
+</main>
+</body>
+</html>

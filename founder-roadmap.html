@@ -1,0 +1,598 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Founder Roadmap</title>
+<meta name="robots" content="noindex">
+<meta name="description" content="Operating roadmap for the Constellation OS founder: customers, raising, runway, unit economics, cadence.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+  :root {
+    --ground:#F2F4F7; --surface:#FFFFFF; --surface-2:#E9EDF2; --ink:#111827; --ink-2:#424D5E; --muted:#7C8797;
+    --line:#D6DCE5; --line-strong:#B9C2CF; --amber:#B9711A; --amber-soft:#F4E4CB; --blue:#2A6597; --blue-soft:#D8E6F3;
+    --rose:#B0433A; --rose-soft:#F3D9D6; --green:#2F7A4F; --green-soft:#D6EBDD; --focus:#2A6597;
+  }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+    --ground:#0C1420; --surface:#131D2C; --surface-2:#1A2637; --ink:#E8EDF4; --ink-2:#B3BFCF; --muted:#74829A;
+    --line:#243349; --line-strong:#34465F; --amber:#E2A24A; --amber-soft:#3A2B14; --blue:#78ACDF; --blue-soft:#16304A;
+    --rose:#E4776E; --rose-soft:#3E1F1D; --green:#6CC08F; --green-soft:#173324; --focus:#78ACDF; } }
+  :root[data-theme="dark"] {
+    --ground:#0C1420; --surface:#131D2C; --surface-2:#1A2637; --ink:#E8EDF4; --ink-2:#B3BFCF; --muted:#74829A;
+    --line:#243349; --line-strong:#34465F; --amber:#E2A24A; --amber-soft:#3A2B14; --blue:#78ACDF; --blue-soft:#16304A;
+    --rose:#E4776E; --rose-soft:#3E1F1D; --green:#6CC08F; --green-soft:#173324; --focus:#78ACDF; }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { margin:0; background:var(--ground); color:var(--ink); font-family:"IBM Plex Sans","Helvetica Neue",Arial,sans-serif; font-size:16px; line-height:1.6; -webkit-font-smoothing:antialiased; }
+  h1,h2,h3,h4 { font-family:"Archivo",sans-serif; letter-spacing:-.015em; text-wrap:balance; margin:0; line-height:1.15; }
+  h1 { font-size:clamp(1.9rem,4vw,2.8rem); font-weight:700; }
+  h2 { font-size:clamp(1.4rem,2.4vw,1.85rem); font-weight:700; }
+  h3 { font-size:1.15rem; font-weight:600; }
+  h4 { font-size:1rem; font-weight:600; }
+  p { margin:0; }
+  a { color:var(--blue); text-underline-offset:2px; } a:hover { color:var(--ink); }
+  .mono { font-family:"IBM Plex Mono",monospace; }
+  .num { font-variant-numeric:tabular-nums; }
+  :focus-visible { outline:2px solid var(--focus); outline-offset:2px; }
+  button, input, select { font:inherit; color:inherit; }
+  .eyebrow { font-family:"IBM Plex Mono",monospace; font-size:.72rem; letter-spacing:.12em; text-transform:uppercase; color:var(--muted); }
+  .eyebrow.amber { color:var(--amber); }
+  .lede { font-size:1.08rem; color:var(--ink-2); max-width:62ch; }
+  .prose { max-width:68ch; } .prose p + p { margin-top:.9em; }
+  .prose ul, .prose ol { margin:.5em 0 0; padding-left:1.2rem; display:grid; gap:.3rem; }
+  .stack { display:grid; gap:1rem; }
+
+  .layout { max-width:1180px; margin:0 auto; padding:0 1.25rem 5rem; display:grid; grid-template-columns:220px minmax(0,1fr); gap:3rem; }
+  @media (max-width: 900px) { .layout { grid-template-columns:1fr; gap:1rem; } }
+  .toc { position:sticky; top:1.5rem; align-self:start; display:grid; gap:.2rem; padding-top:3.5rem; }
+  .toc a { text-decoration:none; color:var(--ink-2); font-size:.86rem; padding:.3rem .5rem; border-left:2px solid transparent; border-radius:0 4px 4px 0; }
+  .toc a:hover { background:var(--surface-2); color:var(--ink); }
+  .toc a[aria-current="true"] { border-left-color:var(--amber); color:var(--ink); font-weight:600; }
+  .toc .eyebrow { padding:.5rem .5rem .3rem; }
+  @media (max-width: 900px) { .toc { position:static; padding-top:1rem; display:flex; flex-wrap:wrap; gap:.3rem; } .toc .eyebrow { display:none; } .toc a { border:1px solid var(--line); border-radius:999px; padding:.25rem .7rem; font-size:.8rem; background:var(--surface); } .toc a[aria-current="true"] { border-color:var(--amber); } }
+
+  header.hero { padding:3.5rem 0 2rem; display:grid; gap:1rem; border-bottom:1px solid var(--line); }
+  section.part { padding:2.5rem 0 1rem; scroll-margin-top:1rem; display:grid; gap:1.25rem; }
+  section.part + section.part { border-top:1px solid var(--line); }
+  .part-head { display:grid; gap:.5rem; }
+  .part-head .eyebrow { color:var(--amber); }
+
+  .note { border-left:3px solid var(--amber); background:var(--surface); padding:.9rem 1.1rem; border-radius:0 6px 6px 0; display:grid; gap:.35rem; max-width:74ch; }
+  .note.blue { border-left-color:var(--blue); } .note.rose { border-left-color:var(--rose); } .note.green { border-left-color:var(--green); }
+  .note .eyebrow { color:inherit; opacity:.8; }
+  .verdict { border:1px solid var(--amber); background:var(--amber-soft); border-radius:6px; padding:1rem 1.2rem; display:grid; gap:.4rem; }
+  .verdict .eyebrow { color:var(--amber); }
+  .two { display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:1.5rem; align-items:start; }
+  @media (max-width: 760px) { .two { grid-template-columns:1fr; } }
+  .tiles { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:6px; }
+  @media (max-width: 760px) { .tiles { grid-template-columns:1fr; } }
+  .tile { background:var(--surface); border:1px solid var(--line); border-radius:6px; padding:.9rem 1rem; display:grid; gap:.25rem; align-content:start; }
+  .tile b { font-family:"Archivo",sans-serif; font-size:1.4rem; font-weight:700; letter-spacing:-.02em; line-height:1.1; }
+  .tile b.amber { color:var(--amber); } .tile b.rose { color:var(--rose); } .tile b.green { color:var(--green); }
+  .tile span { font-size:.84rem; color:var(--ink-2); }
+  .pill { display:inline-block; font-family:"IBM Plex Mono",monospace; font-size:.66rem; letter-spacing:.06em; text-transform:uppercase; padding:.12rem .5rem; border-radius:999px; border:1px solid var(--line-strong); color:var(--ink-2); white-space:nowrap; }
+  .pill.src { background:var(--green-soft); border-color:transparent; color:var(--green); }
+  .pill.est { background:var(--amber-soft); border-color:transparent; color:var(--amber); }
+  .pill.tgt { background:var(--blue-soft); border-color:transparent; color:var(--blue); }
+  .pill.open { background:var(--rose-soft); border-color:transparent; color:var(--rose); }
+  .tablewrap { overflow-x:auto; border:1px solid var(--line); border-radius:6px; background:var(--surface); }
+  table { border-collapse:collapse; width:100%; font-size:.9rem; }
+  th, td { text-align:left; padding:.6rem .8rem; vertical-align:top; border-bottom:1px solid var(--line); }
+  th { font-family:"IBM Plex Mono",monospace; font-size:.68rem; letter-spacing:.08em; text-transform:uppercase; color:var(--muted); font-weight:500; background:var(--surface-2); }
+  tbody tr:last-child td { border-bottom:0; }
+  td.k { font-weight:600; white-space:nowrap; }
+  td .sm { display:block; font-size:.8rem; color:var(--muted); margin-top:.15rem; }
+  tr[hidden] { display:none; }
+
+  /* calculators */
+  .calc { background:var(--surface); border:1px solid var(--line); border-radius:6px; padding:1.1rem 1.2rem; display:grid; gap:1rem; }
+  .fields { display:grid; grid-template-columns:repeat(auto-fit, minmax(170px, 1fr)); gap:.75rem; }
+  .field { display:grid; gap:.25rem; }
+  .field label { font-family:"IBM Plex Mono",monospace; font-size:.68rem; letter-spacing:.08em; text-transform:uppercase; color:var(--muted); }
+  .field input, .field select { width:100%; padding:.5rem .6rem; border:1px solid var(--line-strong); border-radius:4px; background:var(--ground); color:var(--ink); font-variant-numeric:tabular-nums; }
+  .field input:focus { border-color:var(--focus); }
+  .outs { display:grid; grid-template-columns:repeat(auto-fit, minmax(160px, 1fr)); gap:6px; }
+  .out { background:var(--ground); border:1px solid var(--line); border-radius:4px; padding:.7rem .8rem; display:grid; gap:.15rem; }
+  .out b { font-family:"Archivo",sans-serif; font-size:1.35rem; letter-spacing:-.02em; line-height:1.1; }
+  .out span { font-size:.78rem; color:var(--muted); }
+  .out.warn b { color:var(--amber); } .out.bad b { color:var(--rose); } .out.good b { color:var(--green); }
+  .chips { display:flex; flex-wrap:wrap; gap:.35rem; }
+  .chips button { border:1px solid var(--line); background:var(--surface); border-radius:999px; padding:.3rem .8rem; cursor:pointer; font-size:.85rem; }
+  .chips button[aria-pressed="true"] { background:var(--ink); color:var(--ground); border-color:var(--ink); }
+  .bar { height:14px; border-radius:7px; background:var(--surface-2); overflow:hidden; display:flex; }
+  .bar i { display:block; height:100%; }
+  .bar .b1 { background:var(--green); } .bar .b2 { background:var(--amber); } .bar .b3 { background:var(--rose); }
+  .legend { display:flex; flex-wrap:wrap; gap:1rem; font-size:.78rem; color:var(--muted); }
+  .legend i { display:inline-block; width:10px; height:10px; border-radius:2px; margin-right:.35rem; vertical-align:middle; }
+  .small { font-size:.85rem; color:var(--muted); }
+  .btnrow { display:flex; flex-wrap:wrap; gap:.5rem; }
+  .btn { border:1px solid var(--ink); background:transparent; border-radius:4px; padding:.45rem .9rem; cursor:pointer; font-family:"Archivo",sans-serif; font-weight:600; font-size:.88rem; text-decoration:none; color:var(--ink); }
+  .btn:hover { background:var(--surface-2); }
+  .btn.primary { background:var(--ink); color:var(--ground); }
+
+  /* decision helper */
+  .q { display:grid; gap:.5rem; padding:.7rem 0; border-bottom:1px solid var(--line); }
+  .q:last-of-type { border-bottom:0; }
+  .q .opts { display:flex; gap:.4rem; flex-wrap:wrap; }
+  .q .opts button { border:1px solid var(--line-strong); background:var(--ground); border-radius:4px; padding:.3rem .7rem; cursor:pointer; font-size:.85rem; }
+  .q .opts button[aria-pressed="true"] { background:var(--ink); color:var(--ground); border-color:var(--ink); }
+
+  /* checklists */
+  .cl { display:grid; gap:2px; }
+  .cl label { display:grid; grid-template-columns:1.4rem 1fr; gap:.6rem; align-items:start; padding:.5rem .4rem; background:var(--surface); border:1px solid var(--line); border-radius:4px; cursor:pointer; font-size:.93rem; }
+  .cl input { margin:.3rem 0 0; accent-color: var(--green); }
+  .cl label:has(input:checked) { opacity:.6; text-decoration:line-through; }
+  .cl label small { display:block; color:var(--muted); font-size:.8rem; text-decoration:none; }
+  .cal { display:grid; gap:2px; }
+  .cal .m { display:grid; grid-template-columns:6.5rem 1fr; gap:1rem; padding:.55rem .2rem; border-bottom:1px solid var(--line); font-size:.93rem; }
+  .cal .m:last-child { border-bottom:0; }
+  .cal .when { font-family:"IBM Plex Mono",monospace; font-size:.78rem; color:var(--muted); padding-top:.2rem; }
+  .cal .m.key .when { color:var(--amber); }
+  @media (max-width:480px) { .cal .m { grid-template-columns:1fr; gap:.1rem; } }
+  .filters { display:flex; flex-wrap:wrap; gap:.35rem; }
+  .filters button { border:1px solid var(--line); background:var(--surface); border-radius:999px; padding:.3rem .8rem; cursor:pointer; font-size:.85rem; }
+  .filters button[aria-pressed="true"] { background:var(--ink); color:var(--ground); border-color:var(--ink); }
+  details { border:1px solid var(--line); border-radius:4px; background:var(--surface); }
+  details + details { margin-top:4px; }
+  summary { cursor:pointer; padding:.65rem .9rem; font-weight:600; list-style:none; display:flex; justify-content:space-between; gap:1rem; }
+  summary::-webkit-details-marker { display:none; }
+  summary::after { content:"+"; font-family:"IBM Plex Mono",monospace; color:var(--muted); }
+  details[open] summary::after { content:"–"; }
+  details .body { padding:0 .9rem .9rem; color:var(--ink-2); font-size:.93rem; max-width:74ch; }
+  footer { border-top:1px solid var(--line); padding-top:1.25rem; margin-top:2rem; font-size:.82rem; color:var(--muted); display:grid; gap:.5rem; }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior:auto; } }
+</style>
+</head>
+<body>
+<div class="layout">
+  <nav class="toc" aria-label="Sections">
+    <span class="eyebrow">Roadmap</span>
+    <a href="#now">Where you stand</a>
+    <a href="#clocks">The three clocks</a>
+    <a href="#runway">Runway</a>
+    <a href="#customers">Customers first</a>
+    <a href="#raise">Bootstrap vs raise</a>
+    <a href="#where">Where to raise</a>
+    <a href="#howmuch">How much</a>
+    <a href="#unit">Unit economics</a>
+    <a href="#investors">What investors read</a>
+    <a href="#cadence">Cadence</a>
+    <a href="#hygiene">Founder hygiene</a>
+    <a href="#kill">The checkpoint</a>
+  </nav>
+
+  <main>
+    <header class="hero">
+      <p class="eyebrow amber">Founder roadmap · Sumanth · September 2026 · private working document</p>
+      <h1>You have a product and no customer. Everything on this page is about closing that gap without running out of money or nerve.</h1>
+      <p class="lede">This is the advice a good operator-turned-investor would give you across a table. It is direct where the evidence is strong, and it says so where it is a judgement call. Your numbers live in the calculators; they are saved in this browser only and never leave it.</p>
+    </header>
+
+    <!-- ============ NOW ============ -->
+    <section class="part" id="now">
+      <div class="part-head"><p class="eyebrow">1</p><h2>Where you stand, honestly</h2></div>
+      <div class="tiles">
+        <div class="tile"><b>Pre-seed, pre-revenue</b><span>Working core, independently reviewed, running against a real C2. No design partner, no LOI, no rupee of revenue. That is the whole picture and it is a normal one.</span></div>
+        <div class="tile"><b>Solo, savings-funded</b><span>No co-founder, no salary, no institutional money. Runway is your savings divided by your burn — the calculator below turns that into dates.</span></div>
+        <div class="tile"><b>Right city, right year</b><span>Hyderabad has Dhruva, Ananth Technologies, T-Hub's ORBIT space accelerator and an IN-SPACe investor programme. India's fleets are funded and deploy 2027–29.</span></div>
+      </div>
+      <div class="verdict">
+        <p class="eyebrow">The one milestone that matters next</p>
+        <p><strong>A signed design-partner letter of intent from a satellite operator by 15 January 2027.</strong> Not a prettier product, not a bigger deck, not a fundraise. Every week between now and then is judged by whether it moved that one thing. You already wrote this rule into NORTH-STAR; this page just holds you to it.</p>
+      </div>
+      <div class="prose">
+        <p><strong>What you are actually selling right now is not software.</strong> It is a conversation: "show me how you plan passes today, and let me show you a plan for your fleet with a proven bound and a rupee on every line." The product is the reason they take the meeting; the meeting is the product until someone signs.</p>
+        <p><strong>A first-time founder's most common mistake at this stage</strong> is to keep building because building feels like progress and selling feels like rejection. You have shipped enough to be credible. The next 90 days are a sales job, and the code should change only when a real operator asks for something in a real meeting.</p>
+      </div>
+    </section>
+
+    <!-- ============ CLOCKS ============ -->
+    <section class="part" id="clocks">
+      <div class="part-head"><p class="eyebrow">2</p><h2>The three clocks you are racing</h2><p class="lede">Every timing decision — when to sell, when to raise, when to hire — is a question of which clock runs out first.</p></div>
+      <div class="tiles">
+        <div class="tile"><b class="green" id="clockRunway">— months</b><span><strong>Runway clock.</strong> Savings ÷ monthly burn. Yours is long for a solo founder, which is the single biggest advantage you have. Do not shorten it with hires before a customer exists.</span></div>
+        <div class="tile"><b class="amber">9–18 months</b><span><strong>Sales-cycle clock.</strong> A first enterprise contract in space takes 9–18 months from first meeting to signature. A conversation started today closes in mid-to-late 2027. This is why customers come before everything.</span></div>
+        <div class="tile"><b class="rose">2027–29</b><span><strong>Fleet-ramp clock.</strong> EO-PPP and SBS-3 satellites launch in this window. The planning pain arrives with them. Be installed beside a fleet before it doubles, not after.</span></div>
+      </div>
+      <div class="note blue">
+        <p class="eyebrow">How they combine</p>
+        <p>Your runway outlasts the sales cycle, so you can afford to sell properly and raise later on evidence rather than on hope. The trap is the opposite: spending eight months polishing, then discovering the sales cycle starts at zero with ten months of savings left. Start the sales clock this week; it is the only one you cannot buy back.</p>
+      </div>
+    </section>
+
+    <!-- ============ RUNWAY ============ -->
+    <section class="part" id="runway">
+      <div class="part-head"><p class="eyebrow">3</p><h2>Runway — with your numbers</h2><p class="lede">Edit any field. Inputs are saved in this browser. "Copy link" puts them in the URL so you can open the same picture on another device.</p></div>
+      <div class="calc" id="runwayCalc">
+        <div class="chips" role="group" aria-label="Scenarios">
+          <button type="button" data-sc="lean" aria-pressed="false">Lean</button>
+          <button type="button" data-sc="base" aria-pressed="true">Base</button>
+          <button type="button" data-sc="hire" aria-pressed="false">With two hires</button>
+        </div>
+        <div class="fields">
+          <div class="field"><label for="savings">Savings (USD)</label><input id="savings" type="number" min="0" step="500" value="50000"></div>
+          <div class="field"><label for="fx">₹ per USD</label><input id="fx" type="number" min="1" step="0.5" value="85"></div>
+          <div class="field"><label for="personal">Personal burn (₹ / month)</label><input id="personal" type="number" min="0" step="5000" value="120000"></div>
+          <div class="field"><label for="company">Company costs (₹ / month)</label><input id="company" type="number" min="0" step="5000" value="30000"></div>
+          <div class="field"><label for="oneoff">One-off setup (₹)</label><input id="oneoff" type="number" min="0" step="10000" value="60000"></div>
+          <div class="field"><label for="grant">Grant expected (₹)</label><input id="grant" type="number" min="0" step="100000" value="0"></div>
+          <div class="field"><label for="grantMonth">Grant lands in (months)</label><input id="grantMonth" type="number" min="0" step="1" value="9"></div>
+          <div class="field"><label for="start">Start month</label><input id="start" type="month" value="2026-09"></div>
+        </div>
+        <div class="outs">
+          <div class="out" id="oCash"><b>—</b><span>starting cash after setup</span></div>
+          <div class="out" id="oBurn"><b>—</b><span>total monthly burn</span></div>
+          <div class="out good" id="oMonths"><b>—</b><span>months of runway</span></div>
+          <div class="out" id="oEnd"><b>—</b><span>cash runs out</span></div>
+          <div class="out warn" id="oRaise"><b>—</b><span>open a raise by (9 months left)</span></div>
+          <div class="out bad" id="oDanger"><b>—</b><span>do not go past (3 months left)</span></div>
+        </div>
+        <div class="bar" aria-hidden="true"><i class="b1" id="bar1"></i><i class="b2" id="bar2"></i><i class="b3" id="bar3"></i></div>
+        <div class="legend"><span><i style="background:var(--green)"></i>sell and build on savings</span><span><i style="background:var(--amber)"></i>raise window, 9 → 3 months left</span><span><i style="background:var(--rose)"></i>too late to raise well</span></div>
+        <div class="btnrow"><button type="button" class="btn" id="copyLink">Copy link with my numbers</button><button type="button" class="btn" id="resetCalc">Reset</button><span class="small" id="copied"></span></div>
+      </div>
+      <div class="two">
+        <div class="prose">
+          <p><strong>Reading the numbers.</strong> On the base case — a modest Hyderabad life, no salary, cloud and tooling under ₹30,000 a month — your savings carry you well past the January checkpoint and through the whole of a 9–18-month sales cycle. That is unusual, and it is why the advice here is "sell first, raise on evidence" rather than "raise now".</p>
+          <p><strong>The two rules the amber and red bands encode.</strong> Investors read runway as posture. Nine months left is a founder with options; three months left is a founder who will take any terms, and they price accordingly. Open a pre-seed process while the green band is still long. Never let the red band arrive without a signed round or a decision to take the insider path.</p>
+          <p><strong>What is not in this calculator.</strong> Health insurance, a family obligation, a wedding, a visa. Add them to personal burn honestly; a runway you flinch at is not a runway.</p>
+        </div>
+        <div class="stack">
+          <div class="note"><p class="eyebrow">A grant changes the shape, not the rule</p><p>An IN-SPACe Seed grant (≤ ₹1 crore, paid in milestone tranches) can extend runway by a year. Enter it above only once it is approved — pipeline money is not runway.</p></div>
+          <div class="note rose"><p class="eyebrow">The "with two hires" scenario is a warning</p><p>Two engineers at Hyderabad rates roughly triples burn and cuts runway to under a year. That is what a pre-seed round is for. Do not hire on savings.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ CUSTOMERS ============ -->
+    <section class="part" id="customers">
+      <div class="part-head"><p class="eyebrow">4</p><h2>Customers first — starting this week</h2><p class="lede">When should you reach out? You are already late by the sales-cycle clock, and exactly on time by the product clock. Both say now.</p></div>
+      <div class="two">
+        <div class="prose">
+          <p><strong>Who, in order.</strong> KaleidEO first — a hybrid build-plus-buy stack with mission planning under construction, the softest door in the evidence base. Then GalaxEye (staffing a shift-based ops centre now), then Pixxel (in-house incumbent, fleet doubling), then Dhruva (buyer, channel and competitor at once — go in knowing that). PierSight when you know what they run. In parallel, three to five small operators abroad with 5–30 satellites: the segment Quindar-class pricing leaves behind.</p>
+          <p><strong>How to ask for the meeting.</strong> Not "can I show you my product". Say what you found: "I mined the public issue trackers and job postings and it looks like planning still lives in scripts and priority files outside the C2 — is that true for you, and what breaks when the fleet doubles?" You are offering them a finding about their own industry, and asking them to correct it. People take that meeting.</p>
+          <p><strong>What a meeting is for.</strong> Learning how they plan today, what a missed pass costs them, who decides displacement, and whether a self-hosted planner beside their C2 is something they could ever run. Not pitching. If they ask to see the plan, show it; if they don't, don't.</p>
+          <p><strong>The design-partner offer, when they lean in.</strong> One page. Self-hosted install beside their C2; adapters to their ground network and tasking tools; a 45-minute call every two weeks and async feedback within five days; preferential pricing locked for two years; a hard end date with a binary ask — go paid or stop. Three to five partners, no more. Ask for an LOI when they say "when can we start", not before.</p>
+        </div>
+        <div class="stack">
+          <div class="note green">
+            <p class="eyebrow">Eight questions that do the work</p>
+            <ol style="margin:.2rem 0 0;padding-left:1.1rem;display:grid;gap:.25rem;font-size:.92rem">
+              <li>Who are your customers, and which would notice a collection a day late?</li>
+              <li>How long from a customer request to a committed window — and is a person in that path?</li>
+              <li>What fraction of your passes go unallocated in a normal week?</li>
+              <li>When an urgent request lands, who decides what is displaced, and can you explain it to the customer who lost?</li>
+              <li>Do you have customers who are contractually never displaced? How is that enforced?</li>
+              <li>Has anyone ever paid extra to jump the queue? How did you price it?</li>
+              <li>Can a customer task you through an API with no human at your end?</li>
+              <li>What happens to your planning process when the fleet doubles?</li>
+            </ol>
+          </div>
+          <div class="note rose">
+            <p class="eyebrow">Never say</p>
+            <p>Any fixture-derived rupee figure as if it were theirs. That dynamic replanning is a validated need (it is still a hypothesis). "AI runs your satellites." Anything about Dhruva's stack you learned from a job posting as if you had seen it.</p>
+          </div>
+          <div class="note">
+            <p class="eyebrow">Weekly quota</p>
+            <p>Five new outreach messages, two conversations, one written debrief per conversation into founder-ops. Thirty qualified conversations by the checkpoint is a triumph; ten is enough to know.</p>
+          </div>
+        </div>
+      </div>
+      <h3>Customer tracker</h3>
+      <div class="cl" data-cl="customers">
+        <label><input type="checkbox"> <span>KaleidEO — first message sent, referencing their mission-planning build-out <small>softest door; ask for the person who owns tasking tools</small></span></label>
+        <label><input type="checkbox"> <span>GalaxEye — outreach to mission-operations lead</span></label>
+        <label><input type="checkbox"> <span>Pixxel — outreach to head of ground software or flight operations</span></label>
+        <label><input type="checkbox"> <span>Dhruva Space — outreach to ISOCS / ground-station lead, framed as partner first <small>Hyderabad; a coffee, not a demo</small></span></label>
+        <label><input type="checkbox"> <span>PierSight — learn what they run before pitching anything</span></label>
+        <label><input type="checkbox"> <span>Three small operators abroad identified (5–30 satellites) and messaged</span></label>
+        <label><input type="checkbox"> <span>Pricing study run with at least five operators (Van Westendorp, per satellite per month)</span></label>
+        <label><input type="checkbox"> <span>Design-partner one-pager written and sent to the first operator who leaned in</span></label>
+        <label><input type="checkbox"> <span>First LOI signed</span></label>
+      </div>
+    </section>
+
+    <!-- ============ BOOTSTRAP VS RAISE ============ -->
+    <section class="part" id="raise">
+      <div class="part-head"><p class="eyebrow">5</p><h2>Why raise, and when — bootstrap versus venture money</h2></div>
+      <div class="two">
+        <div class="prose">
+          <p><strong>Why anyone raises.</strong> Because the milestone that creates value cannot be reached with the cash on hand before a clock runs out. For you the milestone is a deployed design partner with contracted revenue, and the clock is the 2027–29 fleet ramp. Grants and savings can get you to the LOI. They cannot pay two engineers and an operations co-founder for eighteen months while an operator's procurement grinds.</p>
+          <p><strong>Why not now.</strong> A solo, pre-revenue technical founder with no LOI raises slowly, at poor terms, or not at all — and spends the four months the process takes not selling. The same founder with a working product, a signed LOI and a deployment date raises in weeks. The product is built; the LOI is the thing that changes the conversation. Get it first.</p>
+          <p><strong>The bootstrap case, taken seriously.</strong> If a design partner pays even ₹25–40 lakh a year and a grant lands, you can run lean to a second customer without dilution. The venture case wins only if speed matters — and here it does, because the sovereign fleets arrive on a fixed calendar and a foreign competitor could enter through a partner. So: bootstrap through the LOI, then raise a modest pre-seed to move fast, then let contracted revenue set the seed round's price.</p>
+          <p><strong>The hybrid that fits you.</strong> Non-dilutive money first and in parallel (it takes months and does not wait), savings for living, a pre-seed opened only with an LOI in hand and nine-plus months of runway still on the clock.</p>
+        </div>
+        <div class="calc" id="decide">
+          <p class="eyebrow">Decision helper — answer honestly</p>
+          <div class="q"><span>Do you have a signed LOI or a paying pilot?</span><div class="opts"><button type="button" data-q="loi" data-v="1">Yes</button><button type="button" data-q="loi" data-v="0" aria-pressed="true">No</button></div></div>
+          <div class="q"><span>Months of runway left right now?</span><div class="opts"><button type="button" data-q="rw" data-v="2">More than 12</button><button type="button" data-q="rw" data-v="1">6–12</button><button type="button" data-q="rw" data-v="0">Under 6</button></div></div>
+          <div class="q"><span>Does reaching the next milestone need people you cannot pay?</span><div class="opts"><button type="button" data-q="ppl" data-v="1">Yes</button><button type="button" data-q="ppl" data-v="0" aria-pressed="true">Not yet</button></div></div>
+          <div class="q"><span>Is a grant application filed or approved?</span><div class="opts"><button type="button" data-q="gr" data-v="1">Yes</button><button type="button" data-q="gr" data-v="0" aria-pressed="true">No</button></div></div>
+          <div class="q"><span>Is a competitor or a fixed market window forcing speed?</span><div class="opts"><button type="button" data-q="sp" data-v="1" aria-pressed="true">Yes</button><button type="button" data-q="sp" data-v="0">No</button></div></div>
+          <div class="verdict" id="verdict"><p class="eyebrow">Recommendation</p><p id="verdictText"></p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ WHERE ============ -->
+    <section class="part" id="where">
+      <div class="part-head"><p class="eyebrow">6</p><h2>Where to raise — the ladder, bottom rung first</h2><p class="lede">Filter by rung. Amounts and terms are as published in 2026; confirm every one on the programme's own page before applying — they change yearly.</p></div>
+      <div class="filters" role="group" aria-label="Filter funding sources">
+        <button type="button" data-f="all" aria-pressed="true">All</button>
+        <button type="button" data-f="grant" aria-pressed="false">Non-dilutive</button>
+        <button type="button" data-f="accel" aria-pressed="false">Accelerators</button>
+        <button type="button" data-f="angel" aria-pressed="false">Angels &amp; pre-seed</button>
+        <button type="button" data-f="vc" aria-pressed="false">Seed VCs</button>
+        <button type="button" data-f="global" aria-pressed="false">Global specialists</button>
+      </div>
+      <div class="tablewrap">
+        <table id="fund">
+          <thead><tr><th>Source</th><th>What</th><th>Amount / terms</th><th>When for you</th></tr></thead>
+          <tbody>
+            <tr data-f="grant"><td class="k">IN-SPACe Seed Fund</td><td>Grant for early-stage space start-ups with a novel idea; milestone-based, three or more tranches. Needs DPIIT recognition.</td><td>Up to ₹1 crore</td><td><strong>Apply this quarter.</strong> Mission planning above C2 is squarely "mid-stream". The application forces you to write the milestones anyway.</td></tr>
+            <tr data-f="grant"><td class="k">iDEX Prime Space / DISC</td><td>Defence innovation challenges under Mission DefSpace; mission planning is a named problem-statement area. Grants via the SPARK framework.</td><td>Up to ₹1.5 crore (DISC), up to ₹10 crore (iDEX Prime)</td><td>Watch the challenge cycles; apply when a problem statement matches planning or scheduling. SBS-3 alignment makes this a natural fit.</td></tr>
+            <tr data-f="grant"><td class="k">Startup India Seed Fund (SISFS)</td><td>Grant for proof of concept plus debt for commercialisation, via approved incubators.</td><td>₹20 lakh grant + up to ₹50 lakh convertible debt</td><td>The 2026 window closed 31 May. Check the next cycle; T-Hub is an approved incubator.</td></tr>
+            <tr data-f="grant"><td class="k">MeitY GENESIS · NIDHI SSP</td><td>Deep-tech and science-based start-up support through incubators.</td><td>Up to ₹1 crore each</td><td>Secondary; apply if IN-SPACe is delayed. Do not chase every grant — each application costs two weeks.</td></tr>
+            <tr data-f="grant"><td class="k">Technology Adoption Fund (IN-SPACe)</td><td>Co-funding for development, demonstration and commercialisation of indigenous space technology.</td><td>Up to 60% of cost, ₹25 crore cap; ₹500 crore pool</td><td>Later — once a design partner exists and there is a demonstration to co-fund.</td></tr>
+            <tr data-f="grant"><td class="k">Antariksh VC Fund (₹1,000 cr)</td><td>Government-backed venture fund for space start-ups; deploys through fund managers from FY2027.</td><td>Equity via managers</td><td>Know it exists; reach it through the seed VCs it co-invests with, not directly.</td></tr>
+            <tr data-f="accel"><td class="k">T-Hub ORBIT SpaceTech Accelerator</td><td>Hyderabad accelerator run with IN-SPACe; third cohort of 13 start-ups launched 2026. Mentors, industry access, investor days.</td><td>Programme; no standard cheque</td><td><strong>Apply to the next cohort.</strong> It is in your city, it is the network you lack, and IN-SPACe's investor days run through it.</td></tr>
+            <tr data-f="accel"><td class="k">Antler India</td><td>Pre-seed programme and fund; co-founder matching is part of the model.</td><td>Typically ₹1–2 crore-scale pre-seed for meaningful equity</td><td>Useful mainly for the co-founder search. Weigh the dilution against a warm LOI-backed round.</td></tr>
+            <tr data-f="accel"><td class="k">100X.VC</td><td>Pre-seed via iSAFE notes; coaching and follow-on introductions.</td><td>≈ ₹1.25 crore for ~15% (published model)</td><td>Only if you need the network more than the equity. 15% for ₹1.25 crore is expensive once you have an LOI.</td></tr>
+            <tr data-f="accel"><td class="k">Techstars Space · Seraphim Space Accelerator · Y Combinator</td><td>Global programmes with space cohorts; YC lists New Space in its requests for start-ups.</td><td>Standard programme terms (YC: $500K on its published structure)</td><td>Worth one application cycle after the LOI; the signal helps a global small-operator motion.</td></tr>
+            <tr data-f="angel"><td class="k">Space-literate angels</td><td>Operators and founders from Skyroot, Dhruva, Pixxel, ISRO alumni; angel networks (LetsVenture, AngelList India).</td><td>₹10–50 lakh cheques; SAFE/iSAFE or CCPS</td><td>Start relationships now, ask later. An angel who ran a fleet is worth more as an advisor than as a cheque.</td></tr>
+            <tr data-f="vc"><td class="k">Speciale Invest</td><td>India's most active deep-tech and space seed investor (₹600 crore fund, 2025); explicit space thesis.</td><td>≈ $750K – $1M first cheques</td><td>The natural seed lead once contracted revenue exists. Get on their radar via T-Hub and IN-SPACe events before you need them.</td></tr>
+            <tr data-f="vc"><td class="k">pi Ventures · Inflexor · Bharat Innovation Fund</td><td>Deep-tech seed and Series A funds with space portfolio companies (pi led Aule Space, 2026).</td><td>Seed cheques ₹3–10 crore</td><td>Seed round, 2027–28, on a paid deployment.</td></tr>
+            <tr data-f="global"><td class="k">Seraphim Space</td><td>The world's largest specialist space investor; early-stage fund II over $100M; invests from pre-seed, names India as a key market.</td><td>$250K – $25M, typical ≈ $3M</td><td>Seed or later, with a global small-operator story. Their accelerator is the earlier door.</td></tr>
+            <tr data-f="global"><td class="k">Type One Ventures · Space Capital · Starburst</td><td>Space-specialist VCs and the aerospace accelerator that is, by count, the most active investor in Indian space start-ups.</td><td>Seed to Series A</td><td>Starburst first (accelerator, Indian track record); the others once revenue exists.</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="note"><p class="eyebrow">Sequence</p><p>Now: IN-SPACe Seed application, T-Hub ORBIT application, angel relationships. After the LOI: a pre-seed of angels plus one institutional lead, with iDEX or TAF in parallel. After a paid deployment: Speciale or pi as seed lead, with Seraphim or Starburst for the global story. Do not run two rungs' processes at once; each costs a founder-month.</p></div>
+    </section>
+
+    <!-- ============ HOW MUCH ============ -->
+    <section class="part" id="howmuch">
+      <div class="part-head"><p class="eyebrow">7</p><h2>How much to raise</h2><p class="lede">A pre-seed funds exactly one milestone with a buffer. Size it from the team the milestone needs, not from what sounds impressive.</p></div>
+      <div class="calc" id="roundCalc">
+        <div class="fields">
+          <div class="field"><label for="months">Months to fund</label><input id="months" type="number" min="6" step="1" value="18"></div>
+          <div class="field"><label for="founderPay">Founder salary (₹ / month)</label><input id="founderPay" type="number" min="0" step="10000" value="150000"></div>
+          <div class="field"><label for="hires">Engineers</label><input id="hires" type="number" min="0" step="1" value="2"></div>
+          <div class="field"><label for="hirePay">Cost per engineer (₹ / month)</label><input id="hirePay" type="number" min="0" step="10000" value="250000"></div>
+          <div class="field"><label for="cofounder">Ops co-founder salary (₹ / month)</label><input id="cofounder" type="number" min="0" step="10000" value="200000"></div>
+          <div class="field"><label for="opex">Cloud, travel, legal, tools (₹ / month)</label><input id="opex" type="number" min="0" step="10000" value="100000"></div>
+          <div class="field"><label for="buffer">Buffer (%)</label><input id="buffer" type="number" min="0" step="5" value="20"></div>
+          <div class="field"><label for="grantOffset">Grants expected (₹)</label><input id="grantOffset" type="number" min="0" step="500000" value="0"></div>
+        </div>
+        <div class="outs">
+          <div class="out" id="rBurn"><b>—</b><span>monthly burn, funded team</span></div>
+          <div class="out good" id="rRound"><b>—</b><span>round to raise (₹)</span></div>
+          <div class="out" id="rUsd"><b>—</b><span>in USD at the rate above</span></div>
+          <div class="out warn" id="rDil"><b>—</b><span>implied post-money at 15% dilution</span></div>
+        </div>
+        <p class="small">Reference points, 2026: global pre-seed $500K–$2.5M, median ≈ $1.2M; Indian deep-tech pre-seed commonly ₹2–6 crore; typical dilution 10–20% for the round in total. Instruments: SAFE or iSAFE for angels, CCPS for institutional. Never give one early investor more than 20%.</p>
+      </div>
+      <div class="two">
+        <div class="prose">
+          <p><strong>What the round buys, in the investor's language.</strong> "Eighteen months to a deployed design partner with contracted revenue and a second operator in pipeline, with an operations co-founder and two engineers, timed to the 2027–29 fleet ramp." One sentence, one milestone, one clock.</p>
+          <p><strong>What it must not buy.</strong> Features nobody asked for, a bigger office, a conference calendar. If a cost does not move the milestone, it waits for the seed.</p>
+        </div>
+        <div class="note blue"><p class="eyebrow">Salary is not greed</p><p>Pay yourself a modest salary from the round. A founder living on fumes makes fearful decisions, and investors know it; a small salary line is read as maturity.</p></div>
+      </div>
+    </section>
+
+    <!-- ============ UNIT ECONOMICS ============ -->
+    <section class="part" id="unit">
+      <div class="part-head"><p class="eyebrow">8</p><h2>Unit economics you should hold yourself to</h2><p class="lede">Targets, benchmarks, and the honest date by which each becomes measurable. Until then, say "designed for", never "achieving".</p></div>
+      <div class="tablewrap">
+        <table>
+          <thead><tr><th>Metric</th><th>Your target</th><th>2026 benchmark</th><th>Measurable when</th></tr></thead>
+          <tbody>
+            <tr><td class="k">Annual contract value</td><td>₹25–75 lakh India · $150–400K global <span class="pill open">open</span></td><td>No public price for this layer</td><td>After the pricing study with five operators</td></tr>
+            <tr><td class="k">Gross margin</td><td>≥ 80% on licence; services &lt; 20% of revenue</td><td>Software 75–85%; services drag it fast</td><td>First paid deployment</td></tr>
+            <tr><td class="k">CAC payback</td><td>&lt; 12 months</td><td>Enterprise median stretched to ~18 months in 2024; sub-12 is the bar investors want</td><td>Second customer (the first is founder time, not CAC)</td></tr>
+            <tr><td class="k">LTV / CAC</td><td>&gt; 3× by year 3</td><td>Median 3.2:1; healthy 3–5:1</td><td>Year 3</td></tr>
+            <tr><td class="k">Net revenue retention</td><td>&gt; 110%</td><td>Per-satellite pricing expands with every launch</td><td>First renewal</td></tr>
+            <tr><td class="k">Logo churn</td><td>≈ 0 in years 1–2</td><td>Named-account market; a lost logo is a lost door</td><td>First renewal</td></tr>
+            <tr><td class="k">Sales cycle</td><td>9–18 months, planned for</td><td>Enterprise 6–24 months</td><td>Measure from first meeting to signature on every account</td></tr>
+            <tr><td class="k">Burn multiple</td><td>&lt; 2× after first revenue</td><td>Net burn ÷ net new ARR; under 2 is efficient</td><td>Month 6 after the pre-seed</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="note"><p class="eyebrow">Keep five buckets apart</p><p>Revenue, contracted backlog, qualified pipeline, non-binding interest, long-range demand. Investors in space punish decks that blend them into one growth curve. Your product already refuses to fabricate a number; run the company the same way.</p></div>
+    </section>
+
+    <!-- ============ INVESTORS ============ -->
+    <section class="part" id="investors">
+      <div class="part-head"><p class="eyebrow">9</p><h2>What investors actually read</h2></div>
+      <div class="tiles">
+        <div class="tile"><b>3 min 44 s</b><span>Average time a VC spends on a seed deck (DocSend, 2026). Pre-seed: about four minutes. Only 58% reach the last slide.</span></div>
+        <div class="tile"><b>Team, then financials</b><span>The two slides that get the most time — not product. Investors can judge a product fast; they are betting on you and on whether you understand money.</span></div>
+        <div class="tile"><b>First 4 slides = 60%</b><span>Of total attention. Problem, why now, solution and proof must carry the argument; everything after is evidence.</span></div>
+      </div>
+      <div class="two">
+        <div class="prose">
+          <p><strong>Deep-tech and space specifics.</strong> Separate technical risk from market risk and show which one the round retires. Map the raise to a milestone, not a runway. Show non-dilutive money pursued in parallel — it signals capital efficiency. Name the safety boundary before they ask about "AI running satellites".</p>
+          <p><strong>Your deck already does this.</strong> Thirteen slides, evidence in the notes, every number labelled. What it lacks is the one thing only the world can supply: a named operator saying yes. Until then, present it as "this is what we'll show you the day the LOI is signed", and mean it.</p>
+        </div>
+        <div class="cl" data-cl="deckprep">
+          <label><input type="checkbox"> <span>Rehearse the 3-minute version aloud until the first four slides land without notes</span></label>
+          <label><input type="checkbox"> <span>Financial plan sheet ready: burn, hires, milestone dates, grant pipeline, round use of funds</span></label>
+          <label><input type="checkbox"> <span>Live demo from a clean checkout tested on someone else's laptop</span></label>
+          <label><input type="checkbox"> <span>One-page design-partner offer and LOI template drafted</span></label>
+          <label><input type="checkbox"> <span>Data room: repo access, evidence docs, CVs, incorporation papers</span></label>
+          <label><input type="checkbox"> <span>Three references who will vouch for you as an engineer and as a person</span></label>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ CADENCE ============ -->
+    <section class="part" id="cadence">
+      <div class="part-head"><p class="eyebrow">10</p><h2>Operating cadence — the next twelve months</h2><p class="lede">Building is not the plan. The plan is the weekly split and the monthly milestones; tick them here as they land.</p></div>
+      <div class="tiles">
+        <div class="tile"><b>Mon–Wed</b><span>Build only what a real operator asked for in a real meeting. Otherwise: demo hardening, deployment packaging, security posture.</span></div>
+        <div class="tile"><b>Thu–Fri</b><span>Customers. Five outreach, two conversations, debriefs written the same day. Grant and accelerator paperwork lives here too.</span></div>
+        <div class="tile"><b>One hour, daily</b><span>Relationships: one message to an angel, mentor, operator or fellow founder. Compounding beats bursts.</span></div>
+      </div>
+      <div class="cal" data-cl="calendar">
+        <div class="m"><span class="when">Sep 2026</span><div><label style="display:inline"><input type="checkbox"> Incorporate a private limited company; DPIIT recognition started; separate bank account; a chartered accountant retained. First five outreach messages sent.</label></div></div>
+        <div class="m"><span class="when">Oct 2026</span><div><label style="display:inline"><input type="checkbox"> IN-SPACe Seed Fund application filed. T-Hub ORBIT application filed. Ten conversations logged. Pricing study underway.</label></div></div>
+        <div class="m"><span class="when">Nov 2026</span><div><label style="display:inline"><input type="checkbox"> Demo shown to three operators. Design-partner one-pager sent to whoever leaned in. Two mentors from operations or procurement agreed to monthly calls.</label></div></div>
+        <div class="m"><span class="when">Dec 2026</span><div><label style="display:inline"><input type="checkbox"> LOI negotiation open with at least one operator. Angel relationships warm (five names who know the story). Co-founder search started in earnest.</label></div></div>
+        <div class="m key"><span class="when">15 Jan 2027</span><div><label style="display:inline"><input type="checkbox"> <strong>Checkpoint.</strong> LOI signed → continue on this page. Not signed → the insider path, product as credential, no shame in it.</label></div></div>
+        <div class="m"><span class="when">Feb–Mar 2027</span><div><label style="display:inline"><input type="checkbox"> Self-hosted install beside the design partner's C2. Grant tranche one. Pre-seed materials updated with the LOI and the deployment date.</label></div></div>
+        <div class="m"><span class="when">Apr–Jun 2027</span><div><label style="display:inline"><input type="checkbox"> First receipt-backed execution history from a live fleet. Pre-seed process opened with 9+ months of runway. Ops co-founder identified.</label></div></div>
+        <div class="m"><span class="when">Jul–Sep 2027</span><div><label style="display:inline"><input type="checkbox"> Pre-seed closed. Two engineers hired onto written specs. Second design partner signed. First paid contract negotiated.</label></div></div>
+        <div class="m"><span class="when">Q4 2027 →</span><div><label style="display:inline"><input type="checkbox"> Paid deployment live. Seed conversations begin on contracted revenue (Speciale, pi, Seraphim). Global small-operator pilot.</label></div></div>
+      </div>
+    </section>
+
+    <!-- ============ HYGIENE ============ -->
+    <section class="part" id="hygiene">
+      <div class="part-head"><p class="eyebrow">11</p><h2>Founder hygiene — the things first-timers skip</h2></div>
+      <div>
+        <details open><summary>Legal and money setup, this month</summary><div class="body">Private limited company (not LLP — investors and grants expect it). DPIIT start-up recognition (needed for IN-SPACe Seed and SISFS). All code and IP assigned to the company by a signed deed on day one. A separate business bank account; never mix savings and company money after incorporation. A chartered accountant who has done start-up compliance. Reserve a 10–15% ESOP pool at the first priced round, not before.</div></details>
+        <details><summary>The co-founder you actually need</summary><div class="body">Not another backend engineer. Someone who has run a mission-operations centre or sold into one — Dhruva, ISRO/ISTRAC alumni, KSAT or Leaf Space veterans, a former operator at Pixxel or GalaxEye. Where to look: T-Hub ORBIT cohorts, IN-SPACe investor days, the people who reply to your outreach and say "I wish I had this when I ran ops". Vesting: four years, one-year cliff, for both of you, from the day they join.</div></details>
+        <details><summary>Mentors, and what to ask them for</summary><div class="body">Three is enough: one who has operated a fleet, one who has sold to Indian space or defence procurement, one who has built and sold a B2B SaaS company. Ask for a 30-minute call a month and one introduction a quarter. Send them a one-paragraph update on the first of every month whether or not anything happened; consistency is what turns a mentor into an investor or a reference.</div></details>
+        <details><summary>Solo-founder risk, managed rather than denied</summary><div class="body">You have already written the anti-relapse document; keep using it — doubts get checked against it, not re-litigated daily. Take one full day off a week; the sales clock does not tick faster if you burn out. Health insurance is a runway cost, not a luxury. Tell two people the real numbers so somebody can call you out.</div></details>
+        <details><summary>Public claims discipline</summary><div class="body">Never "AI autonomously runs satellites". Never a fixture rupee figure presented as an operator's. Never "published paper" for work that was submitted but not published. Never Dhruva's stack described as if you had seen it. The company's credibility is the founder's credibility, and in a market of eight to twelve accounts, everybody talks to everybody.</div></details>
+      </div>
+    </section>
+
+    <!-- ============ KILL ============ -->
+    <section class="part" id="kill">
+      <div class="part-head"><p class="eyebrow">12</p><h2>The checkpoint, and what each outcome means</h2></div>
+      <div class="two">
+        <div class="note green"><p class="eyebrow">LOI signed by 15 Jan 2027</p><p>Continue exactly as above. Deploy, file grants, open the pre-seed on evidence. The insider path is closed on purpose, and that is fine — you chose speed and identity.</p></div>
+        <div class="note rose"><p class="eyebrow">No LOI by 15 Jan 2027</p><p>Take the operator role you have already identified, with the product as the evidence of field experience, and run the insider path the Quindar founders ran. The code stays yours; the market does not disappear; the checkpoint converts stubbornness into strategy. Reopen only with a new signal — a warm inbound, a grant approved, a co-founder with a fleet behind them.</p></div>
+      </div>
+      <div class="prose">
+        <p><strong>What "traction signal" means, precisely,</strong> so that January cannot be argued with: a signed letter of intent from an operator naming a start date, or a paid pilot of any size, or a grant approval plus two operators in active design-partner negotiation. Anything less is interest, and interest is not a reason to keep spending savings.</p>
+      </div>
+    </section>
+
+    <footer>
+      <p>Benchmarks and programme terms as published in 2026: DocSend seed and pre-seed research; SaaS unit-economics benchmark surveys; IN-SPACe Seed Fund, iDEX Prime Space and Technology Adoption Fund pages; Startup India Seed Fund Scheme; T-Hub ORBIT; Tracxn and SpaceNews on Speciale Invest, pi Ventures, Seraphim Space; Bessemer and Tracsio on design-partner programmes. Confirm every amount on the programme's own site before applying.</p>
+      <p>Your inputs and ticks are stored only in this browser's local storage. Nothing on this page is sent anywhere.</p>
+    </footer>
+  </main>
+</div>
+
+<script>
+(function () {
+  var $ = function (id) { return document.getElementById(id); };
+  var store = { get: function (k, d) { try { var v = localStorage.getItem(k); return v === null ? d : JSON.parse(v); } catch (e) { return d; } }, set: function (k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} } };
+  var INR = function (n) { n = Math.round(n); if (Math.abs(n) >= 1e7) return '₹' + (n / 1e7).toFixed(2) + ' cr'; if (Math.abs(n) >= 1e5) return '₹' + (n / 1e5).toFixed(1) + ' L'; return '₹' + n.toLocaleString('en-IN'); };
+  var USD = function (n) { return '$' + Math.round(n).toLocaleString('en-US'); };
+  var monthName = function (d) { return d.toLocaleString('en-GB', { month: 'short', year: 'numeric' }); };
+  var addMonths = function (ym, m) { var p = ym.split('-'); var d = new Date(parseInt(p[0], 10), parseInt(p[1], 10) - 1 + Math.floor(m), 1); return d; };
+
+  // ---------- toc highlight ----------
+  var tocLinks = Array.prototype.slice.call(document.querySelectorAll('.toc a'));
+  var parts = Array.prototype.slice.call(document.querySelectorAll('section.part'));
+  function setCur(id) { tocLinks.forEach(function (a) { a.setAttribute('aria-current', a.getAttribute('href') === '#' + id ? 'true' : 'false'); }); }
+  if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting) setCur(e.target.id); }); }, { rootMargin: '-30% 0px -60% 0px' });
+    parts.forEach(function (p) { io.observe(p); });
+  }
+
+  // ---------- runway ----------
+  var rIds = ['savings', 'fx', 'personal', 'company', 'oneoff', 'grant', 'grantMonth', 'start'];
+  var scenarios = { lean: { personal: 80000, company: 20000 }, base: { personal: 120000, company: 30000 }, hire: { personal: 120000, company: 330000 } };
+  function readHash() {
+    if (!location.hash || location.hash.indexOf('=') < 0) return null;
+    var o = {}; location.hash.slice(1).split('&').forEach(function (kv) { var p = kv.split('='); if (p.length === 2) o[decodeURIComponent(p[0])] = decodeURIComponent(p[1]); }); return o;
+  }
+  function loadRunway() {
+    var h = readHash(); var saved = store.get('cos-runway', null);
+    rIds.forEach(function (id) { var v = (h && h[id] !== undefined) ? h[id] : (saved && saved[id] !== undefined ? saved[id] : null); if (v !== null) $(id).value = v; });
+  }
+  function calcRunway() {
+    var v = {}; rIds.forEach(function (id) { v[id] = $(id).value; });
+    store.set('cos-runway', v);
+    var cash = parseFloat(v.savings || 0) * parseFloat(v.fx || 85) - parseFloat(v.oneoff || 0);
+    var burn = parseFloat(v.personal || 0) + parseFloat(v.company || 0);
+    var grant = parseFloat(v.grant || 0), gm = parseFloat(v.grantMonth || 0);
+    var months;
+    if (burn <= 0) months = 999; else { months = cash / burn; if (grant > 0 && months >= gm) months = (cash + grant) / burn; }
+    $('oCash').querySelector('b').textContent = INR(cash);
+    $('oBurn').querySelector('b').textContent = INR(burn) + ' / mo';
+    $('oMonths').querySelector('b').textContent = months >= 999 ? '∞' : months.toFixed(1);
+    $('clockRunway').textContent = (months >= 999 ? '∞' : Math.floor(months)) + ' months';
+    var start = v.start || '2026-09';
+    $('oEnd').querySelector('b').textContent = months >= 999 ? '—' : monthName(addMonths(start, months));
+    $('oRaise').querySelector('b').textContent = months >= 999 ? '—' : (months > 9 ? monthName(addMonths(start, months - 9)) : 'now');
+    $('oDanger').querySelector('b').textContent = months >= 999 ? '—' : (months > 3 ? monthName(addMonths(start, months - 3)) : 'now');
+    var g = Math.max(0, months - 9), a = Math.min(6, Math.max(0, months - 3)), r = Math.min(3, Math.max(0, months)); var t = g + a + r || 1;
+    $('bar1').style.width = (g / t * 100) + '%'; $('bar2').style.width = (a / t * 100) + '%'; $('bar3').style.width = (r / t * 100) + '%';
+    var mo = $('oMonths'); mo.className = 'out ' + (months >= 12 ? 'good' : months >= 6 ? 'warn' : 'bad');
+  }
+  loadRunway();
+  rIds.forEach(function (id) { $(id).addEventListener('input', calcRunway); });
+  document.querySelectorAll('#runwayCalc .chips button').forEach(function (b) {
+    b.addEventListener('click', function () {
+      document.querySelectorAll('#runwayCalc .chips button').forEach(function (x) { x.setAttribute('aria-pressed', x === b ? 'true' : 'false'); });
+      var s = scenarios[b.dataset.sc]; $('personal').value = s.personal; $('company').value = s.company; calcRunway();
+    });
+  });
+  $('copyLink').addEventListener('click', function () {
+    var v = {}; rIds.forEach(function (id) { v[id] = $(id).value; });
+    var q = Object.keys(v).map(function (k) { return encodeURIComponent(k) + '=' + encodeURIComponent(v[k]); }).join('&');
+    var url = location.origin + location.pathname + '#' + q;
+    var done = function (ok) { $('copied').textContent = ok ? 'Copied. Bookmark it on the other device.' : url; };
+    if (navigator.clipboard) navigator.clipboard.writeText(url).then(function () { done(true); }, function () { done(false); }); else done(false);
+  });
+  $('resetCalc').addEventListener('click', function () { try { localStorage.removeItem('cos-runway'); } catch (e) {} history.replaceState(null, '', location.pathname); $('savings').value = 50000; $('fx').value = 85; $('personal').value = 120000; $('company').value = 30000; $('oneoff').value = 60000; $('grant').value = 0; $('grantMonth').value = 9; $('start').value = '2026-09'; calcRunway(); });
+  calcRunway();
+
+  // ---------- decision helper ----------
+  var ans = store.get('cos-decide', { loi: 0, rw: 2, ppl: 0, gr: 0, sp: 1 });
+  function paintDecide() {
+    document.querySelectorAll('#decide .opts button').forEach(function (b) { b.setAttribute('aria-pressed', String(ans[b.dataset.q]) === b.dataset.v ? 'true' : 'false'); });
+    var t;
+    if (ans.rw === 0) t = 'Under six months of runway: you are past the point where raising well is possible. Cut burn to the bone today, take the grant or the insider path, and only open a raise if an LOI is already signed.';
+    else if (ans.loi === 0 && ans.ppl === 0) t = 'No LOI and no hires needed yet: do not raise. Spend the next 90 days on operator conversations and the IN-SPACe Seed application. Savings plus a grant reach the LOI; a round now would cost dilution and four months of not selling.';
+    else if (ans.loi === 0 && ans.ppl === 1) t = 'You want people before you have a customer. Resist it. A hire without an LOI is runway spent on guessing; get the LOI, then raise for the hires you can now justify in one sentence.';
+    else if (ans.loi === 1 && ans.rw === 2 && ans.ppl === 0) t = 'LOI in hand, long runway, no hires needed yet: bootstrap the deployment on savings and grants, and open a pre-seed only when the deployment date forces a hire. You are in the strongest possible negotiating position — use the time.';
+    else if (ans.loi === 1 && (ans.ppl === 1 || ans.sp === 1)) t = 'LOI signed and the milestone needs people or speed: open a modest pre-seed now while runway is still nine-plus months. Anchor it on the LOI, the deployment date and the fleet-ramp clock; keep the grant process running in parallel.';
+    else t = 'Keep selling, keep the grant pipeline warm, and revisit this the week anything changes — an LOI, a hire you cannot avoid, or the runway dropping under twelve months.';
+    if (ans.gr === 0 && ans.rw !== 0) t += ' File the IN-SPACe Seed application regardless; non-dilutive money never waits for the perfect moment.';
+    $('verdictText').textContent = t;
+    store.set('cos-decide', ans);
+  }
+  document.querySelectorAll('#decide .opts button').forEach(function (b) { b.addEventListener('click', function () { ans[b.dataset.q] = parseInt(b.dataset.v, 10); paintDecide(); }); });
+  paintDecide();
+
+  // ---------- funding filter ----------
+  var fb = document.querySelectorAll('.filters button'), rows = document.querySelectorAll('#fund tbody tr');
+  fb.forEach(function (b) { b.addEventListener('click', function () { fb.forEach(function (x) { x.setAttribute('aria-pressed', x === b ? 'true' : 'false'); }); rows.forEach(function (r) { r.hidden = !(b.dataset.f === 'all' || r.dataset.f === b.dataset.f); }); }); });
+
+  // ---------- round calculator ----------
+  var qIds = ['months', 'founderPay', 'hires', 'hirePay', 'cofounder', 'opex', 'buffer', 'grantOffset'];
+  var savedQ = store.get('cos-round', null); if (savedQ) qIds.forEach(function (id) { if (savedQ[id] !== undefined) $(id).value = savedQ[id]; });
+  function calcRound() {
+    var v = {}; qIds.forEach(function (id) { v[id] = $(id).value; }); store.set('cos-round', v);
+    var burn = parseFloat(v.founderPay || 0) + parseFloat(v.hires || 0) * parseFloat(v.hirePay || 0) + parseFloat(v.cofounder || 0) + parseFloat(v.opex || 0);
+    var total = burn * parseFloat(v.months || 0) * (1 + parseFloat(v.buffer || 0) / 100) - parseFloat(v.grantOffset || 0);
+    total = Math.max(0, total);
+    var fx = parseFloat($('fx').value || 85);
+    $('rBurn').querySelector('b').textContent = INR(burn) + ' / mo';
+    $('rRound').querySelector('b').textContent = INR(total);
+    $('rUsd').querySelector('b').textContent = USD(total / fx);
+    $('rDil').querySelector('b').textContent = INR(total / 0.15);
+  }
+  qIds.forEach(function (id) { $(id).addEventListener('input', calcRound); });
+  $('fx').addEventListener('input', calcRound);
+  calcRound();
+
+  // ---------- checklists ----------
+  document.querySelectorAll('[data-cl]').forEach(function (list) {
+    var key = 'cos-cl-' + list.dataset.cl; var boxes = list.querySelectorAll('input[type="checkbox"]'); var saved = store.get(key, []);
+    boxes.forEach(function (b, i) { b.checked = !!saved[i]; b.addEventListener('change', function () { var arr = []; boxes.forEach(function (x) { arr.push(x.checked); }); store.set(key, arr); }); });
+  });
+})();
+</script>
+</body>
+</html>

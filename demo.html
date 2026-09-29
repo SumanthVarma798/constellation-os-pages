@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mentor demo guide · Constellation OS</title>
+<meta name="description" content="A practical Constellation OS mentor walkthrough from request intake to a proposed plan, approval, dispatch, and repair.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+  :root { --ground:#F2F4F7; --surface:#FFFFFF; --ink:#111827; --ink-2:#424D5E; --muted:#667388; --line:#D6DCE5; --amber:#B9711A; --blue:#2A6597; --code:#E9EDF2; }
+  @media (prefers-color-scheme:dark) { :root { --ground:#0C1420; --surface:#131D2C; --ink:#E8EDF4; --ink-2:#B3BFCF; --muted:#9AA9BC; --line:#34465F; --amber:#E2A24A; --blue:#78ACDF; --code:#1A2637; } }
+  * { box-sizing:border-box; }
+  html { scroll-behavior:smooth; }
+  body { margin:0; background:var(--ground); color:var(--ink); font-family:"IBM Plex Sans",Arial,sans-serif; line-height:1.55; }
+  a { color:var(--blue); } a:focus-visible, summary:focus-visible { outline:3px solid var(--amber); outline-offset:3px; }
+  main { max-width:940px; margin:auto; padding:clamp(1.5rem,5vw,4rem) 1.25rem 4rem; }
+  nav { display:flex; flex-wrap:wrap; gap:1.25rem; border-bottom:1px solid var(--line); padding-bottom:1rem; font-size:.85rem; }
+  h1,h2,h3 { font-family:Archivo,Arial,sans-serif; line-height:1.16; }
+  h1 { font-size:clamp(2rem,5vw,3.2rem); max-width:18ch; margin:.5rem 0; }
+  h2 { font-size:clamp(1.4rem,3vw,1.9rem); margin:0 0 .7rem; }
+  h3 { font-size:1.12rem; margin:0 0 .3rem; }
+  p { margin:.5rem 0 0; } ul,ol { padding-left:1.3rem; margin:.55rem 0 0; } li+li { margin-top:.4rem; }
+  .eyebrow { font:500 .72rem "IBM Plex Mono",monospace; letter-spacing:.12em; text-transform:uppercase; color:var(--amber); }
+  .lede { max-width:66ch; color:var(--ink-2); font-size:1.1rem; }
+  .hero { padding:2.5rem 0 1.8rem; }
+  .jump { display:flex; flex-wrap:wrap; gap:.5rem 1.3rem; margin-top:1.5rem; font-size:.9rem; }
+  section { margin-top:2.4rem; }
+  .card { background:var(--surface); border:1px solid var(--line); border-radius:7px; padding:clamp(1rem,3vw,1.5rem); }
+  .card+.card { margin-top:.7rem; }
+  .step { display:grid; grid-template-columns:2rem minmax(0,1fr); gap:1rem; border-top:1px solid var(--line); padding:1.2rem 0; }
+  .step:first-of-type { border-top:0; }
+  .number { font:500 .9rem "IBM Plex Mono",monospace; color:var(--amber); padding-top:.2rem; }
+  .step p { color:var(--ink-2); }
+  .aside { border-left:3px solid var(--amber); padding:.7rem 1rem; background:var(--surface); margin-top:1rem; color:var(--ink-2); }
+  .aside strong { color:var(--ink); }
+  code,pre { font-family:"IBM Plex Mono",monospace; font-size:.83rem; }
+  code { overflow-wrap:anywhere; }
+  pre { background:var(--code); padding:1rem; border-radius:5px; overflow-x:auto; line-height:1.5; }
+  pre code { overflow-wrap:normal; }
+  details { border:1px solid var(--line); border-radius:6px; background:var(--surface); padding:1rem 1.2rem; margin-top:.7rem; }
+  summary { cursor:pointer; font-weight:600; }
+  footer { border-top:1px solid var(--line); margin-top:3rem; padding-top:1rem; color:var(--muted); font-size:.82rem; }
+  @media (max-width:600px) { .step { grid-template-columns:1.5rem minmax(0,1fr); gap:.7rem; } }
+  @media (prefers-reduced-motion:reduce) { html { scroll-behavior:auto; } }
+</style>
+</head>
+<body>
+<main>
+<nav aria-label="Founder pages"><a href="index.html">Founder pages</a><a href="brief.html">Investor brief</a><a href="#run">Live route</a><a href="#branches">Replan or repair</a></nav>
+<header class="hero">
+  <p class="eyebrow">Mentor walkthrough · local demo · 29 September 2026</p>
+  <h1>From a request to an approved plan.</h1>
+  <p class="lede">Keep this guide beside the operator console. Practise the complete request → new plan → compare → approve sequence on the local fixture server. Send and observe are a separate Compose rehearsal when a current-window activity is eligible. Repair needs a real execution event.</p>
+  <div class="jump"><a href="#before">Before the call</a><a href="#run">Walkthrough</a><a href="#jobs">Planning job trigger</a><a href="#branches">Replan / repair</a><a href="#talk">What to say</a></div>
+</header>
+
+<section id="before">
+  <h2>Before the call</h2>
+  <div class="card">
+    <ol>
+      <li>In one terminal, run <code>CONSTELLATION_FUTURE_ADMISSION_LEAD_HOURS=1 backend/.venv/bin/python development/dev_api.py fleet_optimized</code> from the Constellation OS checkout. In another, run <code>cd frontend &amp;&amp; npm run dev -- --host 127.0.0.1 --port 4173</code>. The local server creates a fresh demo database and starts its planning worker. The one-hour admission lead applies only to this practice process.</li>
+      <li>Open <a href="http://127.0.0.1:4173">the local console</a>, use the development identity chooser to sign in as a <strong>tenant admin</strong>, and open <code>world-fleet</code> revision 3. Use a tenant identity, not the platform login. This fixture’s clock is parked at <strong>31 July 2026, 08:00 UTC</strong>.</li>
+      <li>Choose a rehearsed customer, target and sensor. For a concrete target, try <code>26.2685° N, 74.3688° E</code> and a deadline of <code>1 August 2026, 02:00 UTC</code>; the fixture has opportunities at that target. Keep the deadline beyond the displayed admission lead and inside the 31 July–1 August planning window. Note the starting optimized revision for Compare. Confirm the API and console load before the call.</li>
+    </ol>
+  </div>
+  <p class="aside"><strong>What this practice proves.</strong> The fixture server uses a virtual clock and a local job worker. It lets you practise intake, planning, comparison and approval; it does not provide Yamcs dispatch receipts. Stock Compose includes Yamcs and a deterministic spacecraft spoof, but its seeded <code>world-origin</code> horizon is 16–17 July 2026 and its clock is real time. Do not promise a live send from that seed on today’s clock. The full Q09 rehearsal and DEMO_GO decision remain open.</p>
+</section>
+
+<section id="run">
+  <h2>Live route</h2>
+  <div class="step"><span class="number">01</span><div><h3>Queue the request</h3><p>In Plan, select <strong>Queue request</strong>. Choose the customer; enter a justification, target name and coordinates, sensor, mission use, deadline, SLA, priority and planner value. Select <strong>Review request</strong>, check the summary, then acknowledge and select <strong>Submit request</strong>.</p><p><strong>Show:</strong> the acceptance receipt and the new revision. Say that this is durable <em>unscheduled demand</em>; no collection has been scheduled yet.</p></div></div>
+  <div class="step"><span class="number">02</span><div><h3>Make a new proposed plan</h3><p>Use the planning-job snippet below in the console tab’s developer tools. Keep <code>world-fleet</code> and enter the exact new revision shown after intake. Run <code>opportunity_generation</code>, wait for its successor, then run <code>optimization</code> on that successor. These are two distinct queued jobs. A 202 response means admitted or deferred, not completed.</p><p><strong>Show:</strong> each job ID and the resulting revision printed by the snippet. Refresh the console and select the new optimized revision.</p></div></div>
+  <div class="step"><span class="number">03</span><div><h3>Inspect the difference</h3><p>Use <strong>Compare</strong> to place the earlier optimized revision beside the new one. Point to changed or refused requests, activity placement, station use and the money figures in Economics. If the new request is infeasible, show its typed rejection reason; an accepted request does not guarantee a scheduled activity.</p></div></div>
+  <div class="step"><span class="number">04</span><div><h3>Approve the exact revision</h3><p>As the tenant admin, select <strong>Review and approve</strong>. Read the pending request/activity diff and net-value change, acknowledge it, then approve this revision. A regular operator can submit work but cannot approve. Approval authorizes the chosen version; it does not contact C2.</p></div></div>
+  <div class="step"><span class="number">05</span><div><h3>Explain the send gate; rehearse it separately</h3><p>On a <em>current-window Compose plan</em>, select an eligible activity and use <strong>Send selected activity</strong> → <strong>Request dispatch</strong>. In Execution, wait for command and observation receipts. A dispatch request is not an uplink or execution outcome; only later receipts establish those facts. In the fixture practice above, stop at approval: there is no Yamcs dispatch worker.</p></div></div>
+</section>
+
+<section id="jobs">
+  <h2>Planning job trigger</h2>
+  <p>The current operator UI does not have a general “run planner” or “run repair” button. While signed in to <code>http://127.0.0.1:4173</code>, open that tab’s developer console, edit <code>startVersion</code>, then paste this. The script uses your existing same-origin session and CSRF cookie; run it only against the local demo tenant.</p>
+  <pre><code>(async () =&gt; {
+  const book = "world-fleet"; // scenario ID shown in Queue request
+  const startVersion = 4;     // new revision shown after intake; edit if needed
+  const kinds = ["opportunity_generation", "optimization"];
+  // For repair after a real event: use ["repair"] and its current version.
+  const csrf = document.cookie.split("; ").find(x =&gt; x.startsWith("constellation_csrf="))?.split("=")[1];
+  if (!csrf) throw new Error("Sign in to the local operator console first");
+  const read = async path =&gt; {
+    const response = await fetch(path, { credentials: "same-origin" });
+    const body = await response.json();
+    if (!response.ok) throw new Error(JSON.stringify(body));
+    return body.data;
+  };
+  let expected = startVersion;
+  for (const kind of kinds) {
+    const path = `/api/v1/scenarios/${encodeURIComponent(book)}/versions`;
+    const versions = await read(path);
+    const latest = versions.reduce((a, b) =&gt; a.version &gt; b.version ? a : b);
+    if (latest.version !== expected) throw new Error(`Expected revision ${expected}, found ${latest.version}; check the selected plan`);
+    const response = await fetch(`${path}/${latest.version}/jobs`, {
+      method: "POST", credentials: "same-origin",
+      headers: { "Content-Type": "application/json", "X-CSRF-Token": decodeURIComponent(csrf) },
+      body: JSON.stringify({ action_id: crypto.randomUUID(), job_kind: kind,
+        expected_scenario_version: latest.version,
+        expected_scenario_hash: latest.canonical_hash,
+        justification: "Mentor demo: plan accepted request" })
+    });
+    const submitted = await response.json();
+    if (!response.ok) throw new Error(JSON.stringify(submitted));
+    const id = submitted.data.job_id;
+    console.log(`${kind} queued`, id, submitted.data.admission);
+    let completed = false;
+    for (let attempt = 0; attempt &lt; 450; attempt++) {
+      const state = await read(`/api/v1/jobs/${id}`);
+      if (state.payload.status === "failed") throw new Error(JSON.stringify(state.payload.failure));
+      if (state.payload.status === "succeeded") {
+        const successor = (await read(path)).find(v =&gt; v.canonical_hash === state.payload.output_hash);
+        if (!successor) throw new Error(`Job ${id} succeeded but its successor was not found`);
+        console.log(`${kind} succeeded → revision ${successor.version}`, successor);
+        expected = successor.version;
+        completed = true;
+        break;
+      }
+      await new Promise(resolve =&gt; setTimeout(resolve, 2000));
+    }
+    if (!completed) throw new Error(`Job ${id} is still running; inspect /api/v1/jobs/${id}`);
+  }
+})().catch(error =&gt; console.error("Planning stopped:", error));</code></pre>
+  <p class="aside"><strong>If a job fails:</strong> read its printed failure and the job record at <code>/api/v1/jobs/&lt;job-id&gt;</code>. Do not approve an old revision or claim the plan succeeded. A stale input or infeasible request may require a different rehearsed case.</p>
+</section>
+
+<section id="branches">
+  <h2>Replan or repair</h2>
+  <details open><summary>New request or changed planning input → replan</summary><p>From the accepted request’s latest unscheduled revision, run <code>opportunity_generation</code> followed by <code>optimization</code> as above. Compare the earlier optimized version with the new proposed version. This is the reliable path for a fresh request; intake itself never queues either job.</p></details>
+  <details><summary>Execution disruption → repair</summary><p>First show an actual missed, failed or changed execution event in Execution. On the affected scenario, take its current optimized/authorized revision as <code>startVersion</code>, change <code>kinds</code> to <code>["repair"]</code>, and run the same snippet. Repair needs a valid baseline and event evidence; without those, it can fail closed. Compare the repair successor, inspect its changed commitments and money report, then approve that exact revision. Request dispatch only if an eligible remaining activity and a live C2 worker exist. <strong>Open repair</strong> in Execution navigates to an existing repair result; it does not start the job.</p></details>
+  <p class="aside"><strong>Fallback if time is short:</strong> finish at the approval receipt. For repair, open an already generated repaired revision and say plainly that its disruption was prepared. Avoid resetting Compose volumes during the meeting.</p>
+</section>
+
+<section id="talk">
+  <h2>Thirty-second talk track</h2>
+  <div class="card"><p>“A customer asks for an observation. We keep that request as its own version before scheduling anything. The planner generates physical opportunities, then chooses collections and ground contacts under resource and deadline limits. I can compare what moved and what it costs. A human approves one exact version; sending an activity is a second decision. In the Compose integration, Yamcs and the simulator return receipts, so an execution failure can feed a repair.”</p></div>
+</section>
+<footer>Personal mentor-demo guide · Updated 29 September 2026 · <a href="brief.html">Back to the investor brief</a></footer>
+</main>
+</body>
+</html>
